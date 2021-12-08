@@ -23,7 +23,19 @@ const NewAdForm = () => {
     }
     
     const handleLocationChange = (e) => {
-        setLocation(e.target.value);
+        switch(e.target.value){
+            case "Ixelles":
+                setLocation("Av. Adolphe Buyl 87, 1000 Ixelles")
+                return;
+            case "Louvain-La-Neuve":
+                setLocation("Pl. de l'Université 1, 1348 Ottignies-Louvain-la-Neuve")
+                return;
+            case "Woluwe":
+                setLocation("Clos Chapelle-aux-Champs 43, 1200 Woluwe-Saint-Lambert")
+                return;            
+            default:
+                return;
+        }
     }
     
     const handleIsPaying =(e)=>{
@@ -61,7 +73,13 @@ const NewAdForm = () => {
             <div>
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange}/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} />
-                Entrez une adresse pour votre annonce <input type="text" value={location} onChange={handleLocationChange} />
+                    <div onChange={handleLocationChange}>
+                        <select id ="dropdrown">
+                            <option value="Ixelles">Ixelles</option>
+                            <option value="Louvain-La-Neuve">Louvain-La-Neuve</option>
+                            <option value="Woluwe">Woluwe</option>
+                        </select>
+                    </div>
                     <div onChange={event=>handleIsPaying(event)}>
                         Gratuit <input type="radio" name="type" value="isFree" required/>
                         Payant <input type="radio" name="type" value="isPaying" required/>
