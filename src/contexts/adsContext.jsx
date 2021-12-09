@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import * as AdsApi from "services/adsApi";
 
 const defaultSortAd = (a,b) => {
@@ -20,10 +20,10 @@ const ProviderWrapper = (props) => {
   const defaultSortedAd=ads
     .sort(defaultSortAd)
 
-  const addNewAd =(title,type,description,location,price) =>{
+  const addNewAd =(newAd) =>{
       AdsApi
-      .createNewAd(title,type,description,location,price)
-      .then((newAd) =>setAds([...ads, newAd])
+      .createNewAd(newAd)
+      .then((ad) =>setAds([...ads, ad])
       );
   }
   
@@ -58,13 +58,22 @@ const ProviderWrapper = (props) => {
         console.log("context")
       })
     }
+
+    const retrieveAllAd=()=>{
+      AdsApi
+      .getAll()
+      .then((fetchedTasks) => setAds(fetchedTasks));
+  };
+  useEffect(retrieveAllAd, []);
+    
   const exposedValue = {
     defaultSortedAd,
 
     addNewAd,
     updateAd,
     deleteAd,
-    retrieveAd
+    retrieveAd,
+    retrieveAllAd
     };
 
   return (

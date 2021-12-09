@@ -2,30 +2,21 @@ import React from "react";
 import AdDetail from "components/Ad/AdDetail";
 
 
-const AdItem = ({
-    ad,
-}) => {
-    const {
-        id,
-        title,
-        type,
-        description,
-        location,
-        price
-    } = ad;
+const AdItem = ({ad})=>{
+    
 
     const handleDetail=(e)=>{
         console.log("test")
        return( 
            <div>
-        <AdDetail />
+        <AdDetail/>
         </div>
        )
     }
 
     return(
         <li>
-        <button value={id} onClick={event=>handleDetail(event)}> {title} </button>
+        <button value={ad.id} onClick={event=>handleDetail(event)}> {ad.title} </button>
     </li>
     )}
 export default AdItem
