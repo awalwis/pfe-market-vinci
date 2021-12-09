@@ -74,6 +74,7 @@ const NewAdForm = () => {
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange}/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} />
                     <div onChange={handleLocationChange}>
+                        Choisissez une localité
                         <select id ="dropdrown">
                             <option value="Ixelles">Ixelles</option>
                             <option value="Louvain-La-Neuve">Louvain-La-Neuve</option>

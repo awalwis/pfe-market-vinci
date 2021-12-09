@@ -4,10 +4,9 @@ import { ProviderWrapper as TodosProvider } from 'contexts/adsContext';
 
 const AppContainer = () => {
   return (
-      <TodosProvider>
-      <App/>
-      </TodosProvider>
- 
+        <TodosProvider>
+          <App/>
+        </TodosProvider>
   );
 }
 

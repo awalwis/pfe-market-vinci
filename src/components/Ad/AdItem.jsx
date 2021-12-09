@@ -1,5 +1,6 @@
-import React from "react"
-import AdDetail from "./AdDetail";
+import React from "react";
+import AdDetail from "components/Ad/AdDetail";
+
 
 const AdItem = ({
     ad,

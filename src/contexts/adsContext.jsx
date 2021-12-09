@@ -19,7 +19,6 @@ const ProviderWrapper = (props) => {
   
   const defaultSortedAd=ads
     .sort(defaultSortAd)
-  
 
   const addNewAd =(title,type,description,location,price) =>{
       AdsApi
