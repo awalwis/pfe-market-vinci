@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function Register() {
+const Register = () => {
     const bcrypt = require('bcryptjs');
     const navigate = useNavigate();
     const [users, setUsers] = useState([])
