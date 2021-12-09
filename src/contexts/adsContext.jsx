@@ -55,6 +55,7 @@ const ProviderWrapper = (props) => {
     .then(res=>{
         const ad = res.data;
         setAd(ad);
+        console.log("context")
       })
     }
   const exposedValue = {

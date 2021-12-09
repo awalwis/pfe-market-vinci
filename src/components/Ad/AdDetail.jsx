@@ -8,7 +8,7 @@ const AdDetail = ()=>{
     const {
         updateAd,
         deleteAd,
-        retrieveAd
+        retrieveAd,
     } = useContext(adsContext);
 
     const ad = retrieveAd(id)

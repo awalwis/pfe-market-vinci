@@ -34,6 +34,7 @@ const NewAdForm = () => {
                 setLocation("Clos Chapelle-aux-Champs 43, 1200 Woluwe-Saint-Lambert")
                 return;            
             default:
+                setLocation("Av. Adolphe Buyl 87, 1000 Ixelles")
                 return;
         }
     }
@@ -58,6 +59,7 @@ const NewAdForm = () => {
         setLocation("");
         setDescription("");
         setPrice(0)
+        
     }
     const showAddPrice=()=>{
        
@@ -71,15 +73,13 @@ const NewAdForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange}/> 
-                Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} />
+                Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
+                Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
                     <div onChange={handleLocationChange}>
-                        Choisissez une localité
-                        <select id ="dropdrown">
-                            <option value="Ixelles">Ixelles</option>
-                            <option value="Louvain-La-Neuve">Louvain-La-Neuve</option>
-                            <option value="Woluwe">Woluwe</option>
-                        </select>
+                        Choisissez une localité:                     
+                        Ixelles <input type="radio" name="localite" value="Ixelles" required/>
+                        Louvain-La-Neuve <input type="radio" name="localite" value="Louvain-La-Neuve" required/>
+                        Woluwe <input type="radio" name="localite" value="Woluwe" required/>
                     </div>
                     <div onChange={event=>handleIsPaying(event)}>
                         Gratuit <input type="radio" name="type" value="isFree" required/>

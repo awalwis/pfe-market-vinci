@@ -7,13 +7,14 @@ const ad = axios.create({
 /*create a ad*/
 const createNewAd = (title,type,description,location,price) => {
     const payload = {
+        id:2,
         title,
         type,
         description,
         location,
         price,
-        state: "pending" ,
-        id:2
+        state: "pending"
+      
     };
 
     return ad
@@ -22,16 +23,9 @@ const createNewAd = (title,type,description,location,price) => {
 }
 
 /*get all ad*/
-const retrieveAll = () => {
+const getAll = () => {
     return ad
     .get("/")
-    .then( response => response.data );
-}
-
-/*get a ad*/
-const retrieveAd = (id) => {
-    return ad
-    .get(`/${id}`)
     .then( response => response.data );
 }
 
