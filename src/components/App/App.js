@@ -17,7 +17,6 @@ const App = () => {
                 <Link style={padding} to="/register">register</Link>
                 <Link style={padding} to="/home">home</Link>
             </div>
-
             <Routes>
                 <Route path="/login"  element={ <Login />} />
                 <Route path="/register"  element={ <Register />}/>

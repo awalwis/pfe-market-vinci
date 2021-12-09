@@ -1,6 +1,5 @@
 import axios from 'axios'
-const apiurl = 'https://pfe-market-vinci.herokuapp.com/api/utilisateurs'
-
+const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/utilisateurs'
 const getAll = () => {
     return axios.get(apiurl)
 }
