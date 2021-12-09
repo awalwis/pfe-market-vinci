@@ -1,7 +1,10 @@
 import {useState} from "react";
 import userService from 'services/users'
+import authenticationService from 'services/authentication.service'
 import {Col, Row, Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
+
+
 
 
 function Login() {
@@ -15,7 +18,7 @@ function Login() {
 
     const login = (event) => {
         event.preventDefault();
-        //console.log(newUser)
+
         userService.getByEmail(newUser.email).then(response => {
             console.log(response.data.user.password)
             if (bcrypt.compareSync(newUser.password, response.data.user.password))alert("connected");

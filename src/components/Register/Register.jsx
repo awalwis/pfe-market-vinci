@@ -41,7 +41,6 @@ function Register() {
                 setUsers(users.concat(response.data));
                 setNewUser(emptyUser)
             })
-
         navigate("/login");
     }
     const handleUserChange = (event) => {
