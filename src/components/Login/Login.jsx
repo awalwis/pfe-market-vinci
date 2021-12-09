@@ -3,13 +3,14 @@ import userService from 'services/users'
 import authenticationService from 'services/authentication.service'
 import {Col, Row, Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
+import {useNavigate} from "react-router-dom";
+import {authService} from "../../services/auth.service";
 
 
 
 
-function Login() {
-    const bcrypt = require('bcryptjs');
-
+const Login = () => {
+    const navigate = useNavigate();
     const emptyUser = {
         email: "Adresse mail",
         password: "Mot de passe",
@@ -18,14 +19,11 @@ function Login() {
 
     const login = (event) => {
         event.preventDefault();
-
-        userService.getByEmail(newUser.email).then(response => {
-            console.log(response.data.user.password)
-            if (bcrypt.compareSync(newUser.password, response.data.user.password))alert("connected");
-        })
-        //get mdp
-        //check mdp
-        //return
+        let user = authService.login(newUser.email,newUser.password)
+        console.log(user);
+        if(user){
+            navigate("/home");
+        }
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {
