@@ -1,15 +1,7 @@
 import React, { useContext } from "react";
-import {useParams} from "react-router-dom";
-import adsContext from "contexts/adsContext";
 
 
-const AdDetail = ()=>{ 
-
-    const {
-        retrieveAd,
-    } = useContext(adsContext);
-    const id = useParams().id;
-    const ad = retrieveAd(id);
+const AdDetail = (ad)=>{ 
     
     //categorie à modifier
     return (
@@ -22,9 +14,6 @@ const AdDetail = ()=>{
             <p>Catégorie:{ad.category}</p>
             <p>Etat:{ad.state}</p>
             <p>Status :{ad.type}</p>
-            
-
-           
         </div>
     )
 }

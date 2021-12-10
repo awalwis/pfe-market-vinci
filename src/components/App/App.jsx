@@ -8,6 +8,7 @@ import {
   useParams,
   Routes,
 } from "react-router-dom";
+import AdUpdate from 'components/Ad/AdUpdate';
 
 
 
@@ -17,7 +18,7 @@ import {
       <div>
         <Router>
           <Routes>
-            <Route path="/ads/:id" element={<AdDetail />} />
+            <Route path="/ads/:id" element={<AdUpdate />} />
             <Route path="/newAd" element={<NewAddForm />} />
             <Route path="/listAd" element={<AdListTemp/>}/>
           </Routes>

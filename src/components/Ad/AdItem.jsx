@@ -1,17 +1,17 @@
 import React from "react";
 import AdDetail from "components/Ad/AdDetail";
 
+import { useNavigate } from 'react-router-dom';
+
 
 const AdItem = ({ad})=>{
     
+    const navigate = useNavigate();
 
     const handleDetail=(e)=>{
         console.log("test")
-       return( 
-           <div>
-        <AdDetail/>
-        </div>
-       )
+       const id = e.target.value
+       navigate(`/ads/:${id}`)
     }
 
     return(
