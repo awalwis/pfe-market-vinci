@@ -15,10 +15,9 @@ const Context = React.createContext(null);
 const ProviderWrapper = (props) => {
   
   const [ads, setAds] = useState([]);
-  const [ad,setAd] = useState([])
+  const [retrievedAd,setAd] = useState();
   
-  const defaultSortedAd=ads
-    .sort(defaultSortAd)
+ // const defaultSortedAd = ads
 
   const addNewAd =(newAd) =>{
       AdsApi
@@ -56,6 +55,7 @@ const ProviderWrapper = (props) => {
         const ad = res.data;
         setAd(ad);
         console.log("context")
+        console.log(ad)
       })
     }
 
@@ -67,7 +67,8 @@ const ProviderWrapper = (props) => {
   useEffect(retrieveAllAd, []);
     
   const exposedValue = {
-    defaultSortedAd,
+  //  defaultSortedAd,
+    retrievedAd,
 
     addNewAd,
     updateAd,

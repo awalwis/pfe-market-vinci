@@ -10,9 +10,11 @@ const AdUpdate = ()=>{
     const {
         deleteAd,
         retrieveAd,
+        retrievedAd
     } = useContext(adsContext);
 
-    const ad = retrieveAd(id)
+    retrieveAd(id)
+    const ad = retrievedAd
     console.log("test")
     console.log(ad)
     const [isOpen, setIsOpen] = useState(false);
