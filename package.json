@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "axios": "^0.24.0",
@@ -19,8 +20,8 @@
     "web-vitals": "^1.1.2"
   },
   "engines": {
-    "node" : "14.x",
-    "npm" : "6.x"
+    "node": "14.x",
+    "npm": "6.x"
   },
   "scripts": {
     "start": "react-scripts start",
