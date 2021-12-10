@@ -1,21 +1,22 @@
 import axios from "axios";
 
-const apiurl ='https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
+//const apiurl ='https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
 
-
+const apiurl= "http://127.0.0.1:5000/"
+/*
 const ad = axios.create({
     baseURL: "http://localhost:3001/ads"
 })
-
+*/
 /*create a ad*/
 
 const createNewAd = (newAd) => {
-  /*  return axios
+   return axios
     .post(apiurl,newAd)
-    .then( response => response.data );*/
-    return ad
-    .post("/", newAd)
     .then( response => response.data );
+   /* return ad
+    .post("/", newAd)
+    .then( response => response.data );*/
 }
 
 /*update a ad*/
