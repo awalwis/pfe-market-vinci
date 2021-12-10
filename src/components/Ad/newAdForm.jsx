@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-
 import adsContext from "contexts/adsContext";
 import { useNavigate } from 'react-router-dom';
 
@@ -27,6 +26,7 @@ const NewAdForm = () => {
 
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
+        setUser(parseInt("14"))
     }
     
     const handleIsPaying =(e)=>{
@@ -41,7 +41,7 @@ const NewAdForm = () => {
     
     const handlePriceChange =(e)=>{
         setPrice(parseInt(e.target.value));
-        setUser(parseInt("14"))
+        
        
     }
 

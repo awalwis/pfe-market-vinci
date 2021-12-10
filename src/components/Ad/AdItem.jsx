@@ -1,6 +1,4 @@
 import React from "react";
-import AdDetail from "components/Ad/AdDetail";
-
 import { useNavigate } from 'react-router-dom';
 
 

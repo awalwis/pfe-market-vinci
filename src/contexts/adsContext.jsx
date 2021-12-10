@@ -1,29 +1,16 @@
 import React,{useState,useEffect} from "react";
 import * as AdsApi from "services/adsApi";
 
-const defaultSortAd = (a,b) => {
-  
-  if(a.title.toLowerCase() < b.title.toLowerCase())
-     return -1;
-  if(a.title.toLowerCase() > b.title.toLowerCase())
-     return 1;
-  return 0;
-}
-
 const Context = React.createContext(null);
 
 const ProviderWrapper = (props) => {
   
   const [ads, setAds] = useState([]);
   const [retrievedAd,setAd] = useState();
-  
- // const defaultSortedAd = ads
 
   const addNewAd =(newAd) =>{
       AdsApi
       .createNewAd(newAd)
-      .then((ad) =>setAds([...ads, ad])
-      );
   }
   
   const updateAd = (id, changeSet) => {
@@ -42,39 +29,24 @@ const ProviderWrapper = (props) => {
   const deleteAd = (id) => {
     AdsApi
     .remove(id)
-    .then(() => {
-      const newAds = ads.filter((ad) => ad.id !== id);
-      setAds(newAds);
-    });  
   };
 
-  const retrieveAd =(id)=>{
-    AdsApi
-    .getAd(id)
+  const getAdById = async (id)=>{
+    await AdsApi
+    .get(id)
     .then(res=>{
-        const ad = res.data;
-        setAd(ad);
-        console.log("context")
-        console.log(ad)
-      })
-    }
-
-    const retrieveAllAd=()=>{
-      AdsApi
-      .getAll()
-      .then((fetchedTasks) => setAds(fetchedTasks));
-  };
-  useEffect(retrieveAllAd, []);
+        setAd(res.ad)   
+      })      
+    };
+   // useEffect(getAdById,[]);
+    
     
   const exposedValue = {
-  //  defaultSortedAd,
     retrievedAd,
-
     addNewAd,
     updateAd,
     deleteAd,
-    retrieveAd,
-    retrieveAllAd
+    getAdById,
     };
 
   return (

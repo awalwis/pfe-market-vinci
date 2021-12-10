@@ -34,11 +34,8 @@ const remove = (id) => {
     .then( response => response.data );
 }
 /*get a ad by id*/ 
-const getAd =(id)=>{
-    console.log(axios
-        .get(`${apiurl}/${id}`)
-        .then( response => response.data ))
-   return axios
+const get =async (id)=>{
+   return await axios
    .get(`${apiurl}/${id}`)
    .then( response => response.data );
 }
@@ -53,7 +50,7 @@ export {
     createNewAd,
     remove,
     update,
-    getAd,
+    get,
     getAll
 
 }

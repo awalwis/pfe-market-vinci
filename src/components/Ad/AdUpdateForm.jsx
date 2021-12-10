@@ -3,6 +3,7 @@ import adsContext from "contexts/adsContext"
  
 const AdUpdateForm = (ad) => {
 
+    console.log(ad)
     const {
         updateAd     
     } = useContext(adsContext);
@@ -11,19 +12,26 @@ const AdUpdateForm = (ad) => {
     const [description, setDescription] = useState(ad.description)
     const [price,setPrice] = useState(ad.price) 
     const [type, setType] = useState(ad.type)
-    const [location, setLocation] = useState(ad.location)
     const [state, setState] = useState(ad.state)
+    const [id_user,setUser] = useState(ad.id_user)
+    const [id_category,setCategory] = useState(ad.id_category)
+    const[displayed_picture,setDisplayedPicture] = useState(ad.displayed_picture)
+    const currentDate = new Date();
+    const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
 
     //besoin de check si admin/proprio
     
     const update = (e) => {
         const updatedAd = {
+                date,
                 title,
                 description,
                 price,
                 type,
-                location,
-                state
+                state,
+                id_category,
+                id_user,
+                displayed_picture
         };
         updateAd(ad.id, updatedAd)
     };
@@ -42,12 +50,13 @@ const AdUpdateForm = (ad) => {
                 setType(e.target.value)
                 break;
             case "location":
-                setLocation(e.target.value)
+                setCategory(e.target.value)
                 break; 
             case "state":
                 setState(e.target.value)
                 break;                       
-
+            default:
+                break;
         }
 
     }
