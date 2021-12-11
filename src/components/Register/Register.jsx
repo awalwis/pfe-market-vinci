@@ -3,6 +3,8 @@ import userService from 'services/users'
 import {Col, Row, Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
 import { useNavigate } from 'react-router-dom';
+import {authService} from "../../services/auth.service";
+import user from "../User/User";
 
 
 
@@ -11,8 +13,8 @@ const Register = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState([])
     const emptyUser = {
-        name: "Nom",
-        firstName: "Prenom",
+        last_name: "Nom",
+        first_name: "Prenom",
         email: "Adresse mail",
         password1: "Mot de passe",
         password2: "Mot de passe",
@@ -34,14 +36,12 @@ const Register = () => {
             password: bcrypt.hashSync(newUser.password1, salt),
             campus: newUser.campus,
         }
-        console.log(JSON.stringify(userObject))
-        userService
-            .create(userObject)
-            .then(response => {
-                setUsers(users.concat(response.data));
-                setNewUser(emptyUser)
-            })
-        navigate("/login");
+        if(authService.register(userObject)){
+            console.log("registered: ", userObject);
+            setNewUser(emptyUser);
+            navigate("/")
+        }
+
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {
@@ -86,7 +86,7 @@ const Register = () => {
                 <Row className="mb-3">
                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                         <Form.Label>Addresse e-mail institutionnelle</Form.Label>
-                        <Form.Control placeholder="email" onChange={handleUserChange} name="email" required pattern="[A-Za-z0-9-_.]+@(student.){0,1}vinci.be"/>
+                        <Form.Control placeholder="email" onChange={handleUserChange} name="email" required pattern="[A-Za-z]+\.[A-Za-z]+@(student.){0,1}vinci.be"/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridState">

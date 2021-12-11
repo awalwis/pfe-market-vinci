@@ -1,12 +1,8 @@
 import {useState} from "react";
-import userService from 'services/users'
-import authenticationService from 'services/authentication.service'
-import {Col, Row, Button, Form} from "react-bootstrap";
+import {Col,  Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
 import {useNavigate} from "react-router-dom";
-import {authService} from "../../services/auth.service";
-
-
+import {authService} from "services/auth.service";
 
 
 const Login = () => {
