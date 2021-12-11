@@ -68,6 +68,7 @@ const AdUpdateForm = ({ad}) => {
             Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
             Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
             Type: <input type="text" name="type" placeholder={ad.ad.type}onChange={handleUpdate}/>
+
          <button type="submit">Modifier</button>    
          </form>    
     </div>
