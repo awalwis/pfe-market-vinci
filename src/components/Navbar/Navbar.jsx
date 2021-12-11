@@ -7,12 +7,14 @@ const Navbar= ({loggedIn}) => {
     let logBtn;
 
     if (loggedIn) {
-        logBtn =  <><Nav.Item> <Nav.Link  href="/home" eventKey="logout">Deconnexion</Nav.Link> </Nav.Item>  <Nav.Item>
-
-            <Nav.Link href="/profile" eventKey="profile">Profil</Nav.Link>
-            <Nav.Link href="/AjouterAnnonce" eventKey="AjouterAnnonce">Créer une annonce</Nav.Link></Nav.Item>     
-            <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}   </Nav.Link>
-        </Nav.Item></>;
+        logBtn =  
+        <>
+            <Nav.Item>  <Nav.Link  href="/home" eventKey="logout">Deconnexion</Nav.Link> </Nav.Item>
+         {/*   <Nav.Item>  <Nav.Link href="/AjouterAnnonce" eventKey="AjouterAnnonce">Créer une annonce</Nav.Link> </Nav.Item>*/}   
+            <Nav.Item>  <Nav.Link href="/profile" eventKey="profile">Profil</Nav.Link></Nav.Item>
+            <Nav.Item>  <Nav.Link href="/Admin">Zone administrateur</Nav.Link> </Nav.Item>   
+            <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}</Nav.Link></Nav.Item>   
+        </>;
     }else{
         logBtn = <>
             <Nav.Item> <Nav.Link>  <Link to="/login" >Connexion</Link>  </Nav.Link> </Nav.Item>

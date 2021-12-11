@@ -2,7 +2,7 @@ import {useState} from "react";
 import userService from 'services/users'
 import {Col, Row, Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {authService} from "../../services/auth.service";
 import user from "../User/User";
 
@@ -10,7 +10,7 @@ import user from "../User/User";
 
 const Register = () => {
     const bcrypt = require('bcryptjs');
-    const navigate = useNavigate();
+    const history = useHistory();
     const [users, setUsers] = useState([])
     const emptyUser = {
         last_name: "Nom",
@@ -39,9 +39,8 @@ const Register = () => {
         if(authService.register(userObject)){
             console.log("registered: ", userObject);
             setNewUser(emptyUser);
-            navigate("/")
+            history.push("/")
         }
-
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {

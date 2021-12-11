@@ -1,12 +1,12 @@
 import {useState} from "react";
 import {Col,  Button, Form} from "react-bootstrap";
 import "components/formStyle.css"
-import {useNavigate} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {authService} from "services/auth.service";
 
 
 const Login = () => {
-    const navigate = useNavigate();
+    const history = useHistory();
     const emptyUser = {
         email: "Adresse mail",
         password: "Mot de passe",
@@ -18,7 +18,7 @@ const Login = () => {
         let user = authService.login(newUser.email,newUser.password)
         console.log(user);
         if(user){
-            navigate("/home");
+            history.push("/home");
         }
     }
     const handleUserChange = (event) => {
