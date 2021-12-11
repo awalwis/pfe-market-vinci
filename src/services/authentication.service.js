@@ -1,10 +1,7 @@
-
-
-
 import { handleResponse } from 'helpers/handle-response';
 
 
-export const authenticationService = {
+const authenticationService = {
     login,
     logout,
     get currentUserValue () { return }
@@ -32,3 +29,4 @@ function logout() {
     localStorage.removeItem('currentUser');
 
 }
+export default authenticationService;

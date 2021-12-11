@@ -18,9 +18,10 @@ const update = (id, newObject) => {
 
 //TODO delete ?
 
-export default {
+const UsersAPI = {
     getAll: getAll,
     create: create,
     update: update,
     getByEmail: getByEmail
 }
+export default UsersAPI;
