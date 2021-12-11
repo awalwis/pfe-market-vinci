@@ -4,8 +4,8 @@ import Login from "components/Login/Login";
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
-import AdNewForm from "components/Ad/AdNewForm"
-import AdItem from "components/Ad/AdItem";
+import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
+import AdItem from "components/Ad/AdItem/AdItem";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
 

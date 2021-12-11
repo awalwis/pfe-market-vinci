@@ -1,8 +1,8 @@
 import React, { useContext,useState,useEffect } from "react";
 import adsContext from "contexts/adsContext";
 import {useParams,useHistory} from "react-router-dom";
-import AdDetail from "components/Ad/AdDetail";
-import AdUpdateForm from "components/Ad/AdUpdateForm";
+import AdDetail from "components/Ad/AdItem/AdDetail"
+import AdUpdateForm from "components/Ad/AdItem/AdUpdateForm"
 import {authService} from "services/auth.service";
 import * as AdsApi from 'services/adsApi'
 
