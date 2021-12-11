@@ -5,7 +5,7 @@ import "components/formStyle.css"
 function Home() {
     return (
         <div>
-            <h1>Market Vinci - 2021</h1>
+            <h1>Market Vinci</h1>
         </div>
     )
 }
