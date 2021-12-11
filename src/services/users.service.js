@@ -19,9 +19,10 @@ const update = (id, newObject) => {
 
 //TODO delete ?
 
-export default {
-    getAll: getAll,
-    create: create,
-    update: update,
-    getByEmail: getByEmail
+export const userService = {
+    getAll,
+    create,
+    update,
+    getByEmail
 }
+

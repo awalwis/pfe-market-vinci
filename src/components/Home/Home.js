@@ -1,5 +1,5 @@
 
-import "components/formStyle.css"
+import "styles/style.css"
 
 
 function Home() {

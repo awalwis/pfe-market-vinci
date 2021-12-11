@@ -16,8 +16,8 @@ const AdNewForm = () => {
     const[displayed_picture,setDisplayedPicture] = useState(0)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
+    const history =useHistory();
     const {addNewAd} = useContext(adsContext);
-    const history = useHistory(); 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     }

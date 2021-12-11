@@ -1,9 +1,8 @@
 import {useState} from "react";
 import {Col,  Button, Form} from "react-bootstrap";
-import "components/formStyle.css"
+import "styles/style.css"
 import {useHistory} from "react-router-dom";
 import {authService} from "services/auth.service";
-
 
 const Login = () => {
     const history = useHistory();
@@ -15,11 +14,14 @@ const Login = () => {
 
     const login = (event) => {
         event.preventDefault();
-        let user = authService.login(newUser.email,newUser.password)
-        console.log(user);
-        if(user){
-            history.push("/home");
-        }
+        let user = authService.login(newUser.email,newUser.password).then(()=>{
+            console.log("usr: ",user);
+            if(user){
+                console.log("history push")
+                history.push("/");
+            }
+        });
+        
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {
