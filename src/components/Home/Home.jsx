@@ -9,13 +9,15 @@ function Home() {
 
 
     const [data, setData] = useState();
+    const [filter, setFilter] = useState("");
 
     useEffect(() => {
-    AnnoncesAPI.getAds("").then((elt) => setData(elt));
+    AnnoncesAPI.getAds(filter).then((elt) => setData(elt));
       
     }, [])
 
     return (
+
         <Container>
             <h1>Market Vinci - 2021</h1>
             {data && <AnnonceList annonces={data.ads}/>}
