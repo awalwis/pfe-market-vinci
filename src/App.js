@@ -1,7 +1,6 @@
 import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "components/Login/Login";
-
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
@@ -27,7 +26,10 @@ const App = () => {
                     <Route path="/login"  component={ Login } />
                     <Route path="/register"  component={ Register }/>
                     <Route path="/home"  component={ Home }/>
+                    <Route path="/ajouter"  component={ AdNewForm }/>
+                    <Route path="/annonces/:id"  component={ AdItem }/>
                     <Route path="/"  component={ Home }/>
+                   
                 </Switch>
             </>
     )

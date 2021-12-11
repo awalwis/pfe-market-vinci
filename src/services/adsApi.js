@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 const apiurl ='https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
 
 
@@ -26,11 +27,12 @@ const remove = (id) => {
     .then( response => response.data );
 }
 /*get a ad by id*/ 
-const get =async (id)=>{
-   return await axios
+const get = (id)=>{
+   return  axios
    .get(`${apiurl}/${id}`)
    .then( response => response.data );
 }
+
 /*get all ad*/
 const getAll = () => {
     return axios

@@ -18,6 +18,7 @@ const AdUpdateForm = ({ad}) => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
 
+
     //besoin de check si admin/proprio
     
     const handleSubmit = (e) => {
