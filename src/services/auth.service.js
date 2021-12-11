@@ -17,6 +17,7 @@ async function login(email, password) {
         console.log("connected");
         const token = jwt.sign({ user: user.id, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256'});
         let userDto={
+            id_user:user.id_user,
             last_name:user.last_name,
             first_name:user.first_name,
             token:token,

@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import { ProviderWrapper as TodosProvider } from 'contexts/adsContext';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+    <TodosProvider>
     <App />
+    </TodosProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

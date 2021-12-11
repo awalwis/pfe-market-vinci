@@ -5,10 +5,10 @@ import Login from "components/Login/Login";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
+import AdNewForm from "components/Ad/AdNewForm"
+import AdItem from "components/Ad/AdItem";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
-
-
 const App = () => {
     let loggedIn = false;
     if (authService.getCurrentUser()) loggedIn =true;
@@ -23,6 +23,8 @@ const App = () => {
                 <Route path="/home"  element={ <Home />}/>
                 <Route path="/"  element={ <Home />}/>
                 <Route path="/profile"  element={ <Profile />}/>
+                <Route path="/newAd"  element={ <AdNewForm />}/>
+                <Route path="/ads/:id" element={<AdItem />} />
             </Routes>
         </Router>
     )
