@@ -27,8 +27,8 @@ const App = () => {
                 <Route path="/home"  element={ <Home />}/>
                 <Route path="/"  element={ <Home />}/>
                 <Route path="/profile"  element={ <Profile />}/>
-                <Route path="/newAd"  element={ <AdNewForm />}/>
-                <Route path="/ads/:id" element={<AdItem />} />
+                <Route path="/AjouterAnnonce"  element={ <AdNewForm />}/>
+                <Route path="/annonce/:id" element={<AdItem />} />
             </Routes>
         </Router>
     )
