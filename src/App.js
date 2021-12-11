@@ -2,29 +2,34 @@ import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "components/Login/Login";
 
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {Route, Switch, useRouteMatch} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
+import Logout from "./components/Logout/Logout";
+
 
 
 const App = () => {
+    useRouteMatch("/");
     let loggedIn = false;
     if (authService.getCurrentUser()) loggedIn =true;
-    console.log("App.js")
+    console.log("App.js: ", loggedIn)
+
 
     return (
-        <Router>
-            <Navbar loggedIn={loggedIn}/>
-            <Routes>
-                <Route path="/login"  element={ <Login />} />
-                <Route path="/register"  element={ <Register />}/>
-                <Route path="/home"  element={ <Home />}/>
-                <Route path="/"  element={ <Home />}/>
-                <Route path="/profile"  element={ <Profile />}/>
-            </Routes>
-        </Router>
+            <>
+                <Navbar loggedIn={loggedIn}/>
+                <Switch>
+                    <Route path="/profile"  component={ Profile }/>
+                    <Route path="/login"  component={ Login } />
+                    <Route path="/logout"  component={ Logout } />
+                    <Route path="/register"  component={ Register }/>
+                    <Route path="/home"  component={ Home }/>
+                    <Route path="/"  component={ Home }/>
+                </Switch>
+            </>
     )
 }
 export default App;

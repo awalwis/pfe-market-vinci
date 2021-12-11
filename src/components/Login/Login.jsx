@@ -1,12 +1,11 @@
 import {useState} from "react";
 import {Col,  Button, Form} from "react-bootstrap";
-import "components/formStyle.css"
-import {useNavigate} from "react-router-dom";
+import "styles/style.css"
+import {useHistory} from "react-router-dom";
 import {authService} from "services/auth.service";
 
-
 const Login = () => {
-    const navigate = useNavigate();
+    const history = useHistory();
     const emptyUser = {
         email: "Adresse mail",
         password: "Mot de passe",
@@ -15,11 +14,15 @@ const Login = () => {
 
     const login = (event) => {
         event.preventDefault();
-        let user = authService.login(newUser.email,newUser.password)
-        console.log(user);
-        if(user){
-            navigate("/home");
-        }
+        let user = authService.login(newUser.email,newUser.password).then(() => {
+                console.log(user);
+                if(user){
+                    console.log("history push")
+                    history.push("/");
+                }
+            }
+        )
+
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {

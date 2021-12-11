@@ -18,3 +18,7 @@ input:invalid {
      border-radius: 10px;
      margin: auto;
  }
+
+.navBtn{
+     text-decoration: none;
+}

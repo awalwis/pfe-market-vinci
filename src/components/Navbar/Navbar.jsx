@@ -1,32 +1,29 @@
-import {Button} from "react-bootstrap";
+
 import {authService} from "services/auth.service";
 import {Nav} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+import "styles/style.css"
 const Navbar= ({loggedIn}) => {
     const currentUser = authService.getCurrentUser();
     let logBtn;
 
     if (loggedIn) {
-        logBtn =  <><Nav.Item> <Nav.Link  href="/home" eventKey="logout">Deconnexion</Nav.Link> </Nav.Item>  <Nav.Item>
-            <Nav.Link href="/profile" eventKey="profile">Profil</Nav.Link> </Nav.Item>
+        logBtn =  <>   <Nav.Item>  <Link to="/logout" className="navBtn nav-link">Deconnexion</Link>  </Nav.Item>
+            <Nav.Item>  <NavLink to="/profile" className="navBtn nav-link">Profil</NavLink>  </Nav.Item>
             <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}   </Nav.Link>
         </Nav.Item></>;
     }else{
         logBtn = <>
-            <Nav.Item> <Nav.Link>  <Link to="/login" >Connexion</Link>  </Nav.Link> </Nav.Item>
-        <Nav.Item>  <Nav.Link href="/register" eventKey="register">Inscription</Nav.Link>   </Nav.Item>
+            <Nav.Item>  <Link to="/login" className="navBtn nav-link">Connexion</Link>  </Nav.Item>
+            <Nav.Item>  <NavLink to="/register" className="navBtn nav-link">Inscription</NavLink>  </Nav.Item>
         </>
     }
 
 
     return( <Nav
-        activeKey="/home"
-        onSelect={(selectedKey) => {
-            if (selectedKey=='logout')authService.logout();
-        }}
-    >
+        activeKey="/home">
         <Nav.Item>
-            <Nav.Link href="/home">Acceuil</Nav.Link>
+            <NavLink to="/home" className="navBtn nav-link">Acceuil</NavLink>
         </Nav.Item>
         {logBtn}
     </Nav>  )

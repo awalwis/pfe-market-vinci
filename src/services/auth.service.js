@@ -1,8 +1,5 @@
 import userService from 'services/users'
-import { handleResponse } from 'helpers/handle-response';
 import jwt from 'jsonwebtoken'
-import Navbar from "../components/Navbar/Navbar";
-import ReactDOM from "react-dom";
 
 async function login(email, password) {
 
@@ -14,7 +11,7 @@ async function login(email, password) {
     })
     console.log(user)
     if (user && bcrypt.compareSync(password, user.password)){
-        console.log("connected");
+
         const token = jwt.sign({ user: user.id, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256'});
         let userDto={
             last_name:user.last_name,
@@ -26,12 +23,9 @@ async function login(email, password) {
         user=userDto;
         localStorage.setItem("currentUser", JSON.stringify(user) );
     }
-
-    window.location.reload();
-
-
     return user;
 }
+
 
 const logout = () =>{
     console.log("logout !")
