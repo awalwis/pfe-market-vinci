@@ -61,11 +61,11 @@ const AdUpdateForm = ({ad}) => {
     <div>
          <form onSubmit={handleSubmit}>
             Titre: <input type="text" name="title"placeholder={ad.title} onChange={handleUpdate}/>
-            Description: <input type="text" name="description" value={ad.description}onChange={handleUpdate}/>
-            Prix: <input type="number"name="price" value={ad.price}onChange={handleUpdate}/>
-            Category:<input type="text" name="category" value={ad.category}onChange={handleUpdate}/>
-            Etat:  <input type="text" name="state" value={ad.sate}onChange={handleUpdate}/>
-            Type: <input type="text" name="type" value={ad.type}onChange={handleUpdate}/>
+            Description: <input type="text" name="description" placeholder={ad.description}onChange={handleUpdate}/>
+            Prix: <input type="number"name="price" placeholder={ad.price}onChange={handleUpdate}/>
+            Category:<input type="text" name="category" placeholder={ad.category}onChange={handleUpdate}/>
+            Etat:  <input type="text" name="state" placeholder={ad.sate}onChange={handleUpdate}/>
+            Type: <input type="text" name="type" placeholder={ad.type}onChange={handleUpdate}/>
          <button type="submit">Modifier</button>    
          </form>    
     </div>

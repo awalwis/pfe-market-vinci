@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState} from "react";
 import * as AdsApi from "services/adsApi";
 
 const Context = React.createContext(null);
@@ -24,7 +24,6 @@ const ProviderWrapper = (props) => {
         setAds(newAds);
       });
   };
-      
 
   const deleteAd = (id) => {
     AdsApi

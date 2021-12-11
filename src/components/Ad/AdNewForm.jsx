@@ -11,14 +11,13 @@ const AdNewForm = () => {
     const [type, setType] = useState("")
     const [id_category,setCategory] = useState(0)
     const currentUser = authService.getCurrentUser()
-    const [id_user,setUser] = useState(0)
+    const id_user = currentUser.id_user
     const [isPaying, setIsPaying]= useState(false)
     const[displayed_picture,setDisplayedPicture] = useState(0)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     const navigate = useNavigate();
     const {addNewAd} = useContext(adsContext);
-
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     }
@@ -51,7 +50,8 @@ const AdNewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisplayedPicture(parseInt("0"))
-        setUser(currentUser.id_user)
+        console.log(id_user)
+      
       
         const newAd = {
             date,
@@ -70,8 +70,7 @@ const AdNewForm = () => {
         setTitle("");
         setDescription("");
         setPrice(0)
-        setCategory(0)
-        setUser(0)  
+        setCategory(0)  
        navigate("/home")
     }
     const showAddPrice=()=>{

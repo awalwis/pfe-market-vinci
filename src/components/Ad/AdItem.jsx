@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import AdDetail from "./AdDetail";
 import AdUpdateForm from "./AdUpdateForm";
 import { useNavigate } from 'react-router-dom';
-import authService from "services/auth.service";
+import {authService} from "services/auth.service";
 import * as AdsApi from 'services/adsApi'
 
 const AdItem = ()=>{ 
@@ -21,7 +21,7 @@ const AdItem = ()=>{
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
-    async function test(){
+    async function ShowDetails(){
        await AdsApi
     .get(id)
     .then(res=>{
@@ -38,7 +38,7 @@ const AdItem = ()=>{
         <AdDetail ad={ad}/>
         <button onClick={handleDelete}> Supprimer l'annonce </button>
         <button onClick={togglePopup}> Modfier l'annonce </button>
-        <button onClick={test}> Afficher les détails </button>
+        <button onClick={ShowDetails}> Afficher les détails </button>
         {isOpen && <AdUpdateForm ad={ad}/>}
         </div>
     )

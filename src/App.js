@@ -12,6 +12,7 @@ import Navbar from "components/Navbar/Navbar";
 
 
 
+
 const App = () => {
     let loggedIn = false;
     if (authService.getCurrentUser()) loggedIn =true;
