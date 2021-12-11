@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import adsContext from "contexts/adsContext";
-import {useNavigate} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {authService} from "services/auth.service";
 
 const AdNewForm = () => {
@@ -16,7 +16,6 @@ const AdNewForm = () => {
     const[displayed_picture,setDisplayedPicture] = useState(0)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
-    const navigate = useNavigate();
     const {addNewAd} = useContext(adsContext);
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -49,10 +48,7 @@ const AdNewForm = () => {
     // à modifier à 'ajoute de l'image
     const handleSubmit = (e) => {
         e.preventDefault();
-        setDisplayedPicture(parseInt("0"))
-        console.log(id_user)
-      
-      
+        setDisplayedPicture(parseInt("0"))   
         const newAd = {
             date,
             description,
@@ -62,16 +58,16 @@ const AdNewForm = () => {
             state: "pending",
             title,
             type,
-            id_user
-            
-          
+            id_user        
         };
+
         addNewAd(newAd);
         setTitle("");
         setDescription("");
         setPrice(0)
         setCategory(0)  
-       navigate("/home")
+        useHistory().push("/home")
+       alert("Ajout effectué")
     }
     const showAddPrice=()=>{
        
@@ -88,10 +84,12 @@ const AdNewForm = () => {
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
                     <div onChange={handleCategorieChange}>
-                        Choisissez la catégorie de votre objet:                     
-                        Categorie 1 <input type="checkbox" name="category" value="1" />
-                        Categorie 2 <input type="checkbox" name="category" value="2" />
-                        Categorie 3 <input type="checkbox" name="category" value="3" />
+                            <select id = "dropdown">
+                                <option value="N/A">N/A</option>
+                                <option value="1">Categorie 1</option>
+                                <option value="2">Categorie 2</option>
+                                <option value="3">Categorie 3</option>
+                             </select>
                     </div>
                     <div onChange={event=>handleIsPaying(event)}>
                         Gratuit <input type="radio" name="type" value="isFree" required/>

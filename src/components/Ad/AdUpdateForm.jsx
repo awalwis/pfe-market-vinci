@@ -35,6 +35,7 @@ const AdUpdateForm = ({ad}) => {
                 displayed_picture
         }; 
         updateAd(ad.id_ad, updatedAd)
+        alert("Mise à jour de l'annonce effectuée")
     };
     const handleUpdate =(e)=>{
         switch (e.target.name){

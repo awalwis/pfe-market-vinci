@@ -1,14 +1,14 @@
 import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "components/Login/Login";
-
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import AdNewForm from "components/Ad/AdNewForm"
 import AdItem from "components/Ad/AdItem";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
+import AdTest from "components/Ad/AdTest"
 const App = () => {
     let loggedIn = false;
     if (authService.getCurrentUser()) loggedIn =true;
@@ -17,15 +17,16 @@ const App = () => {
     return (
         <Router>
             <Navbar loggedIn={loggedIn}/>
-            <Routes>
-                <Route path="/login"  element={ <Login />} />
-                <Route path="/register"  element={ <Register />}/>
-                <Route path="/home"  element={ <Home />}/>
-                <Route path="/"  element={ <Home />}/>
-                <Route path="/profile"  element={ <Profile />}/>
-                <Route path="/AjouterAnnonce"  element={ <AdNewForm />}/>
-                <Route path="/annonce/:id" element={<AdItem />} />
-            </Routes>
+            <Switch>
+                <Route path="/login"  component={Login} />
+                <Route path="/register"  component={Register}/>
+                <Route path="/home"  component={Home}/>
+                <Route path="/"  component={Home}/>
+                <Route path="/profile"  component={Profile}/>
+                <Route path="/AjouterAnnonce"  component={AdNewForm}/>
+                <Route path="/annonces/:id" component={AdItem} />
+                <Route path="/test" component={AdTest}/>
+            </Switch>
         </Router>
     )
 }
