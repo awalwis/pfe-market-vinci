@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react'
-import { Button, Form, FormControl, Table } from 'react-bootstrap';
-import "components/formStyle.css"
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import React from 'react'
+import { Table } from 'react-bootstrap';
+import "styles/style.css"
 
 export default function Display(props) {
 

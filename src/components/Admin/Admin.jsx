@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import userService from 'services/users'
+import {userService} from 'services/users.service'
 import {Col, Row, Button, Form, FormControl, FloatingLabel} from "react-bootstrap";
-import "components/formStyle.css"
+import "styles/style.css"
 import Display from "./Display"
 
 const Admin = () => {
