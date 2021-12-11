@@ -8,9 +8,9 @@ const Navbar= ({loggedIn}) => {
 
     if (loggedIn) {
         logBtn =  <><Nav.Item> <Nav.Link  href="/home" eventKey="logout">Deconnexion</Nav.Link> </Nav.Item>  <Nav.Item>
+
             <Nav.Link href="/profile" eventKey="profile">Profil</Nav.Link>
             <Nav.Link href="/newAd" eventKey="newAd">Créer une annonce</Nav.Link></Nav.Item>
-             
             <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}   </Nav.Link>
         </Nav.Item></>;
     }else{
