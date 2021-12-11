@@ -1,4 +1,4 @@
-import userService from 'services/users'
+import {userService} from 'services/users.service'
 import jwt from 'jsonwebtoken'
 
 async function login(email, password) {
@@ -52,7 +52,4 @@ export const authService = {
     getCurrentUser,
     register,
 };
-export default{
-    login: login,
-    logout: logout,
-}
+

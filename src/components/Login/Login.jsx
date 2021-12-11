@@ -14,15 +14,12 @@ const Login = () => {
 
     const login = (event) => {
         event.preventDefault();
-        let user = authService.login(newUser.email,newUser.password).then(() => {
-                console.log(user);
-                if(user){
-                    console.log("history push")
-                    history.push("/");
-                }
-            }
-        )
-
+        let user = authService.login(newUser.email,newUser.password);
+        console.log("usr: ",user);
+        if(user){
+            console.log("history push")
+            history.push("/");
+        }
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {

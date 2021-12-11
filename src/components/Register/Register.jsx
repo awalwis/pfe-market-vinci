@@ -9,7 +9,6 @@ import {authService} from "services/auth.service";
 const Register = () => {
     const bcrypt = require('bcryptjs');
     const history = useHistory();
-    const [users, setUsers] = useState([])
     const emptyUser = {
         last_name: "Nom",
         first_name: "Prenom",

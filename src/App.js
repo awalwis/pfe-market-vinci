@@ -7,7 +7,6 @@ import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
-import Logout from "./components/Logout/Logout";
 
 
 
@@ -22,9 +21,8 @@ const App = () => {
             <>
                 <Navbar loggedIn={loggedIn}/>
                 <Switch>
-                    <Route path="/profile"  component={ Profile }/>
+                    <Route path="/profile/:email"  component={ Profile }/>
                     <Route path="/login"  component={ Login } />
-                    <Route path="/logout"  component={ Logout } />
                     <Route path="/register"  component={ Register }/>
                     <Route path="/home"  component={ Home }/>
                     <Route path="/"  component={ Home }/>

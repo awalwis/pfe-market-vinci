@@ -1,15 +1,16 @@
 
 import {authService} from "services/auth.service";
 import {Nav} from "react-bootstrap";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useHistory} from "react-router-dom";
 import "styles/style.css"
 const Navbar= ({loggedIn}) => {
     const currentUser = authService.getCurrentUser();
     let logBtn;
+    const history = useHistory();
 
     if (loggedIn) {
-        logBtn =  <>   <Nav.Item>  <Link to="/logout" className="navBtn nav-link">Deconnexion</Link>  </Nav.Item>
-            <Nav.Item>  <NavLink to="/profile" className="navBtn nav-link">Profil</NavLink>  </Nav.Item>
+        logBtn =  <>   <Nav.Item>  <Nav.Link eventKey="logout" className="navBtn nav-link">Deconnexion</Nav.Link>  </Nav.Item>
+            <Nav.Item>  <NavLink to={`/profile/${currentUser.email}`} className="navBtn nav-link">Profil</NavLink>  </Nav.Item>
             <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}   </Nav.Link>
         </Nav.Item></>;
     }else{
@@ -21,7 +22,14 @@ const Navbar= ({loggedIn}) => {
 
 
     return( <Nav
-        activeKey="/home">
+        activeKey="/home"
+        onSelect={(selectedKey) => {
+            if (selectedKey==='logout') {
+                authService.logout();
+                history.push("/");
+            }
+        }}
+    >
         <Nav.Item>
             <NavLink to="/home" className="navBtn nav-link">Acceuil</NavLink>
         </Nav.Item>
