@@ -1,20 +1,21 @@
 import React,{ useContext,useState }  from "react";
 import adsContext from "contexts/adsContext"
  
-const AdUpdateForm = (ad) => {
+const AdUpdateForm = ({ad}) => {
 
+    console.log("ad",ad)
     const {
         updateAd     
     } = useContext(adsContext);
 
-    const [title, setTitle] = useState(ad.ad.title)
-    const [description, setDescription] = useState(ad.ad.description)
-    const [price,setPrice] = useState(parseInt(ad.ad.price)) 
-    const [type, setType] = useState(ad.ad.type)
-    const [state, setState] = useState(ad.ad.sate)
-    const [id_user,setUser] = useState(parseInt(ad.ad.id_user))
-    const [id_category,setCategory] = useState(parseInt(ad.ad.id_category))
-    const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.ad.displayed_picture))
+    const [title, setTitle] = useState(ad.title)
+    const [description, setDescription] = useState(ad.description)
+    const [price,setPrice] = useState(parseInt(ad.price)) 
+    const [type, setType] = useState(ad.type)
+    const [state, setState] = useState(ad.sate)
+    const [id_user,setUser] = useState(parseInt(ad.id_user))
+    const [id_category,setCategory] = useState(parseInt(ad.id_category))
+    const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.displayed_picture))
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
 
@@ -35,7 +36,8 @@ const AdUpdateForm = (ad) => {
                 displayed_picture
         };
          console.log(JSON.stringify(updatedAd))
-        updateAd(ad.ad.id, updatedAd)
+  
+        updateAd(ad.id_ad, updatedAd)
     };
     const handleUpdate =(e)=>{
         switch (e.target.name){
@@ -64,12 +66,12 @@ const AdUpdateForm = (ad) => {
   return (
     <div>
          <form onSubmit={handleSubmit}>
-            Titre: <input type="text" name="title"placeholder={ad.ad.title} onChange={handleUpdate}/>
-            Description: <input type="text" name="description" value={ad.ad.description}onChange={handleUpdate}/>
-            Prix: <input type="number"name="price" value={ad.ad.price}onChange={handleUpdate}/>
-            Category:<input type="text" name="category" value={ad.ad.category}onChange={handleUpdate}/>
-            Etat:  <input type="text" name="state" value={ad.ad.sate}onChange={handleUpdate}/>
-            Type: <input type="text" name="type" value={ad.ad.type}onChange={handleUpdate}/>
+            Titre: <input type="text" name="title"placeholder={ad.title} onChange={handleUpdate}/>
+            Description: <input type="text" name="description" value={ad.description}onChange={handleUpdate}/>
+            Prix: <input type="number"name="price" value={ad.price}onChange={handleUpdate}/>
+            Category:<input type="text" name="category" value={ad.category}onChange={handleUpdate}/>
+            Etat:  <input type="text" name="state" value={ad.sate}onChange={handleUpdate}/>
+            Type: <input type="text" name="type" value={ad.type}onChange={handleUpdate}/>
 
          <button type="submit">Modifier</button>    
          </form>

@@ -38,11 +38,7 @@ const AdUpdate = ()=>{
         <button onClick={handleDelete}> Supprimer l'annonce </button>
         <button onClick={togglePopup}> Modfier l'annonce </button>
         <button onClick={test}> Afficher les détails </button>
-        {isOpen && <AdUpdateForm ad={ad}
-      content={<>
-      </>}
-      handleClose={togglePopup}
-    />}
+        {isOpen && <AdUpdateForm ad={ad}/>}
         </div>
     )
 }

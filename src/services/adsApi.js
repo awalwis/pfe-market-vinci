@@ -22,6 +22,7 @@ const createNewAd = (newAd) => {
 
 /*update a ad*/
 const update = (id, updatedAd) => {
+    console.log(`${apiurl}/${id}`)
     return axios
     .put(`${apiurl}/${id}`, updatedAd)
     .then( response => response.data );
