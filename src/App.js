@@ -5,8 +5,8 @@ import Admin from "components/Admin/Admin";
 import {Switch, Route, useRouteMatch} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
-import AdNewForm from "components/Ad/AdNewForm"
-import AdItem from "components/Ad/AdItem";
+import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
+import AdItem from "components/Ad/AdItem/AdItem";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
 
@@ -26,7 +26,7 @@ const App = () => {
                 <Route path="/login"  component={Login} />
                 <Route path="/register"  component={Register}/>
                 <Route path="/home"  component={Home}/>
-                <Route path="/AjouterAnnonce"  component={AdNewForm}/>
+                <Route path="/ajouter"  component={AdNewForm}/>
                 <Route path="/annonces/:id" component={AdItem} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/profile/:email"  component={ Profile }/>

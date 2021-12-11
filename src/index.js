@@ -7,9 +7,11 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom";
 
 ReactDOM.render(
+    <TodosProvider>
       <Router>
           <App/>
       </Router>
+    </TodosProvider>
     ,
   document.getElementById('root')
 );

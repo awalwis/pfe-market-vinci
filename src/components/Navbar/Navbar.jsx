@@ -13,6 +13,7 @@ const Navbar= ({loggedIn}) => {
         <>   
             <Nav.Item>  <Nav.Link eventKey="logout" className="navBtn nav-link">Deconnexion</Nav.Link>  </Nav.Item>
             <Nav.Item>  <NavLink to={`/profile/${currentUser.email}`} className="navBtn nav-link">Profil</NavLink>  </Nav.Item>
+            <Nav.Item>  <NavLink to="/ajouter" className="navBtn nav-link">Créer</NavLink>  </Nav.Item>
             <Nav.Item>  <Nav.Link href="/Admin">Zone administrateur</Nav.Link> </Nav.Item>   
             <Nav.Item>  <Nav.Link eventKey="disabled" disabled>  {currentUser.email}  </Nav.Link></Nav.Item>
         </>;
