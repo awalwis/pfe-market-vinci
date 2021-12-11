@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import adsContext from "contexts/adsContext";
 import { useNavigate } from 'react-router-dom';
+import authService from "services/auth.service";
 
 const AdNewForm = () => {
 
@@ -9,6 +10,7 @@ const AdNewForm = () => {
     const [price,setPrice] = useState(0) 
     const [type, setType] = useState("")
     const [id_category,setCategory] = useState(0)
+    const currentUser = authService.getCurrentUser()
     const [id_user,setUser] = useState(0)
     const [isPaying, setIsPaying]= useState(false)
     const[displayed_picture,setDisplayedPicture] = useState(0)
@@ -52,6 +54,7 @@ const AdNewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisplayedPicture(parseInt("0"))
+        setUser(currentUser.id_user)
       
         const newAd = {
             date,
