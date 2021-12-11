@@ -1,21 +1,21 @@
 import React, { useContext,useState } from "react";
 import adsContext from "contexts/adsContext";
-import {useParams} from "react-router-dom";
-import AdDetail from "./AdDetail";
-import AdUpdateForm from "./AdUpdateForm";
-import { useNavigate } from 'react-router-dom';
+import {useParams,useHistory} from "react-router-dom";
+import AdDetail from "components/Ad/AdDetail";
+import AdUpdateForm from "components/Ad/AdUpdateForm";
 import {authService} from "services/auth.service";
 import * as AdsApi from 'services/adsApi'
 
 const AdItem = ()=>{ 
 
     const {
-        deleteAd
+        deleteAd,
+        retrievedAd,
+        
     } = useContext(adsContext);
     const id = useParams().id;    
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
-    const navigate = useNavigate();
     const user = authService.getCurrentUser()
 
     const togglePopup = () => {
@@ -31,17 +31,26 @@ const AdItem = ()=>{
     // need to check if admin/ad's owner
     const handleDelete = () => {
         deleteAd(id);
-        navigate('/Home')
+        alert("Annonce Supprimée")
+        useHistory().push('/Home')
     }
-    return (
+   // if(retrievedAd){
+        return (
+            <div>
+            <AdDetail ad={ad}/>
+            <button onClick={handleDelete}> Supprimer l'annonce </button>
+            <button onClick={togglePopup}> Modfier l'annonce </button>
+            <button onClick={ShowDetails}> Afficher les détails </button>
+            {isOpen && <AdUpdateForm ad={ad}/>}
+            </div>
+        )
+ //   }
+    return(
         <div>
-        <AdDetail ad={ad}/>
-        <button onClick={handleDelete}> Supprimer l'annonce </button>
-        <button onClick={togglePopup}> Modfier l'annonce </button>
-        <button onClick={ShowDetails}> Afficher les détails </button>
-        {isOpen && <AdUpdateForm ad={ad}/>}
+            <h2>Cette annonce n'existe pas</h2>
         </div>
     )
+
 }
 
 export default AdItem

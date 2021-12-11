@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import * as AdsApi from "services/adsApi";
 
 const Context = React.createContext(null);
@@ -30,14 +30,18 @@ const ProviderWrapper = (props) => {
     .remove(id)
   };
 
-  const getAdById = async (id)=>{
-    await AdsApi
+  const getAdById =(id)=>{
+     AdsApi
     .get(id)
     .then(res=>{
         setAd(res.ad)   
       })      
     };
+    useEffect(getAdById,[])
+
   const exposedValue = {  
+    retrievedAd,
+
     addNewAd,
     updateAd,
     deleteAd,
