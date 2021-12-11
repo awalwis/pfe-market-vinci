@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {userService} from 'services/users.service'
-import {Col, Row, Button, Form, FormControl, FloatingLabel} from "react-bootstrap";
+import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
 import "styles/style.css"
 import Display from "./Display"
 
