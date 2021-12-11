@@ -7,6 +7,7 @@ const AdUpdateForm = ({ad}) => {
         updateAd     
     } = useContext(adsContext);
 
+   
     const [title, setTitle] = useState(ad.ad.title)
     const [description, setDescription] = useState(ad.ad.description)
     const [price,setPrice] = useState(parseInt(ad.ad.price)) 
@@ -18,8 +19,6 @@ const AdUpdateForm = ({ad}) => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
 
-
-    //besoin de check si admin/proprio
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,6 +34,7 @@ const AdUpdateForm = ({ad}) => {
                 id_user,
                 displayed_picture
         }; 
+        
         updateAd(ad.ad.id_ad, updatedAd)
         alert("Mise à jour de l'annonce effectuée")
     };

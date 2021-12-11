@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import adsContext from "contexts/adsContext";
 import {useHistory} from 'react-router-dom';
 import {authService} from "services/auth.service";
+import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
 
 const AdNewForm = () => {
 
+    const [adCreated,setAdCreated] =useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [price,setPrice] = useState(0) 
@@ -61,14 +63,14 @@ const AdNewForm = () => {
             type,
             id_user        
         };
-
         addNewAd(newAd);
+        setAdCreated(true)
         setTitle("");
         setDescription("");
         setPrice(0)
         setCategory(0)  
-        history.push("/home")
-       alert("Ajout effectué")
+       // history.push("/home")
+       alert("Ajout effectué, Veuillez ajouté une image à cette annonce")
     }
     const showAddPrice=()=>{
        
@@ -80,8 +82,8 @@ const AdNewForm = () => {
     }
     
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <div>
+            <form onSubmit={handleSubmit}>    
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
                     <div onChange={handleCategorieChange}>
@@ -96,10 +98,13 @@ const AdNewForm = () => {
                         Gratuit <input type="radio" name="type" value="isFree" required/>
                         Payant <input type="radio" name="type" value="isPaying" required/>
                     </div>
-                {isPaying && showAddPrice()}
-            </div>
-            <button type="submit">Créer</button>     
-        </form>
+                     {isPaying && showAddPrice()}
+           
+                 <button type="submit">Créer</button>     
+            </form>
+            {adCreated &&<FileUploadComponent />}
+         </div>
+       
     )
 }
 
