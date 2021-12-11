@@ -20,39 +20,39 @@ const AdItem = ()=>{
     const history = useHistory()
     const [isLoading,setIsLoading]=useState(true)
     const [adUserId,setAdUserId] =useState("")
+    const [test,setTest]=useState(false)
   
     const togglePopup = () => {
-       /*  if(user.id_user===adUserId || user.role==="admin"){
+        if(user.id_user===adUserId || user.role==="admin"){
             setIsOpen(!isOpen);
         }else{
             alert("Cette annonce ne vous appartient pas vous me pouvez pas la modifier")
-        } */
-        setIsOpen(!isOpen);
+        }
 
     }
 
     // need to check if admin/ad's owner
     const handleDelete = () => {
-       /*  if(user.id_user===adUserId || user.role==="admin"){
-            
-        }else{
-            alert("Cette annonce ne vous appartient pas vous me pouvez pas la supprimer")
-        } */
-        deleteAd(id);
+        if(user.id_user===adUserId || user.role==="admin"){
+            deleteAd(id);
             alert("Annonce Supprimée")
             history.push('/Home')
+        }else{
+            alert("Cette annonce ne vous appartient pas vous me pouvez pas la supprimer")
+        }
     }
     useEffect(()=>{
         const fetchData = async ()=>{
             const retrievedAd = await AdsApi.get(id);
             setAd(retrievedAd);
-            setAdUserId(retrievedAd.id_user)
+            setAdUserId(retrievedAd.ad.id_user)
             setIsLoading(false);
+            console.log(retrievedAd)
             console.log("dans le await ",retrievedAd.id_user)
         }
         fetchData();
     },[id]);
-    
+  
     if(isLoading)
         return (
             <div>

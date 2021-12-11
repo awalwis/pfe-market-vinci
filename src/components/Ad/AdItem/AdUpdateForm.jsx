@@ -12,7 +12,7 @@ const AdUpdateForm = ({ad}) => {
     const [price,setPrice] = useState(parseInt(ad.ad.price)) 
     const [type, setType] = useState(ad.ad.type)
     const [state, setState] = useState(ad.ad.sate)
-    const [id_user,setUser] = useState(parseInt(ad.ad.id_user))
+    const id_user = parseInt(ad.ad.id_user)
     const [id_category,setCategory] = useState(parseInt(ad.ad.id_category))
     const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.ad.displayed_picture))
     const currentDate = new Date();
@@ -47,7 +47,7 @@ const AdUpdateForm = ({ad}) => {
                 setDescription(e.target.value)
                 break;
             case "price":
-                setPrice(e.target.value)
+                setPrice(parseInt(e.target.value))
                 break;
             case "type":
                 setType(e.target.value)
