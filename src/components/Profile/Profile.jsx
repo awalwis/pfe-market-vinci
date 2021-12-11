@@ -1,50 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {Button} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {userService} from "../../services/users.service";
 
-/* const GetCurrentUser= ()=>{
-
-    const email = useParams().email
-    console.log("email ",email)
-
-     userService.getByEmail(email).then(response => {
-     let currentUser
-     currentUser = response.data.user;
-     console.log(currentUser)
-     if (currentUser)
-         return (
-             <div>
-                 <p>Nom: {currentUser.last_name}</p>
-                 <p>Prenom: {currentUser.first_name}</p>
-                 <p>Mail: {currentUser.email}</p>
-                 <p>Campus: {currentUser.campus}</p>
-                 <p>Role: {currentUser.role}</p>
-                 <p>Mot de passe: {currentUser.password}</p>
-             </div>
-         )
-     else return <>
-         <p>Veuillez vous connecter</p>
-         <Button href="/login" variant="outline-primary" type="submit">
-             Se connecter
-         </Button>
-          </>
-      })
-      return(
-          <></>
-      )
-    } */
 const Profile =  () => {
 
-    
-   
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState(null);
+    const email = useParams().email
 
-    return(
-        <div>
-            à implémenter
-        </div>
-        
-    )
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            console.log("email ",email)
+            const data = await userService.getByEmail(email);
+            setData(data);
+            setLoading(false);
+        }
+        fetchData();
+    },[email]);
+
+    if(isLoading)
+        return (
+            <div>
+                Loading...
+            </div>
+        )
+
+
+    if (data)
+        return (
+            <div>
+                <p>Nom: {data.data.user.last_name}</p>
+                <p>Prenom: {data.data.user.first_name}</p>
+                <p>Mail: {data.data.user.email}</p>
+                <p>Campus: {data.data.user.campus}</p>
+                <p>Role: {data.data.user.role}</p>
+                <p>Mot de passe: {data.data.user.password}</p>
+            </div>
+        )
+        else 
+            return (
+            <>
+                <p>Veuillez vous connecter</p>
+                <Button href="/login" variant="outline-primary" type="submit">
+                    Se connecter
+                </Button>
+            </>
+            )
 }
 
    
