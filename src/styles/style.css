@@ -17,7 +17,15 @@ input:invalid {
      padding: 15px;
      border-radius: 10px;
      margin: auto;
- }
+}
+
+.table-hover .tuple:hover{
+     background-color: rgb(9 90 165 / 74%);
+}
+
+.center {
+     text-align: center;
+}
 
 .navBtn{
      text-decoration: none;

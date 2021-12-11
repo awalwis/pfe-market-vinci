@@ -17,7 +17,8 @@ const AdItem = ()=>{
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
     const user = authService.getCurrentUser()
-    const history = useHistory()
+    
+    const history = useHistory(); 
 
     const togglePopup = () => {
         setIsOpen(!isOpen);

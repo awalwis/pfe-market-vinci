@@ -38,7 +38,6 @@ const Register = () => {
             setNewUser(emptyUser);
            history.push("/")
         }
-
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {
