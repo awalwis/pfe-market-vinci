@@ -38,9 +38,7 @@ const ProviderWrapper = (props) => {
         setAd(res.ad)   
       })      
     };
-  const exposedValue = {
-    retrievedAd,
-    
+  const exposedValue = {  
     addNewAd,
     updateAd,
     deleteAd,

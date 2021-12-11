@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import adsContext from "contexts/adsContext";
-import { useNavigate } from 'react-router-dom';
-import authService from "services/auth.service";
+import {useNavigate} from 'react-router-dom';
+import {authService} from "services/auth.service";
 
 const AdNewForm = () => {
 
@@ -17,9 +17,6 @@ const AdNewForm = () => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     const navigate = useNavigate();
-
-    
-
     const {addNewAd} = useContext(adsContext);
 
     const handleTitleChange = (e) => {
