@@ -22,23 +22,25 @@ const AdItem = ()=>{
     const [adUserId,setAdUserId] =useState("")
   
     const togglePopup = () => {
-        if(user.id_user===adUserId || user.role==="admin"){
+       /*  if(user.id_user===adUserId || user.role==="admin"){
             setIsOpen(!isOpen);
         }else{
             alert("Cette annonce ne vous appartient pas vous me pouvez pas la modifier")
-        }
+        } */
+        setIsOpen(!isOpen);
 
     }
 
     // need to check if admin/ad's owner
     const handleDelete = () => {
-        if(user.id_user===adUserId || user.role==="admin"){
-            deleteAd(id);
-            alert("Annonce Supprimée")
-            history.push('/Home')
+       /*  if(user.id_user===adUserId || user.role==="admin"){
+            
         }else{
             alert("Cette annonce ne vous appartient pas vous me pouvez pas la supprimer")
-        }
+        } */
+        deleteAd(id);
+            alert("Annonce Supprimée")
+            history.push('/Home')
     }
     useEffect(()=>{
         const fetchData = async ()=>{
