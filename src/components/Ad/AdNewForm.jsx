@@ -16,6 +16,7 @@ const AdNewForm = () => {
     const[displayed_picture,setDisplayedPicture] = useState(0)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
+    const history =useHistory();
     const {addNewAd} = useContext(adsContext);
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -66,7 +67,7 @@ const AdNewForm = () => {
         setDescription("");
         setPrice(0)
         setCategory(0)  
-        useHistory().push("/home")
+        history.push("/home")
        alert("Ajout effectué")
     }
     const showAddPrice=()=>{

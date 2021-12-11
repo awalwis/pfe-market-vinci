@@ -17,6 +17,7 @@ const AdItem = ()=>{
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
     const user = authService.getCurrentUser()
+    const history = useHistory()
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
@@ -32,7 +33,7 @@ const AdItem = ()=>{
     const handleDelete = () => {
         deleteAd(id);
         alert("Annonce Supprimée")
-        useHistory().push('/Home')
+        history.push('/Home')
     }
    // if(retrievedAd){
         return (
