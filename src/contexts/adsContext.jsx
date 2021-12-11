@@ -40,6 +40,7 @@ const ProviderWrapper = (props) => {
     };
   const exposedValue = {
     retrievedAd,
+    
     addNewAd,
     updateAd,
     deleteAd,

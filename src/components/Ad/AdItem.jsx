@@ -4,9 +4,10 @@ import {useParams} from "react-router-dom";
 import AdDetail from "./AdDetail";
 import AdUpdateForm from "./AdUpdateForm";
 import { useNavigate } from 'react-router-dom';
+import authService from "services/auth.service";
 import * as AdsApi from 'services/adsApi'
 
-const AdUpdate = ()=>{ 
+const AdItem = ()=>{ 
 
     const {
         deleteAd
@@ -15,6 +16,7 @@ const AdUpdate = ()=>{
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
     const navigate = useNavigate();
+    const user = authService.getCurrentUser()
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
@@ -42,4 +44,4 @@ const AdUpdate = ()=>{
     )
 }
 
-export default AdUpdate
+export default AdItem

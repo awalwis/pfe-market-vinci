@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import AdNewForm from "components/Ad/AdNewForm"
+import AdItem from "components/Ad/AdItem";
 import {authService} from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
 
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/"  element={ <Home />}/>
                 <Route path="/profile"  element={ <Profile />}/>
                 <Route path="/newAd"  element={ <AdNewForm />}/>
+                <Route path="/ads/:id" element={<AdItem />} />
             </Routes>
         </Router>
     )
