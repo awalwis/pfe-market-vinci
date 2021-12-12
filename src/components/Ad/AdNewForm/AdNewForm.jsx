@@ -32,10 +32,10 @@ const AdNewForm = () => {
     const handleIsPaying =(e)=>{
         if(e.target.value==="isPaying"){
             setIsPaying(true)
-            setType("sell")
+            setType("a vendre")
         }else{
             setIsPaying(false)
-            setType("give")
+            setType("a donner")
         }
     }
     
@@ -62,7 +62,7 @@ const AdNewForm = () => {
             displayed_picture,
             id_category,
             price,
-            state: "pending",
+            state: "en attente",
             title,
             type,
             id_user        

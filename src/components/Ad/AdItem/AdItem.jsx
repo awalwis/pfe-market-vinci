@@ -4,9 +4,9 @@ import {useParams,useHistory} from "react-router-dom";
 import AdDetail from "components/Ad/AdItem/AdDetail"
 import AdUpdateForm from "components/Ad/AdItem/AdUpdateForm"
 import {authService} from "services/auth.service";
-import * as AdsApi from 'services/adsApi'
+import * as AdsApi from 'services/ads.service'
 import * as mediasApi from 'services/mediasApi'
-
+import { adService } from "services/ads.service";
 
 const AdItem = ()=>{ 
 
@@ -47,7 +47,7 @@ const AdItem = ()=>{
     }
     useEffect(()=>{
         const fetchData = async ()=>{
-            const retrievedAd = await AdsApi.get(id);
+            const retrievedAd = await adService.get(id);
             setAd(retrievedAd);
             setAdUserId(retrievedAd.ad.id_user) 
            const retrievedPictures= await mediasApi.getByAdId(id)

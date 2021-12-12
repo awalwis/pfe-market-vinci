@@ -12,10 +12,8 @@ const createNewAd = (newAd) => {
 
 /*update a ad*/
 const update = (id, updatedAd) => {
-    console.log(`${apiurl}/${id}`)
     return axios
         .put(`${apiurl}/${id}`, updatedAd)
-        .then(response => response.data);
 }
 
 /*delete a ad*/
@@ -38,11 +36,10 @@ const getAll = () => {
         .then(response => response.data);
 }
 
-export {
+export const adService = {
     createNewAd,
     remove,
     update,
     get,
     getAll
-
 }
