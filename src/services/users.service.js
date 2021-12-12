@@ -17,12 +17,15 @@ const update = (id, newObject) => {
     return axios.put(`${apiurl}/${id}`, newObject)
 }
 
-//TODO delete ?
+const deleteUser = (id) => {
+    return axios.delete(`${apiurl}/${id}`)
+}
 
 export const userService = {
     getAll,
     create,
     update,
-    getByEmail
+    getByEmail,
+    deleteUser
 }
 

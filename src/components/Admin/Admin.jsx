@@ -1,84 +1,97 @@
 import {useEffect, useState} from "react";
 import {userService} from 'services/users.service'
-import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
+import {getAll} from 'services/adsApi'
 import "styles/style.css"
-import Display from "./Display"
+import {Loader} from "components/Loading/Loading";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUsers, faComments } from '@fortawesome/free-solid-svg-icons'
+import { authService } from "services/auth.service";
+import {useHistory} from "react-router-dom";
 
 const Admin = () => {
 
+    library.add(faUsers, faComments)
 
-    const [users, setUsers] = useState('');
-    const [query, setquery] = useState(''); 
-    const [select, setSelect] = useState('email');
+    const history = useHistory();
+
+    let currentUser = authService.getCurrentUser();
+    let roleCurrentUser = '';
+    if (currentUser) {
+        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+    }
+    if(roleCurrentUser!=="admin"){
+        history.push("/");
+    }
+
+    const [isLoading, setLoading] = useState(true);
+    const [countUsers, setCountUsers] = useState(0);
+    const [countAds, setCountAds] = useState(0);
 
     useEffect(() => {
-        getAllUsers();
+        setLoading(true);
+        getCount();
     }, []); 
 
-    const getAllUsers = () => {
-        userService.getAll().then((response) => {
-            const allUsers = response.data.users; 
-            setUsers(allUsers); 
-        })
+    const getCount = async () => {
+        let responseUser = await userService.getAll();
+        const countUsers = responseUser.data.users.length; 
+        setCountUsers(countUsers);
+        let responseAd = await getAll();
+        const countAds = responseAd.ads.length
+        setCountAds(countAds);
+        setLoading(false);
     }
 
-    const getFiltredUsers = (query, u) => {
-        if(!query) {
-            return users; 
-        }
-        const queryLowerCase = query.toLowerCase(); 
-        if(select === "email"){
-            return u.filter(user => String(user.email).toLowerCase().startsWith(queryLowerCase))
-        }else if(select ==="campus"){
-            return u.filter(user => String(user.campus).toLowerCase().startsWith(queryLowerCase))
-        }else{
-            return u.filter(user => String(user.role).toLowerCase().startsWith(queryLowerCase))
-        }
-        
+    const navigateToUsers = () =>{
+        history.push("/admin/utilisateurs");
     }
 
-    const filtredUsers = getFiltredUsers(query, users)
-
-    const changeSelectValue = (selectValue) => {
-        setSelect(selectValue);
+    if(isLoading){
+        return (
+            <>
+                <h1 className="center">Zone administrateur</h1>
+                <div className="main-part">
+                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="users" /><br/>
+                            <small>Utilisateurs</small>
+                            <Loader.SmallLoader />
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="comments" /><br/>
+                            <small>Annonces</small>
+                            <Loader.SmallLoader />
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }else{
+        return (
+            <>
+                <h1 className="center">Zone administrateur</h1>
+                <div className="main-part">
+                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="users" /><br/>
+                            <small>Utilisateurs</small>
+                            <p>{countUsers}</p>
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="comments" /><br/>
+                            <small>Annonces</small>
+                            <p>{countAds}</p>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
     }
-
-    return (
-        
-        <div>
-            <h1 className="center">Zone administrateur</h1>
-            
-            <Form>
-                <Row className="g-2">
-                    <Col xs={11}>
-                        <FloatingLabel controlId="floatingInputGrid" label="Entrez votre recherche">
-                            <FormControl
-                                type="search"
-                                placeholder="Entrez votre recherche : email, campus ou le role"
-                                className="me-2"
-                                aria-label="Search"
-                                onChange={e => setquery(e.target.value)}
-                            />
-                        </FloatingLabel>
-                    </Col>
-                    <Col xs={1}>
-                        <FloatingLabel label="Filtres">
-                            <Form.Select 
-                                onChange={e => changeSelectValue(e.target.value)}
-                            >
-                                <option value="email">Email</option>
-                                <option value="role">Role</option>
-                                <option value="campus">Campus</option>
-                            </Form.Select>
-                        </FloatingLabel>
-                    </Col>
-                </Row>
-            </Form>
-
-            <Display users={filtredUsers} />
-        </div>
-
-    )
 }
 
 export default Admin;
