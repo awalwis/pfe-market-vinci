@@ -5,10 +5,9 @@ const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
 /*create a ad*/
 
 const createNewAd = (newAd) => {
-    console.log(JSON.stringify(newAd))
-    return axios
-        .post(apiurl, newAd)
-        .then(response => response.data);
+   return axios
+    .post(apiurl,newAd)
+    .then( response => response.data );
 }
 
 /*update a ad*/

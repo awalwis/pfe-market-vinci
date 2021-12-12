@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import adsContext from "contexts/adsContext";
 import {useHistory} from 'react-router-dom';
 import {authService} from "services/auth.service";
+import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
 
 const AdNewForm = () => {
 
+    const [adCreated,setAdCreated] =useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [price,setPrice] = useState(0) 
@@ -17,7 +19,7 @@ const AdNewForm = () => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     const history =useHistory();
-    const {addNewAd} = useContext(adsContext);
+    const {addNewAd,adId} = useContext(adsContext);
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     }
@@ -42,6 +44,10 @@ const AdNewForm = () => {
         
        
     }
+    const handleDisplayPicture=()=>{
+        console.log("ici handle pict")
+        setDisplayedPicture(1)
+    }
 
     const handleCategorieChange=(e)=>{
         setCategory(parseInt(e.target.value))
@@ -49,7 +55,7 @@ const AdNewForm = () => {
     // à modifier à 'ajoute de l'image
     const handleSubmit = (e) => {
         e.preventDefault();
-        setDisplayedPicture(parseInt("0"))   
+        setDisplayedPicture(0)   
         const newAd = {
             date,
             description,
@@ -61,14 +67,14 @@ const AdNewForm = () => {
             type,
             id_user        
         };
-
-        addNewAd(newAd);
+        addNewAd(newAd)
+        setAdCreated(true)
         setTitle("");
         setDescription("");
         setPrice(0)
         setCategory(0)  
-        history.push("/home")
-       alert("Ajout effectué")
+       // history.push("/home")
+       alert("Ajout effectué, Veuillez ajouté une image à cette annonce")
     }
     const showAddPrice=()=>{
        
@@ -80,8 +86,8 @@ const AdNewForm = () => {
     }
     
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <div>
+            <form onSubmit={handleSubmit}>    
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
                     <div onChange={handleCategorieChange}>
@@ -96,10 +102,13 @@ const AdNewForm = () => {
                         Gratuit <input type="radio" name="type" value="isFree" required/>
                         Payant <input type="radio" name="type" value="isPaying" required/>
                     </div>
-                {isPaying && showAddPrice()}
-            </div>
-            <button type="submit">Créer</button>     
-        </form>
+                     {isPaying && showAddPrice()}
+           
+                 <button type="submit">Créer</button>     
+            </form>
+            {adCreated &&<FileUploadComponent id={adId} handle={handleDisplayPicture}/>}
+         </div>
+       
     )
 }
 
