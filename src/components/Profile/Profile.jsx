@@ -30,7 +30,7 @@ const Profile =  () => {
     if (data)
         return (
             <div>
-                <p>Nom: {data.data.user.last_name}</p>
+                <p id={data.data.user.last_name==='test' ? 'selected' : ''}>Nom: {data.data.user.last_name}</p>
                 <p>Prenom: {data.data.user.first_name}</p>
                 <p>Mail: {data.data.user.email}</p>
                 <p>Campus: {data.data.user.campus}</p>

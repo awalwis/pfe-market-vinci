@@ -1,5 +1,4 @@
 import React from "react"; 
-import {useState} from "react";
 import { Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import {useHistory} from "react-router-dom";
@@ -8,11 +7,12 @@ export default function Display(props) {
 
 const DisplayUsers = (props) => {
 
-    const {users} = props; 
+    const {users} = props;
     const history = useHistory(); 
 
     const navigateToUserProfile = (email) =>{
-        history.push("/profile/"+email);
+        props.setRefreshKey(props.refreshKey+1)
+        history.push("/admin/utilisateurs");
     }
 
     const changeSelectValue = (user, selectValue) => {
@@ -46,13 +46,13 @@ const DisplayUsers = (props) => {
                                 {user.campus}
                             </td>
                             <td>
-                                <Form.Select 
+                                <Form.Select defaultValue={user.role}
                                     onChange={e => changeSelectValue(user ,e.target.value)}
                                 >
-                                    <option value="user" selected={user.role==='user' ? true : false}>utilisateur</option>
-                                    <option value="admin" selected={user.role==='admin' ? true : false}>admin</option>
-                                    <option value="mute" selected={user.role==='mute' ? true : false}>limité</option>
-                                    <option value="banned" selected={user.role==='banned' ? true : false}>banni</option>
+                                    <option value="user">utilisateur</option>
+                                    <option value="admin">admin</option>
+                                    <option value="mute">limité</option>
+                                    <option value="banned">banni</option>
                                 </Form.Select> 
                             </td>
                     </tr>

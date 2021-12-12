@@ -37,7 +37,6 @@ const ProviderWrapper = (props) => {
         setAd(res.ad)   
       })      
     };
-    useEffect(getAdById,[])
 
   const exposedValue = {  
     retrievedAd,
