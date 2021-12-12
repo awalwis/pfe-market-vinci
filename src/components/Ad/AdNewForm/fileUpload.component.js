@@ -33,7 +33,7 @@ const FileUploadComponent = (id,handle) => {
             id_ad,
         };
          mediasApi.createNewMedia(newMedia)
-         handle()
+       
   
        
     }
