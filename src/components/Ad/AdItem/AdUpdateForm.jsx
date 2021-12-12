@@ -1,7 +1,8 @@
 import React,{ useContext,useState }  from "react";
 import adsContext from "contexts/adsContext"
+import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
  
-const AdUpdateForm = ({ad}) => {
+const AdUpdateForm = ({ad,setRefreshKey,refreshKey}) => {
 
     const {
         updateAd     
@@ -22,7 +23,6 @@ const AdUpdateForm = ({ad}) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-     
         const updatedAd = {
                 date,
                 title,
@@ -33,9 +33,9 @@ const AdUpdateForm = ({ad}) => {
                 id_category,
                 id_user,
                 displayed_picture
-        }; 
-        
+            }; 
         updateAd(ad.ad.id_ad, updatedAd)
+        setRefreshKey(refreshKey+1)
         alert("Mise à jour de l'annonce effectuée")
     };
     const handleUpdate =(e)=>{
@@ -60,19 +60,18 @@ const AdUpdateForm = ({ad}) => {
         }      
     }     
   return (
-    <div>
-         <form onSubmit={handleSubmit}>
-            Titre: <input type="text" name="title"placeholder={ad.ad.title} onChange={handleUpdate}/>
-            Description: <input type="text" name="description" placeholder={ad.ad.description}onChange={handleUpdate}/>
-            Prix: <input type="number"name="price" placeholder={ad.ad.price}onChange={handleUpdate}/>
-            Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
-            Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
-            Type: <input type="text" name="type" placeholder={ad.ad.type}onChange={handleUpdate}/>
-
-         <button type="submit">Modifier</button>    
-         </form>    
-    </div>
-  );
+        <div>
+            <form onSubmit={handleSubmit}>
+                Titre: <input type="text" name="title"placeholder={ad.ad.title} onChange={handleUpdate}/>
+                Description: <input type="text" name="description" placeholder={ad.ad.description}onChange={handleUpdate}/>
+                Prix: <input type="number"name="price" placeholder={ad.ad.price}onChange={handleUpdate}/>
+                Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
+                Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
+                Type: <input type="text" name="type" placeholder={ad.ad.type}onChange={handleUpdate}/>
+                <FileUploadComponent id ={ad.ad.id_ad} displayedPicture={displayed_picture} setDisplayedPictures={setDisplayedPicture}/>
+                <button type="submit">Modifier</button>    
+            </form>    
+        </div>
+    );
 };
- 
 export default AdUpdateForm;

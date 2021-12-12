@@ -3,7 +3,7 @@ import React from "react";
 
 
 const AdDetail = ({ad,adPictures})=>{ 
-
+    console.log(ad)
     return (
         <>
             <div>
@@ -14,13 +14,13 @@ const AdDetail = ({ad,adPictures})=>{
                 <p>Catégorie: {ad.ad.category}</p>
                 <p>Etat: {ad.ad.sate}</p>
                 <p>Status: {ad.ad.type}</p>
-             </div>
-             <div>
-                 <img src={adPictures[0].url}/>
-             </div>
-             
+                <p>Nombre de media: {ad.ad.displayed_picture}</p>
+            </div>
+            <div>
+                <img src={adPictures[0].url}/>
+            </div>      
         </>
-        )
+    )
 }
 
 export default AdDetail

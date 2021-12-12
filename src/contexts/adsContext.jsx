@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{useState} from "react";
 import * as AdsApi from "services/adsApi";
 
 const Context = React.createContext(null);
