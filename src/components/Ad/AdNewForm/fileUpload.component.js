@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 import { getDroppedOrSelectedFiles } from 'html5-file-selector'
-import * as mediasApi from "services/mediasApi"
+import {mediaService} from "services/medias.service"
 
 
 const FileUploadComponent = (id) => {
@@ -33,7 +33,7 @@ const FileUploadComponent = (id) => {
             id_ad,
         };
         console.log(newMedia)
-         mediasApi.createNewMedia(newMedia)   
+        mediaService.createNewMedia(newMedia)   
     }
 
     const getFilesFromEvent = e => {

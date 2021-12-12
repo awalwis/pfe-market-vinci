@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-import adsContext from "contexts/adsContext";
-import {useHistory} from 'react-router-dom';
+import React, { useState } from "react";
+import {adService} from 'services/ads.service'
 import {authService} from "services/auth.service";
 import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
 
@@ -16,10 +15,12 @@ const AdNewForm = () => {
     const id_user = currentUser.id_user
     const [isPaying, setIsPaying]= useState(false)
     const[displayed_picture,setDisplayedPicture] = useState(0)
+    const [adId,setAdId] = useState();
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
-    const history =useHistory();
-    const {addNewAd,adId} = useContext(adsContext);
+    
+
+    
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -61,8 +62,9 @@ const AdNewForm = () => {
             type,
             id_user        
         };
-        console.log(JSON.stringify(newAd))
-        addNewAd(newAd)
+        adService.createNewAd(newAd)
+        .then(res=>{
+            setAdId(res.id_ad)})
         setAdCreated(true)
         setTitle("");
         setDescription("");
@@ -99,9 +101,8 @@ const AdNewForm = () => {
                      {isPaying && showAddPrice()}
                  <button type="submit">Créer</button>     
             </form>
-            {adCreated &&<FileUploadComponent id={adId} displayedPicture={displayed_picture} setDisplayedPictures={setDisplayedPicture}/>}
-         </div>
-       
+            {adCreated &&<FileUploadComponent id={adId}/>}
+         </div>   
     )
 }
 

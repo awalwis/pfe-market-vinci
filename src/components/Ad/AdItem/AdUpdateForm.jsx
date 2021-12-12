@@ -1,14 +1,9 @@
-import React,{ useContext,useState }  from "react";
-import adsContext from "contexts/adsContext"
+import React,{ useState }  from "react";
+import {adService} from 'services/ads.service'
 import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
 
-    const {
-        updateAd     
-    } = useContext(adsContext);
-
-   
     const [title, setTitle] = useState(ad.ad.title)
     const [description, setDescription] = useState(ad.ad.description)
     const [price,setPrice] = useState(parseInt(ad.ad.price)) 
@@ -35,7 +30,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 id_user,
                 displayed_picture
             }; 
-        updateAd(ad.ad.id_ad, updatedAd)
+            adService.update(ad.ad.id_ad, updatedAd)
         setRefreshKey(refreshKey+1)
         alert("Mise à jour de l'annonce effectuée")
     };
@@ -54,6 +49,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 setType(e.target.value)
                 if(e.target.value ==="a donner")
                 setPrice(0)
+                console.log("ici ", price)
                 break;
             case "state":
                 setState(e.target.value)
@@ -78,8 +74,10 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 Prix: <input type="number"name="price" placeholder={ad.ad.price}onChange={handleUpdate}/>
                 Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
                 Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
+                <div onChange={handleUpdate}>
                 A donner  <input type="radio" name="type" value="a donner" required/>
                 A vendre  <input type="radio" name="type" value="a vendre" required/>
+                </div>
                 <FileUploadComponent id ={ad.ad.id_ad}/>
                 <button type="submit">Modifier</button>    
             </form>  

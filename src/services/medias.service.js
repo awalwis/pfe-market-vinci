@@ -27,10 +27,9 @@ const getAll = () => {
     .then( response => response.data );
 }
 
-export {
+export const mediaService = {
     createNewMedia,
     get,
     getByAdId,
     getAll
-
 }
