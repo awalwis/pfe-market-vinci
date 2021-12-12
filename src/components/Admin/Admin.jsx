@@ -6,7 +6,6 @@ import Display from "./Display"
 
 const Admin = () => {
 
-
     const [users, setUsers] = useState('');
     const [query, setquery] = useState(''); 
     const [select, setSelect] = useState('email');
@@ -44,10 +43,8 @@ const Admin = () => {
     }
 
     return (
-        
         <div>
             <h1 className="center">Zone administrateur</h1>
-            
             <Form>
                 <Row className="g-2">
                     <Col xs={11}>
@@ -77,7 +74,6 @@ const Admin = () => {
 
             <Display users={filtredUsers} />
         </div>
-
     )
 }
 

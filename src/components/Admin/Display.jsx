@@ -1,6 +1,6 @@
 import React from "react"; 
 import {useState} from "react";
-import { Form, Table } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
@@ -26,6 +26,10 @@ const DisplayUsers = (props) => {
            role: selectValue
         }
         userService.update(user.id_user, newUser)
+    }
+
+    const deleteUser = (id) => {
+        userService.deleteUser(id); 
     }
 
     if(users.length > 0) {
@@ -55,6 +59,9 @@ const DisplayUsers = (props) => {
                                     <option value="banned" selected={user.role==='banned' ? true : false}>banni</option>
                                 </Form.Select> 
                             </td>
+                            <td>
+                                <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}>Supprimer</Button>
+                            </td>
                     </tr>
                 )
             })
@@ -76,11 +83,12 @@ return (
         <Table striped bordered hover>
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prenom</th>
+                    <th>nom</th>
+                    <th>prenom</th>
                     <th>email</th>
-                    <th>Campus</th>
-                    <th>Role</th>
+                    <th>campus</th>
+                    <th>role</th>
+                    <th>supprimer un compte</th>
                 </tr>
             </thead>
             <tbody>
