@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import * as AdsApi from "services/adsApi";
+import {adService} from "services/ads.service";
 
 const Context = React.createContext(null);
 
@@ -10,23 +10,23 @@ const ProviderWrapper = (props) => {
   const [ad, setAd] = useState([]);
 
   const addNewAd =(newAd) =>{
-      AdsApi
+      adService
       .createNewAd(newAd)
       .then(res=>
         setAdId(res.id_ad))
   }
   
   const updateAd = (id, changeSet) => {
-    AdsApi
+    adService
       .update(id, changeSet)
   }
   const deleteAd = (id) => {
-    AdsApi
+    adService
     .remove(id)
   };
 
   const getAdById =(id)=>{
-     AdsApi
+     adService
     .get(id)
     .then(res=>{
         setAd(res.ad)   
