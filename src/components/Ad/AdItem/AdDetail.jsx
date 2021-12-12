@@ -1,8 +1,7 @@
 import React from "react";
-//import AdDisplayPictures from "components/Ad/AdDisplayPictures";
 
 
-const AdDetail = ({ad,adPictures})=>{ 
+const AdDetail = ({ad,adMedias})=>{ 
 
     return (
         <>
@@ -14,13 +13,15 @@ const AdDetail = ({ad,adPictures})=>{
                 <p>Catégorie: {ad.ad.category}</p>
                 <p>Etat: {ad.ad.sate}</p>
                 <p>Status: {ad.ad.type}</p>
-             </div>
-             <div>
-                 <img src={adPictures[0].url}/>
-             </div>
-             
+            </div>
+            <div> 
+            {adMedias.map(m => {
+            return <img key={m.id_media} src={m.url}/>;
+           
+            })}
+            </div>      
         </>
-        )
+    )
 }
 
 export default AdDetail

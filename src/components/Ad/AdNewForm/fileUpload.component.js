@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState} from 'react';
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
 import { getDroppedOrSelectedFiles } from 'html5-file-selector'
-import * as mediasApi from "services/mediasApi"
+import {mediaService} from "services/medias.service"
 
 
-const FileUploadComponent = (id,handle) => {
+const FileUploadComponent = (id) => {
 
-    const [url,setFileUrl]=useState("")
+    const [url2,setFileUrl]=useState("")
     const [type,setFileType]=useState("")
     const id_ad=id.id
+    const url ="https://pfemedias.blob.core.windows.net/medias/hqdefault.jpg"
     
     const fileParams = ({ meta }) => {
         return { url: 'https://httpbin.org/post' }
@@ -26,16 +27,13 @@ const FileUploadComponent = (id,handle) => {
         allFiles.forEach(f =>{ 
             f.remove()
         })
-       
         const newMedia = {
             url,
             type,
             id_ad,
         };
-         mediasApi.createNewMedia(newMedia)
-       
-  
-       
+        console.log(newMedia)
+        mediaService.createNewMedia(newMedia)   
     }
 
     const getFilesFromEvent = e => {
@@ -74,7 +72,7 @@ const FileUploadComponent = (id,handle) => {
             InputComponent={selectFileInput}
             getUploadParams={fileParams}
             getFilesFromEvent={getFilesFromEvent}
-            accept="image/*,audio/*,video/*"
+            accept="image/*,video/*"
             maxFiles={1}
             inputContent="Drop A File"
             styles={{
