@@ -33,10 +33,10 @@ const AdNewForm = () => {
     const handleIsPaying =(e)=>{
         if(e.target.value==="isPaying"){
             setIsPaying(true)
-            setType("sell")
+            setType("a vendre")
         }else{
             setIsPaying(false)
-            setType("give")
+            setType("a donner")
         }
     }
     
@@ -56,7 +56,7 @@ const AdNewForm = () => {
             displayed_picture,
             id_category,
             price,
-            state: "pending",
+            state: "en attente",
             title,
             type,
             id_user        
@@ -93,8 +93,8 @@ const AdNewForm = () => {
                              </select>
                     </div>
                     <div onChange={event=>handleIsPaying(event)}>
-                        Gratuit <input type="radio" name="type" value="isFree" required/>
-                        Payant <input type="radio" name="type" value="isPaying" required/>
+                        A donner <input type="radio" name="type" value="isFree" required/>
+                        A vendre <input type="radio" name="type" value="isPaying" required/>
                     </div>
                      {isPaying && showAddPrice()}
                  <button type="submit">Créer</button>     

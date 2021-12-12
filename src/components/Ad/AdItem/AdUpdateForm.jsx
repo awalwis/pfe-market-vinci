@@ -52,6 +52,8 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 break;
             case "type":
                 setType(e.target.value)
+                if(e.target.value ==="a donner")
+                setPrice(0)
                 break;
             case "state":
                 setState(e.target.value)
@@ -76,7 +78,8 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 Prix: <input type="number"name="price" placeholder={ad.ad.price}onChange={handleUpdate}/>
                 Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
                 Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
-                Type: <input type="text" name="type" placeholder={ad.ad.type}onChange={handleUpdate}/>
+                A donner  <input type="radio" name="type" value="a donner" required/>
+                A vendre  <input type="radio" name="type" value="a vendre" required/>
                 <FileUploadComponent id ={ad.ad.id_ad}/>
                 <button type="submit">Modifier</button>    
             </form>  

@@ -52,7 +52,6 @@ const AdItem = ()=>{
     const handleDetailSeller=()=>{ 
         setSellerInfo(!sellerInfo)
     }
-
     useEffect(()=>{
         const fetchData = async ()=>{
             const retrievedAd = await AdsApi.get(id);
@@ -67,13 +66,14 @@ const AdItem = ()=>{
         }
         fetchData();
     },[refreshKey]);
-  
-    if(isLoading)
+    
+    if(isLoading){
         return (
             <div>
                 Loading...
             </div>
         )
+    }
     return(
         <div>
              <AdDetail ad={ad} adMedias={medias}/>
