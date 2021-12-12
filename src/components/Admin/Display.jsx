@@ -4,11 +4,13 @@ import { Button, Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
+import {Loader} from "components/Loading/Loading";
+
 export default function Display(props) {
 
 const DisplayUsers = (props) => {
 
-    const {users} = props; 
+    const {users} = props;
     const history = useHistory(); 
 
     const navigateToUserProfile = (email) =>{
@@ -29,10 +31,22 @@ const DisplayUsers = (props) => {
     }
 
     const deleteUser = (id) => {
-        userService.deleteUser(id); 
+        userService.deleteUser(id).then(
+            (response)=>{
+                props.setRefreshKey(props.refreshKey+1)
+            }
+        )
     }
 
-    if(users.length > 0) {
+    if(props.isLoading){
+        return(
+            <tr>
+                <td colSpan={6}>
+                    <Loader.BigLoader />
+                </td>
+            </tr>    
+            )
+    }else if(users.length > 0) {
         return (
             users.map((user) => {
                 return(
@@ -50,16 +64,16 @@ const DisplayUsers = (props) => {
                                 {user.campus}
                             </td>
                             <td>
-                                <Form.Select 
+                                <Form.Select defaultValue={user.role}
                                     onChange={e => changeSelectValue(user ,e.target.value)}
                                 >
-                                    <option value="user" selected={user.role==='user' ? true : false}>utilisateur</option>
-                                    <option value="admin" selected={user.role==='admin' ? true : false}>admin</option>
-                                    <option value="mute" selected={user.role==='mute' ? true : false}>limité</option>
-                                    <option value="banned" selected={user.role==='banned' ? true : false}>banni</option>
+                                    <option value="user">utilisateur</option>
+                                    <option value="admin">admin</option>
+                                    <option value="mute">limité</option>
+                                    <option value="banned">banni</option>
                                 </Form.Select> 
                             </td>
-                            <td>
+                            <td className='tdDelete'>
                                 <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}>Supprimer</Button>
                             </td>
                     </tr>
@@ -69,7 +83,7 @@ const DisplayUsers = (props) => {
     }else{
         return(
         <tr>
-            <td className="center" colSpan={5}>
+            <td className="center" colSpan={6}>
                 <p> Aucun résultat trouvé</p>
             </td>
         </tr>    

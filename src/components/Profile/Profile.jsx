@@ -3,31 +3,30 @@ import {Badge, Button, Card} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {userService} from "../../services/users.service";
 import "styles/style.css"
-import Loader from "components/Loading/Loading";
+import {Loader} from "components/Loading/Loading";
 const Profile =  () => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const email = useParams().email
-
-    let statusColor; 
+    const [statusColor, setStatusColor] = useState('');
 
     useEffect(()=>{
         const fetchData = async ()=>{
             console.log("email ",email)
             const data = await userService.getByEmail(email);
             setData(data);
-            setLoading(false);
-            {/*if(data.data.user.role === "admin"){
-                statusColor = "danger";
+            if(data.data.user.role === "admin"){
+                setStatusColor("danger");
             }else if(data.data.user.role === "mute"){
-                statusColor = "warning";
+                setStatusColor("warning");
             }else if(data.data.user.role === "banned"){
-                statusColor = "danger";
+                setStatusColor("danger");
             } else {
-                statusColor = "primary";
+                setStatusColor("primary");
             }
-            console.log(statusColor)*/}  
+            console.log(statusColor);
+            setLoading(false);
         }
         fetchData();
     },[email]);
@@ -36,7 +35,7 @@ const Profile =  () => {
     if(isLoading)
         return (
             <div>
-                <Loader />
+                <Loader.BigLoader />
             </div>
         )
 
@@ -57,7 +56,7 @@ const Profile =  () => {
                     </Card.Body>
                     <Card.Footer>
                         Statut du compte :  
-                            <Badge pill bg="primary"> 
+                            <Badge pill bg={statusColor}> 
                                 {data.data.user.role}
                             </Badge> 
                     </Card.Footer>
