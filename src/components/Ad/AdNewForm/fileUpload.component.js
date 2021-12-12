@@ -5,11 +5,12 @@ import { getDroppedOrSelectedFiles } from 'html5-file-selector'
 import * as mediasApi from "services/mediasApi"
 
 
-const FileUploadComponent = (id,displayedPicture,setDisplayedPictures) => {
+const FileUploadComponent = (id) => {
 
-    const [url,setFileUrl]=useState("")
+    const [url2,setFileUrl]=useState("")
     const [type,setFileType]=useState("")
     const id_ad=id.id
+    const url ="https://pfemedias.blob.core.windows.net/medias/hqdefault.jpg"
     
     const fileParams = ({ meta }) => {
         return { url: 'https://httpbin.org/post' }
@@ -31,8 +32,8 @@ const FileUploadComponent = (id,displayedPicture,setDisplayedPictures) => {
             type,
             id_ad,
         };
-         mediasApi.createNewMedia(newMedia)
-        setDisplayedPictures(displayedPicture+1)    
+        console.log(newMedia)
+         mediasApi.createNewMedia(newMedia)   
     }
 
     const getFilesFromEvent = e => {

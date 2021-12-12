@@ -60,6 +60,7 @@ const AdItem = ()=>{
             setAdUserId(retrievedAd.ad.id_user)
             const retrievedMedias= await mediasApi.getByAdId(id)
             setMedias(retrievedMedias.medias)
+            retrievedAd.ad.displayed_picture = retrievedMedias.medias[0].id_media
             const retrievedAdSeller = await userService.getById(retrievedAd.ad.id_user)
             SetSeller(retrievedAdSeller) 
             setIsLoading(false);  
@@ -73,14 +74,13 @@ const AdItem = ()=>{
                 Loading...
             </div>
         )
-    
     return(
         <div>
-             <AdDetail ad={ad} adPictures={medias}/>
+             <AdDetail ad={ad} adMedias={medias}/>
             <button onClick={handleDelete}> Supprimer l'annonce </button>
             <button onClick={handleUpdate}> Modfier l'annonce </button>
             <button onClick={handleDetailSeller}>Infos Vendeur</button>
-            {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey}/>}
+            {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey} adMedias={medias}/>}
             {sellerInfo &&
             <ul>
             <li>Nom: {seller.user.last_name}</li>

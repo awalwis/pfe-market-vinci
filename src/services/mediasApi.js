@@ -2,7 +2,6 @@ import axios from "axios";
 const apiurl ='https://pfe-market-vinci-backend.herokuapp.com/api/medias'
 
 const createNewMedia = (newMedia) => {
-    console.log(JSON.stringify(newMedia))
    return axios
     .post(apiurl,newMedia)
     .then( response => response.data );

@@ -61,6 +61,7 @@ const AdNewForm = () => {
             type,
             id_user        
         };
+        console.log(JSON.stringify(newAd))
         addNewAd(newAd)
         setAdCreated(true)
         setTitle("");

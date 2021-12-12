@@ -2,7 +2,7 @@ import React,{ useContext,useState }  from "react";
 import adsContext from "contexts/adsContext"
 import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
  
-const AdUpdateForm = ({ad,setRefreshKey,refreshKey}) => {
+const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
 
     const {
         updateAd     
@@ -17,10 +17,11 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey}) => {
     const id_user = parseInt(ad.ad.id_user)
     const [id_category,setCategory] = useState(parseInt(ad.ad.id_category))
     const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.ad.displayed_picture))
+    const[isChangeDisplayPicture,setIsChangeDisplayPicture]=useState(false)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
 
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const updatedAd = {
@@ -59,6 +60,14 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey}) => {
                 break;
         }      
     }     
+    const handlePictureChange=()=>{
+        setIsChangeDisplayPicture(!isChangeDisplayPicture)
+    }
+    const handleDisplayPicture=(e)=>{
+       setDisplayedPicture(e.target.value)
+       setIsChangeDisplayPicture(!isChangeDisplayPicture)
+     
+    }
   return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -68,9 +77,25 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey}) => {
                 Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
                 Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
                 Type: <input type="text" name="type" placeholder={ad.ad.type}onChange={handleUpdate}/>
-                <FileUploadComponent id ={ad.ad.id_ad} displayedPicture={displayed_picture} setDisplayedPictures={setDisplayedPicture}/>
+                <FileUploadComponent id ={ad.ad.id_ad}/>
                 <button type="submit">Modifier</button>    
-            </form>    
+            </form>  
+            <button onClick={handlePictureChange}>Changer d'image de d'affichage pour l'annonce</button>
+            {isChangeDisplayPicture &&
+           <div>   
+               <p>Choissez l'image que vous souhaiter utiliser</p>
+                {adMedias.map(m => {
+                    if(m.type==="image"){
+                        return (
+                            <>
+                            <img key={m.id_media} src={m.url} />
+                            <button value={m.id_media} onClick={handleDisplayPicture}>Valider</button>
+                            </>
+                        )
+                    }
+                })}
+            </div>
+             }
         </div>
     );
 };
