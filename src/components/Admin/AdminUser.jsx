@@ -19,14 +19,14 @@ const AdminUser = () => {
         history.push("/");
     }
 
-
+    const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState('');
     const [query, setquery] = useState(''); 
     const [select, setSelect] = useState('email');
     const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
-        console.log("test");
+        setLoading(true);
         setUsers('');
         getAllUsers();
     }, [refreshKey]); 
@@ -35,6 +35,7 @@ const AdminUser = () => {
         userService.getAll().then((response) => {
             const allUsers = response.data.users; 
             setUsers(allUsers); 
+            setLoading(false);
         })
     }
 
@@ -60,7 +61,6 @@ const AdminUser = () => {
     }
 
     return (
-        
         <div>
             <h1 className="center">Utilisateurs</h1>
             
@@ -91,9 +91,8 @@ const AdminUser = () => {
                 </Row>
             </Form>
 
-            <Display users={filtredUsers} setRefreshKey={setRefreshKey} refreshKey={refreshKey}/>
+            <Display users={filtredUsers} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
         </div>
-
     )
 }
 

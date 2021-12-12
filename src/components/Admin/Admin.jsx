@@ -1,4 +1,8 @@
+import {useEffect, useState} from "react";
+import {userService} from 'services/users.service'
+import {getAll} from 'services/adsApi'
 import "styles/style.css"
+import {Loader} from "components/Loading/Loading";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUsers, faComments } from '@fortawesome/free-solid-svg-icons'
@@ -20,32 +24,74 @@ const Admin = () => {
         history.push("/");
     }
 
+    const [isLoading, setLoading] = useState(true);
+    const [countUsers, setCountUsers] = useState(0);
+    const [countAds, setCountAds] = useState(0);
+
+    useEffect(() => {
+        setLoading(true);
+        getCount();
+    }, []); 
+
+    const getCount = async () => {
+        let responseUser = await userService.getAll();
+        const countUsers = responseUser.data.users.length; 
+        setCountUsers(countUsers);
+        let responseAd = await getAll();
+        const countAds = responseAd.ads.length
+        setCountAds(countAds);
+        setLoading(false);
+    }
+
     const navigateToUsers = () =>{
         history.push("/admin/utilisateurs");
     }
 
-
-    return (
-        <>
-            <h1 className="center">Zone administrateur</h1>
-            <div className="main-part">
-                <div className="cpanel" onClick={e => navigateToUsers()}>
-                    <div className="icon-part">
-                        <FontAwesomeIcon icon="users" /><br/>
-                        <small>Utilisateurs</small>
-                        <p>985</p>
+    if(isLoading){
+        return (
+            <>
+                <h1 className="center">Zone administrateur</h1>
+                <div className="main-part">
+                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="users" /><br/>
+                            <small>Utilisateurs</small>
+                            <Loader.SmallLoader />
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="comments" /><br/>
+                            <small>Annonces</small>
+                            <Loader.SmallLoader />
+                        </div>
                     </div>
                 </div>
-                <div className="cpanel-blue cpanel">
-                    <div className="icon-part">
-                        <FontAwesomeIcon icon="comments" /><br/>
-                        <small>Annonces</small>
-                        <p>104</p>
+            </>
+        )
+    }else{
+        return (
+            <>
+                <h1 className="center">Zone administrateur</h1>
+                <div className="main-part">
+                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="users" /><br/>
+                            <small>Utilisateurs</small>
+                            <p>{countUsers}</p>
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="comments" /><br/>
+                            <small>Annonces</small>
+                            <p>{countAds}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
 
 export default Admin;

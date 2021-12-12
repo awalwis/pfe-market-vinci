@@ -18,10 +18,6 @@ input:invalid {
   margin: auto;
 }
 
-.table-hover .tuple:hover {
-  background-color: rgb(9 90 165 / 74%);
-}
-
 .center {
   text-align: center;
 }
@@ -30,7 +26,18 @@ input:invalid {
   text-decoration: none;
 }
 
-/*TEST CARD*/
+/*TABLE USERS*/
+
+.table-hover .tuple:hover {
+  background-color: rgb(9 90 165 / 74%);
+}
+
+.tdDelete {
+  width: 12%;
+  text-align: center;
+}
+
+/*CARDS*/
 
 body {
   background: #eee;
@@ -62,4 +69,13 @@ body {
 }
 .cpanel-blue .icon-part {
   background-color: #2980b9;
+}
+
+/*LOADING*/
+
+.loadingCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2%;
 }

@@ -35,7 +35,7 @@ const get = (id) => {
 /*get all ad*/
 const getAll = () => {
     return axios
-        .get(apiurl)
+        .get(apiurl + "/all")
         .then(response => response.data);
 }
 
