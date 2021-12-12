@@ -19,7 +19,7 @@ const AdNewForm = () => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     const history =useHistory();
-    const {addNewAd} = useContext(adsContext);
+    const {addNewAd,adId} = useContext(adsContext);
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     }
@@ -44,6 +44,10 @@ const AdNewForm = () => {
         
        
     }
+    const handleDisplayPicture=()=>{
+        console.log("ici handle pict")
+        setDisplayedPicture(1)
+    }
 
     const handleCategorieChange=(e)=>{
         setCategory(parseInt(e.target.value))
@@ -51,7 +55,7 @@ const AdNewForm = () => {
     // à modifier à 'ajoute de l'image
     const handleSubmit = (e) => {
         e.preventDefault();
-        setDisplayedPicture(parseInt("0"))   
+        setDisplayedPicture(0)   
         const newAd = {
             date,
             description,
@@ -63,7 +67,7 @@ const AdNewForm = () => {
             type,
             id_user        
         };
-        addNewAd(newAd);
+        addNewAd(newAd)
         setAdCreated(true)
         setTitle("");
         setDescription("");
@@ -102,7 +106,7 @@ const AdNewForm = () => {
            
                  <button type="submit">Créer</button>     
             </form>
-            {adCreated &&<FileUploadComponent />}
+            {adCreated &&<FileUploadComponent id={adId} handle={handleDisplayPicture}/>}
          </div>
        
     )

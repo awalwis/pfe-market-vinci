@@ -5,6 +5,7 @@ import AdDetail from "components/Ad/AdItem/AdDetail"
 import AdUpdateForm from "components/Ad/AdItem/AdUpdateForm"
 import {authService} from "services/auth.service";
 import * as AdsApi from 'services/adsApi'
+import * as mediasApi from 'services/mediasApi'
 
 
 const AdItem = ()=>{ 
@@ -13,14 +14,17 @@ const AdItem = ()=>{
         deleteAd,
         
     } = useContext(adsContext);
-    const id = useParams().id;    
+    
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
-    const user = authService.getCurrentUser()
-    const history = useHistory()
     const [isLoading,setIsLoading]=useState(true)
     const [adUserId,setAdUserId] =useState("")
-    const [test,setTest]=useState(false)
+    const [pictures,setPictures] = useState("")
+    const user = authService.getCurrentUser()
+    const id = useParams().id;  
+    const history = useHistory()
+   
+    
   
     const togglePopup = () => {
         if(user.id_user===adUserId || user.role==="admin"){
@@ -45,10 +49,10 @@ const AdItem = ()=>{
         const fetchData = async ()=>{
             const retrievedAd = await AdsApi.get(id);
             setAd(retrievedAd);
-            setAdUserId(retrievedAd.ad.id_user)
-            setIsLoading(false);
-            console.log(retrievedAd)
-            console.log("dans le await ",retrievedAd.id_user)
+            setAdUserId(retrievedAd.ad.id_user) 
+           const retrievedPictures= await mediasApi.getByAdId(id)
+            setPictures(retrievedPictures.medias)
+            setIsLoading(false);  
         }
         fetchData();
     },[id]);
@@ -62,7 +66,7 @@ const AdItem = ()=>{
     
     return(
         <div>
-             <AdDetail ad={ad}/>
+             <AdDetail ad={ad} adPictures={pictures}/>
             <button onClick={handleDelete}> Supprimer l'annonce </button>
             <button onClick={togglePopup}> Modfier l'annonce </button>
             {isOpen && <AdUpdateForm ad={ad}/>}
@@ -70,8 +74,6 @@ const AdItem = ()=>{
             </div>
         
     )
-    
-
 }
 
 export default AdItem

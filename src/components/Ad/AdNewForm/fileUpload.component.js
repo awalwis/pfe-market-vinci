@@ -5,25 +5,20 @@ import { getDroppedOrSelectedFiles } from 'html5-file-selector'
 import * as mediasApi from "services/mediasApi"
 
 
-const FileUploadComponent = () => {
+const FileUploadComponent = (id,handle) => {
 
-    const [fileUrl,setFileUrl]=useState("")
-    const [fileType,setFileType]=useState("")
-
+    const [url,setFileUrl]=useState("")
+    const [type,setFileType]=useState("")
+    const id_ad=id.id
+    
     const fileParams = ({ meta }) => {
         return { url: 'https://httpbin.org/post' }
     }
 
     const onFileChange = ({ meta, file }, status) => { 
-     //   console.log( meta, ) 
         if(status==="done"){
             setFileUrl(meta.previewUrl)
             setFileType(meta.type.split("/")[0])
-                
-            const newMedia = {
-               fileUrl,
-               fileType,
-             }; 
         }
     }
 
@@ -31,6 +26,16 @@ const FileUploadComponent = () => {
         allFiles.forEach(f =>{ 
             f.remove()
         })
+       
+        const newMedia = {
+            url,
+            type,
+            id_ad,
+        };
+         mediasApi.createNewMedia(newMedia)
+         handle()
+  
+       
     }
 
     const getFilesFromEvent = e => {

@@ -6,25 +6,20 @@ const Context = React.createContext(null);
 const ProviderWrapper = (props) => {
   
   const [ads, setAds] = useState([]);
-  const [retrievedAd,setAd] = useState();
+  const [adId,setAdId] = useState();
+  const [ad, setAd] = useState([]);
 
   const addNewAd =(newAd) =>{
       AdsApi
       .createNewAd(newAd)
+      .then(res=>
+        setAdId(res.id_ad))
   }
   
   const updateAd = (id, changeSet) => {
     AdsApi
       .update(id, changeSet)
-      .then((updatedAd) => {
-        const newAds = ads.map((ad) => {
-          if (ad.id !== id) return ad;
-          return updatedAd;
-        });
-        setAds(newAds);
-      });
-  };
-
+  }
   const deleteAd = (id) => {
     AdsApi
     .remove(id)
@@ -37,15 +32,13 @@ const ProviderWrapper = (props) => {
         setAd(res.ad)   
       })      
     };
-    useEffect(getAdById,[])
 
   const exposedValue = {  
-    retrievedAd,
+    adId,
 
     addNewAd,
     updateAd,
     deleteAd,
-    getAdById,
     };
 
   return (
