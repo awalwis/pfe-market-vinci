@@ -1,20 +1,14 @@
-import React, { useContext,useState,useEffect } from "react";
-import adsContext from "contexts/adsContext";
+import React, {useState,useEffect } from "react";
 import {useParams,useHistory} from "react-router-dom";
 import AdDetail from "components/Ad/AdItem/AdDetail"
 import AdUpdateForm from "components/Ad/AdItem/AdUpdateForm"
 import {authService} from "services/auth.service";
-import * as AdsApi from 'services/adsApi'
-import * as mediasApi from 'services/mediasApi'
+import {adService} from 'services/ads.service'
+import {mediaService} from 'services/medias.service'
 import { userService } from "services/users.service";
 
 
 const AdItem = ()=>{ 
-
-    const {
-        deleteAd,
-        
-    } = useContext(adsContext);
     
     const [isOpen, setIsOpen] = useState(false);
     const [ad,setAd]=useState("")
@@ -39,10 +33,9 @@ const AdItem = ()=>{
 
     }
 
-    // need to check if admin/ad's owner
     const handleDelete = () => {
         if(user.id_user===adUserId || user.role==="admin"){
-            deleteAd(id);
+            adService.remove(id);
             alert("Annonce Supprimée")
             history.push('/Home')
         }else{
@@ -54,10 +47,10 @@ const AdItem = ()=>{
     }
     useEffect(()=>{
         const fetchData = async ()=>{
-            const retrievedAd = await AdsApi.get(id);
+            const retrievedAd = await adService.get(id);
             setAd(retrievedAd);
             setAdUserId(retrievedAd.ad.id_user)
-            const retrievedMedias= await mediasApi.getByAdId(id)
+            const retrievedMedias= await mediaService.getByAdId(id)
             setMedias(retrievedMedias.medias)
             retrievedAd.ad.displayed_picture = retrievedMedias.medias[0].id_media
             const retrievedAdSeller = await userService.getById(retrievedAd.ad.id_user)

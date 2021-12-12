@@ -1,5 +1,4 @@
 import React from "react"; 
-import {useState} from "react";
 import { Button, Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import {useHistory} from "react-router-dom";
@@ -67,10 +66,10 @@ const DisplayUsers = (props) => {
                                 <Form.Select defaultValue={user.role}
                                     onChange={e => changeSelectValue(user ,e.target.value)}
                                 >
-                                    <option value="user">utilisateur</option>
+                                    <option value="utilisateur">utilisateur</option>
                                     <option value="admin">admin</option>
-                                    <option value="mute">limité</option>
-                                    <option value="banned">banni</option>
+                                    <option value="limite">limité</option>
+                                    <option value="banni">banni</option>
                                 </Form.Select> 
                             </td>
                             <td className='tdDelete'>
