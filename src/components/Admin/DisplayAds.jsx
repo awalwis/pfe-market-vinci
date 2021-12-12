@@ -17,6 +17,7 @@ const DisplayAds = (props) => {
     }
 
     const changeSelectValue = (ad, selectValue) => {
+        console.log(selectValue)
         let newAd = {
            id_ad: ad.id_ad,
            title: ad.title,

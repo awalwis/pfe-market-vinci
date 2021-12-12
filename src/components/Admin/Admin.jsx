@@ -61,14 +61,14 @@ const Admin = () => {
             <>
                 <h1 className="center">Zone administrateur</h1>
                 <div className="main-part">
-                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                    <div className="cpanel" >
                         <div className="icon-part">
                             <FontAwesomeIcon icon="users" /><br/>
                             <small>Utilisateurs</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel" onClick={e => navigateToAds()}>
+                    <div className="cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
@@ -97,7 +97,7 @@ const Admin = () => {
                             <p>{countUsers}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-blue cpanel" onClick={e => navigateToAds()}>
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
