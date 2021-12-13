@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {adService} from 'services/ads.service'
 import {authService} from "services/auth.service";
+import Category from "components/Category/Category";
 import FileUploadComponent from "components/Ad/AdNewForm/fileUpload.component";
 
 const AdNewForm = () => {
@@ -45,9 +46,9 @@ const AdNewForm = () => {
         setPrice(parseInt(e.target.value));
  
     }
-    const handleCategorieChange=(e)=>{
+    /* const handleCategorieChange=(e)=>{
         setCategory(parseInt(e.target.value))
-    }
+    } */
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisplayedPicture(0)   
@@ -86,14 +87,7 @@ const AdNewForm = () => {
             <form onSubmit={handleSubmit}>    
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
                 Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
-                    <div onChange={handleCategorieChange}>
-                            <select id = "dropdown">
-                                <option value="N/A">N/A</option>
-                                <option value="1">Categorie 1</option>
-                                <option value="2">Categorie 2</option>
-                                <option value="3">Categorie 3</option>
-                             </select>
-                    </div>
+                    <Category setCategory={setCategory}/>
                     <div onChange={event=>handleIsPaying(event)}>
                         A donner <input type="radio" name="type" value="isFree" required/>
                         A vendre <input type="radio" name="type" value="isPaying" required/>

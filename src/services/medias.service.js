@@ -18,13 +18,13 @@ const get = (id)=>{
 const getByAdId = (id_ad)=>{
     return  axios
     .get(`${apiurl}/ad/${id_ad}`)
-    .then( response => response.data );
+    .then( response => response.data.medias );
  }
  
 const getAll = () => {
     return axios
     .get(apiurl)
-    .then( response => response.data );
+    .then( response => response.data.medias);
 }
 
 export const mediaService = {
