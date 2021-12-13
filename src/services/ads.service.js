@@ -1,5 +1,14 @@
 import axios from "axios";
+import { authService } from "./auth.service";
 const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
+
+let currentUser = authService.getCurrentUser(); 
+
+let config = {  
+    headers: {
+        Authorization: currentUser["token"]
+    }
+}
 
 
 /*create a ad*/
@@ -7,14 +16,15 @@ const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
 const createNewAd = (newAd) => {
     console.log(JSON.stringify(newAd))
    return axios
-    .post(apiurl,newAd)
+    .post(apiurl,newAd,)
     .then( response => response.data );
 }
 
 /*update a ad*/
 const update = (id, updatedAd) => {
+    console.log(config); 
     return axios
-        .put(`${apiurl}/${id}`, updatedAd)
+        .put(`${apiurl}/${id}`, updatedAd, config)
 }
 
 /*delete a ad*/
