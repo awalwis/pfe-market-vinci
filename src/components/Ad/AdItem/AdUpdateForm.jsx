@@ -8,7 +8,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
     const [description, setDescription] = useState(ad.ad.description)
     const [price,setPrice] = useState(parseInt(ad.ad.price)) 
     const [type, setType] = useState(ad.ad.type)
-    const [state, setState] = useState(ad.ad.sate)
+    const [state, setState] = useState(ad.ad.state)
     const id_user = parseInt(ad.ad.id_user)
     const [id_category,setCategory] = useState(parseInt(ad.ad.id_category))
     const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.ad.displayed_picture))
@@ -73,7 +73,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
                 Description: <input type="text" name="description" placeholder={ad.ad.description}onChange={handleUpdate}/>
                 Prix: <input type="number"name="price" placeholder={ad.ad.price}onChange={handleUpdate}/>
                 Category:<input type="text" name="category" placeholder={ad.ad.category}onChange={handleUpdate}/>
-                Etat:  <input type="text" name="state" placeholder={ad.ad.sate}onChange={handleUpdate}/>
+                Etat:  <input type="text" name="state" placeholder={ad.ad.state}onChange={handleUpdate}/>
                 <div onChange={handleUpdate}>
                 A donner  <input type="radio" name="type" value="a donner" required/>
                 A vendre  <input type="radio" name="type" value="a vendre" required/>
