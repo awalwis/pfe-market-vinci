@@ -3,10 +3,10 @@ import AnnonceCard from "./AnnonceCard";
 const AnnonceList = ({annonces}) => {
 
     return(
-        <Container className="d-flex flex-wrap flex-row">
+        <Container className="d-inline-flex flex-wrap flex-row justify-content-start">
             {annonces.map((annonce) => {
                 return(
-                    <AnnonceCard annonce={annonce}/>
+                    <AnnonceCard key={annonce.id_ad} annonce={annonce}/>
                 )
             }) }
         </Container>
