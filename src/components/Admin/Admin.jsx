@@ -19,7 +19,7 @@ const Admin = () => {
     let currentUser = authService.getCurrentUser();
     let roleCurrentUser = '';
     if (currentUser) {
-        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+        roleCurrentUser = authService.getRoleCurrentUser()
     }
     if(roleCurrentUser!=="admin"){
         history.push("/");
@@ -56,19 +56,23 @@ const Admin = () => {
         history.push("/admin/annonces"); 
     }
 
+    const navigateToCategories = () => {
+        history.push("/admin/categories"); 
+    }
+
     if(isLoading){
         return (
             <>
                 <h1 className="center">Zone administrateur</h1>
                 <div className="main-part">
-                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                    <div className="cpanel" >
                         <div className="icon-part">
                             <FontAwesomeIcon icon="users" /><br/>
                             <small>Utilisateurs</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel" onClick={e => navigateToAds()}>
+                    <div className="cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
@@ -92,19 +96,19 @@ const Admin = () => {
                 <div className="main-part">
                     <div className="cpanel" onClick={e => navigateToUsers()}>
                         <div className="icon-part">
-                            <FontAwesomeIcon icon="users" /><br/>
+                            <i><FontAwesomeIcon icon="users" /></i><br/>
                             <small>Utilisateurs</small>
                             <p>{countUsers}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-blue cpanel" onClick={e => navigateToAds()}>
                         <div className="icon-part">
-                            <FontAwesomeIcon icon="comments" /><br/>
+                            <i><FontAwesomeIcon icon="comments" /></i><br/>
                             <small>Annonces</small>
                             <p>{countAds}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-blue cpanel" onClick={e => navigateToCategories()}>
                         <div className="icon-part">
                             <FontAwesomeIcon icon="list-ul"/><br/>
                             <small>Catégories</small>

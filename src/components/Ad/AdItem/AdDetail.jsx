@@ -11,7 +11,7 @@ const AdDetail = ({ad,adMedias,category})=>{
                 <p>Prix: {ad.price}</p>
                 <p>Date de publication: {ad.date}</p>
                 <p>Catégorie: {category.name}</p>
-                <p>Etat: {ad.sate}</p>
+                <p>Etat: {ad.state}</p>
                 <p>Status: {ad.type}</p>
             </div>
             <div> 

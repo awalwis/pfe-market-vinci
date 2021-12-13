@@ -37,6 +37,8 @@ const DisplayUsers = (props) => {
         )
     }
 
+    console.log(users);
+
     if(props.isLoading){
         return(
             <tr>

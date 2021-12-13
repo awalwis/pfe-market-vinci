@@ -1,20 +1,32 @@
 import axios from "axios";
-const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
+import { authService } from "./auth.service";
+
+const apiurl = process.env.REACT_APP_URL_API + '/api/annonces'
+
+let currentUser = authService.getCurrentUser();
+let config = {};
+if (currentUser) {
+    config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+}
 
 
 /*create a ad*/
 
 const createNewAd = (newAd) => {
-    console.log(JSON.stringify(newAd))
-   return axios
-    .post(apiurl,newAd)
-    .then( response => response.data );
+    return axios
+        .post(apiurl, newAd)
+        .then(response => response.data);
 }
 
 /*update a ad*/
 const update = (id, updatedAd) => {
+    console.log(config);
     return axios
-        .put(`${apiurl}/${id}`, updatedAd)
+        .put(`${apiurl}/${id}`, updatedAd, config)
 }
 
 /*delete a ad*/
@@ -27,12 +39,12 @@ const remove = (id) => {
 const get = (id) => {
     try {
         return axios
-        .get(`${apiurl}/${id}`)
-        .then(response => response.data.ad);
+            .get(`${apiurl}/${id}`)
+            .then(response => response.data.ad);
     } catch (error) {
-       console.log("Ad inexistant pour l'id" ,id) 
+        console.log("Ad inexistant pour l'id", id)
     }
-   
+
 }
 
 /*get all ad*/
