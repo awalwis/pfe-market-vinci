@@ -56,6 +56,10 @@ const Admin = () => {
         history.push("/admin/annonces"); 
     }
 
+    const navigateToCategories = () => {
+        history.push("/admin/categories"); 
+    }
+
     if(isLoading){
         return (
             <>
@@ -104,7 +108,7 @@ const Admin = () => {
                             <p>{countAds}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-blue cpanel" onClick={e => navigateToCategories()}>
                         <div className="icon-part">
                             <FontAwesomeIcon icon="list-ul"/><br/>
                             <small>Catégories</small>
