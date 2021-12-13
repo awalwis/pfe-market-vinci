@@ -13,9 +13,14 @@ const create = newObject => {
     return axios.post(apiurl, newObject)
 }
 
+const deleteCategory = (id) => {
+    console.log("ID ", id)
+    return axios.delete(`${apiurl}/${id}`)
+}
+
 export const categoryService = {
     getAll,
     create,
-    getById
+    getById,
+    deleteCategory
 }
-
