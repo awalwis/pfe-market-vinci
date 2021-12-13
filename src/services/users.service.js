@@ -1,5 +1,5 @@
 import axios from 'axios'
-const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/utilisateurs'
+const apiurl = process.env.REACT_APP_URL_API + '/api/utilisateurs'
 
 const getAll = () => {
     return axios.get(apiurl)
@@ -10,7 +10,7 @@ const getByEmail = (email) => {
 }
 const getById = (id) => {
     return axios.get(`${apiurl}/${id}`)
-    .then(response => response.data);
+        .then(response => response.data);
 }
 
 const create = newObject => {

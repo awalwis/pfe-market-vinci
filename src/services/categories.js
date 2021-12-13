@@ -1,5 +1,5 @@
 import axios from 'axios'
-const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/categories'
+const apiurl = process.env.REACT_APP_URL_API + '/api/categories'
 
 // GET
 
