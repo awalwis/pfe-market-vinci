@@ -1,5 +1,4 @@
 
-import "components/formStyle.css"
 import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
