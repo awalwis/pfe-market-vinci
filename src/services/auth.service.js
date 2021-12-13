@@ -37,8 +37,8 @@ const getCurrentUser = () => {
     return user;
 }
 
-const getRoleCurrentUser = (token) => {
-    let decodedToken = jwt.verify(token, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs");
+const getRoleCurrentUser = () => {
+    let decodedToken = jwt.verify(getCurrentUser().token, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs");
     return decodedToken.role;
 }
 

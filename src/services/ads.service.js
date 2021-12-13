@@ -14,6 +14,7 @@ let config = {
 /*create a ad*/
 
 const createNewAd = (newAd) => {
+    console.log(JSON.stringify(newAd))
    return axios
     .post(apiurl,newAd,)
     .then( response => response.data );
@@ -34,9 +35,14 @@ const remove = (id) => {
 }
 /*get a ad by id*/
 const get = (id) => {
-    return axios
+    try {
+        return axios
         .get(`${apiurl}/${id}`)
-        .then(response => response.data);
+        .then(response => response.data.ad);
+    } catch (error) {
+       console.log("Ad inexistant pour l'id" ,id) 
+    }
+   
 }
 
 /*get all ad*/
