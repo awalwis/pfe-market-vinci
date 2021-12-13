@@ -19,7 +19,7 @@ const Admin = () => {
     let currentUser = authService.getCurrentUser();
     let roleCurrentUser = '';
     if (currentUser) {
-        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+        roleCurrentUser = authService.getRoleCurrentUser()
     }
     if(roleCurrentUser!=="admin"){
         history.push("/");

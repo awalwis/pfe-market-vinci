@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {userService} from "../../services/users.service";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
+import {authService} from "services/auth.service"
 
 
 const Profile =  () => {
@@ -14,29 +15,48 @@ const Profile =  () => {
     const [statusColor, setStatusColor] = useState('');
     const [statusModif, setStatusModif] = useState(false);
     const [updatedUser, setUpdatedUser] = useState()
+    const [modifAuthorized, setModifAuthorized] = useState(false);
 
-    const modifierStatusModif = () => {
+    const modifierStatusModif = (e) => {
+        e.preventDefault();
+        console.log("profile: ", data.data.user)
+        console.log("current: ", authService.getCurrentUser())
         setStatusModif(!statusModif);
     }
 
-    function submitUpdate() {
-        //todo appeler userService pour la requete put avec updateUser !! mettre un token dans le header !!
-        console.log("todo submit")
+    function submitUpdate(e) {
+        e.preventDefault();
+        //todo  !! mettre un token dans le header !!
+        userService.update(updatedUser.id_user,updatedUser).then(()=>{
+            setStatusModif(false);
+        })
+        console.log("to submit: ", updatedUser)
     }
     const handleUserChange = (event) => {
-
-        //todo handle tous les inputs
         switch (event.target.name) {
+            case "last_name":
+                setUpdatedUser({...updatedUser, last_name: event.target.value});
+                break;
+            case "first_name":
+                setUpdatedUser({...updatedUser, first_name: event.target.value});
+                break;
             case "email":
                 setUpdatedUser({...updatedUser, email: event.target.value});
                 break;
-            case "password":
-                setUpdatedUser({...updatedUser, password: event.target.value});
+            case "password1":
+                setUpdatedUser({...updatedUser, password1: event.target.value});
+                break;
+            case "password2":
+                setUpdatedUser({...updatedUser, password2: event.target.value});
+                break;
+            case "campus":
+                setUpdatedUser({...updatedUser, campus: event.target.value});
                 break;
             default:
                 console.log("error input")
                 break
         }
+        
     }
 
     useEffect(()=>{
@@ -55,6 +75,8 @@ const Profile =  () => {
             }
             console.log(statusColor);
             setLoading(false);
+            setUpdatedUser(data.data.user)
+            if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
         }
         fetchData();
     },[email]);
@@ -67,10 +89,9 @@ const Profile =  () => {
             </div>
         )
 
-
-    if (data)
+    if (data){
         return (
-            <>
+            <form>
                 <Card border="primary" className={"customForm"}>
                     <Card.Header className="center">Mes informations</Card.Header>
                     <Card.Body>
@@ -78,11 +99,13 @@ const Profile =  () => {
                             <li>Nom: {!statusModif && data.data.user.last_name} {statusModif && <input name="last_name" onChange={handleUserChange} type="text"  defaultValue={data.data.user.last_name}/>} </li>
                             <li>Prénom: {!statusModif && data.data.user.first_name} {statusModif && <input  name="first_name" onChange={handleUserChange} type="text"  defaultValue={data.data.user.first_name}/>} </li>
                             <li>Mail: {!statusModif && data.data.user.email} {statusModif && <input name="email" onChange={handleUserChange} type="text"  defaultValue={data.data.user.email}/>} </li>
-                            <li>Campus: {!statusModif && data.data.user.campus} {statusModif && <input name="campus" onChange={handleUserChange} type="text"  defaultValue={data.data.user.campus}/>} </li>
-                            {statusModif && <li>Mot de passe: <input password onChange={handleUserChange} type="text" /></li>}
+                            <li>Campus: {!statusModif && data.data.user.campus} {statusModif && <select name="campus" onChange={handleUserChange} defaultValue={data.data.user.campus}>   <option>Woluwe</option>
+                            <option>Ixelles</option>
+                            <option>Louvain la neuve</option></select> }</li> 
+                            {statusModif && <li>Mot de passe: <input name="password" onChange={handleUserChange} type="text" /></li>}
                         </ul>
-                        <button onClick={modifierStatusModif}>{!statusModif && "Modifier profil"}{statusModif && "Annuler"}</button>
-                        {statusModif && <button onClick={submitUpdate}>Confirmer</button>}
+                        {modifAuthorized && <button onClick={(e)=>modifierStatusModif(e)}>{!statusModif && "Modifier profil"}{statusModif && "Annuler"}</button>}
+                        {statusModif && <button onClick={(e)=>submitUpdate(e)}>Confirmer</button>}
                     </Card.Body>
                     <Card.Footer>
                         Statut du compte :  
@@ -91,8 +114,8 @@ const Profile =  () => {
                             </Badge> 
                     </Card.Footer>
                 </Card>
-            </>
-        )
+            </form>
+        )}
         else 
             return (
             <>
