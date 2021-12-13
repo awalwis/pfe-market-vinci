@@ -1,29 +1,47 @@
 import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "components/Login/Login";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./components/Home/Home";
+import Admin from "components/Admin/Admin";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+import Home from "components/Home/Home";
+import Profile from "components/Profile/Profile";
+import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
+import AdItem from "components/Ad/AdItem/AdItem";
+import { authService } from "services/auth.service";
+import Navbar from "components/Navbar/Navbar";
+import AdminUser from "components/Admin/AdminUser";
+import AdminAd from "components/Admin/AdminAd";
+
+
 
 const App = () => {
-    
-    const padding = {
-            padding: 5
-        }
+    useRouteMatch("/");
+    let loggedIn = false;
+    let currentUser = authService.getCurrentUser();
+    let roleCurrentUser = '';
+    if (currentUser) {
+        loggedIn = true;
+        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+    }
+    console.log("App.js: ", loggedIn);
+
 
     return (
-        <Router>
-            <div>
-                <Link style={padding} to="/login">login</Link>
-                <Link style={padding} to="/register">register</Link>
-                <Link style={padding} to="/home">home</Link>
-            </div>
-            <Routes>
-                <Route path="/login"  element={ <Login />} />
-                <Route path="/register"  element={ <Register />}/>
-                <Route path="/home"  element={ <Home />}/>
-                <Route path="/"  element={ <Home />}/>
-            </Routes>
-        </Router>
+        <>
+            <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
+            <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/home" component={Home} />
+                <Route path="/ajouter" component={AdNewForm} />
+                <Route path="/annonces/:id" component={AdItem} />
+                <Route path="/admin/utilisateurs" component={AdminUser} />
+                <Route path="/admin/annonces" component={AdminAd} />
+                <Route path="/admin" component={Admin} />
+                <Route path="/profile/:email" component={Profile} />
+                <Route path="/" component={Home} />
+            </Switch>
+        </>
     )
 }
 export default App;

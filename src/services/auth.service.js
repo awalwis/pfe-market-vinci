@@ -1,47 +1,62 @@
-import userService from 'services/users'
-import { handleResponse } from 'helpers/handle-response';
+import { userService } from 'services/users.service'
 import jwt from 'jsonwebtoken'
 
-
-
-export const authService = {
-    login,
-    logout,
-    getCurrentUserValue () { return }
-};
-
 async function login(email, password) {
+
     const bcrypt = require('bcryptjs');
     let user;
     await userService.getByEmail(email).then(response => {
-        user=response.data.user;            
+        user = response.data.user;
         console.log(user)
     })
     console.log(user)
-    if (user && bcrypt.compareSync(password, user.password)){
-        console.log("connected");
-        var token = jwt.sign({ user: user.id, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256'});
-        let userDto={
-            last_name:user.last_name,
-            first_name:user.first_name,
-            token:token,
-            email:user.email,
-            campus:user.campus,
+    if (user && bcrypt.compareSync(password, user.password)) {
+        const token = jwt.sign({ id_user: user.id_user, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256' });
+        let userDto = {
+            id_user: user.id_user,
+            last_name: user.last_name,
+            first_name: user.first_name,
+            token: token,
+            email: user.email,
+            campus: user.campus,
         }
-
-        console.log(userDto)
-        user=userDto;
-        localStorage.setItem('currentUser', JSON.stringify(user) );
+        user = userDto;
+        localStorage.setItem("currentUser", JSON.stringify(user));
     }
     return user;
 }
 
-function logout() {
-    // remove user from local storage to log user out
+
+const logout = () => {
+    console.log("logout !")
     localStorage.removeItem('currentUser');
 }
 
-export default{
-    login: login,
-    logout: logout,
+const getCurrentUser = () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    return user;
 }
+
+const getRoleCurrentUser = (token) => {
+    let decodedToken = jwt.verify(token, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs");
+    return decodedToken.role;
+}
+
+async function register(user) {
+    await userService
+        .create(user)
+        .then(response => {
+            console.log(response)
+            return true;
+        })
+    return false;
+}
+
+export const authService = {
+    login,
+    logout,
+    getCurrentUser,
+    getRoleCurrentUser,
+    register,
+};
+

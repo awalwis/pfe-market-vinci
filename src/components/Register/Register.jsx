@@ -1,18 +1,17 @@
 import {useState} from "react";
-import userService from 'services/users'
 import {Col, Row, Button, Form} from "react-bootstrap";
-import "components/formStyle.css"
-import { useNavigate } from 'react-router-dom';
+import "styles/style.css"
+import { useHistory } from 'react-router-dom';
+import {authService} from "services/auth.service";
 
 
 
 const Register = () => {
     const bcrypt = require('bcryptjs');
-    const navigate = useNavigate();
-    const [users, setUsers] = useState([])
+    const history = useHistory();
     const emptyUser = {
-        name: "Nom",
-        firstName: "Prenom",
+        last_name: "Nom",
+        first_name: "Prenom",
         email: "Adresse mail",
         password1: "Mot de passe",
         password2: "Mot de passe",
@@ -34,14 +33,10 @@ const Register = () => {
             password: bcrypt.hashSync(newUser.password1, salt),
             campus: newUser.campus,
         }
-        console.log(JSON.stringify(userObject))
-        userService
-            .create(userObject)
-            .then(response => {
-                setUsers(users.concat(response.data));
-                setNewUser(emptyUser)
-            })
-        navigate("/login");
+        if(authService.register(userObject)){
+            setNewUser(emptyUser);
+           history.push("/")
+        }
     }
     const handleUserChange = (event) => {
         switch (event.target.name) {
@@ -71,26 +66,26 @@ const Register = () => {
 
     return (
         <div className="customForm">
-            <h1>Registration form</h1>
+            <h1 className="center">Inscription</h1>
             <Form onSubmit={register}>
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridName">
-                        <Form.Label>Nom</Form.Label>
+                        <Form.Label>Nom :</Form.Label>
                         <Form.Control type="text" placeholder="Nom" onChange={handleUserChange} name="name" required/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridFirstName">
-                        <Form.Label>Prénom</Form.Label>
+                        <Form.Label>Prénom :</Form.Label>
                         <Form.Control type="" placeholder="Prenom" onChange={handleUserChange} name="firstName" required/>
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
-                        <Form.Label>Addresse e-mail institutionnelle</Form.Label>
-                        <Form.Control placeholder="email" onChange={handleUserChange} name="email" required pattern="[A-Za-z0-9-_.]+@(student.){0,1}vinci.be"/>
+                        <Form.Label>Addresse e-mail institutionnelle :</Form.Label>
+                        <Form.Control placeholder="email" onChange={handleUserChange} name="email" required pattern="[A-Za-z]+\.[A-Za-z]+@(student.){0,1}vinci.be"/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridState">
-                        <Form.Label>Campus</Form.Label>
+                        <Form.Label>Campus :</Form.Label>
                         <Form.Select defaultValue="Woluwe" onChange={handleUserChange} name="campus">
                             <option>Woluwe</option>
                             <option>Ixelles</option>
@@ -100,17 +95,19 @@ const Register = () => {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridPassword1" >
-                        <Form.Label>Mot de Passe</Form.Label>
+                        <Form.Label>Mot de Passe :</Form.Label>
                         <Form.Control onChange={handleUserChange} name="password1" pattern="[a-z0-9._%+-]{6,}" type="password" required/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridConfirmedPassword2" >
-                        <Form.Label>Confirmer mot de Passe</Form.Label>
+                        <Form.Label>Confirmer mot de passe : </Form.Label>
                         <Form.Control onChange={handleUserChange} name="password2" pattern="[a-z0-9._%+-]{6,}" type="password" required/>
                     </Form.Group>
                 </Row>
+                <div className="center">
                 <Button variant="outline-primary" type="submit">
-                    Valider
+                    Valider mon inscription
                 </Button>
+                </div>
             </Form>
         </div>
     )
