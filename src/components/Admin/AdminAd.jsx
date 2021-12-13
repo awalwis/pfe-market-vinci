@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
-import {userService} from 'services/users.service'
+import { adService } from "services/ads.service";
 import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
 import "styles/style.css"
 import { authService } from "services/auth.service";
-import Display from "./DisplayUsers"
+import DisplayAds from "./DisplayAds"
 import {useHistory} from "react-router-dom";
 
-const AdminUser = () => {
+const AdminAd = () => {
 
-    const history = useHistory();
+    const history = useHistory(); 
 
     let currentUser = authService.getCurrentUser();
     let roleCurrentUser = '';
@@ -19,42 +19,39 @@ const AdminUser = () => {
         history.push("/");
     }
 
-    const [isLoading, setLoading] = useState(true);
-    const [users, setUsers] = useState('');
-    const [query, setquery] = useState(''); 
-    const [select, setSelect] = useState('email');
+    const [isLoading, setLoading] = useState(true); 
+    const [ads, setAds] = useState('');
+    const [query, setQuery] = useState('');
+    const [select, setSelect] = useState('state');
     const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
         setLoading(true);
-        setUsers('');
-        getAllUsers();
-    }, [refreshKey]); 
+        setAds('');
+        getAllAds(); 
+    }, [refreshKey]);
 
-    const getAllUsers = () => {
-        userService.getAll().then((response) => {
-            const allUsers = response.data.users; 
-            setUsers(allUsers); 
-            setLoading(false);
+    const getAllAds = () => {
+        adService.getAll().then((response) => {
+            const allAds = response.ads; 
+            setAds(allAds);
+            setLoading(false); 
         })
     }
 
-    const getFiltredUsers = (query, u) => {
+    const getFiltredAds = (query, a) => {
         if(!query) {
-            return users; 
+            return ads; 
         }
         const queryLowerCase = query.toLowerCase(); 
-        if(select === "email"){
-            return u.filter(user => String(user.email).toLowerCase().startsWith(queryLowerCase))
-        }else if(select ==="campus"){
-            return u.filter(user => String(user.campus).toLowerCase().startsWith(queryLowerCase))
-        }else{
-            return u.filter(user => String(user.role).toLowerCase().startsWith(queryLowerCase))
+        if(select === "state"){
+            return a.filter(ad => String(ad.state).toLowerCase().startsWith(queryLowerCase))
+        }else if(select ==="title"){
+            return a.filter(ad => String(ad.title).toLowerCase().startsWith(queryLowerCase))
         }
-        
     }
 
-    const filtredUsers = getFiltredUsers(query, users)
+    const filtredAds = getFiltredAds(query, ads)
 
     const changeSelectValue = (selectValue) => {
         setSelect(selectValue);
@@ -62,18 +59,18 @@ const AdminUser = () => {
 
     return (
         <div>
-            <h1 className="center">Utilisateurs</h1>
-            
+            <h1 className="center">Annonces</h1>
+
             <Form>
                 <Row className="g-2">
                     <Col xs={11}>
                         <FloatingLabel controlId="floatingInputGrid" label="Entrez votre recherche">
                             <FormControl
                                 type="search"
-                                placeholder="Entrez votre recherche : email, campus ou le role"
+                                placeholder="Entrez votre recherche : titre ou état de l'annonce"
                                 className="me-2"
                                 aria-label="Search"
-                                onChange={e => setquery(e.target.value)}
+                                onChange={e => setQuery(e.target.value)}
                             />
                         </FloatingLabel>
                     </Col>
@@ -82,18 +79,18 @@ const AdminUser = () => {
                             <Form.Select 
                                 onChange={e => changeSelectValue(e.target.value)}
                             >
-                                <option value="email">Email</option>
-                                <option value="role">Role</option>
-                                <option value="campus">Campus</option>
+                                <option value="state">état</option>
+                                <option value="title">titre</option>
                             </Form.Select>
                         </FloatingLabel>
                     </Col>
                 </Row>
             </Form>
 
-            <Display users={filtredUsers} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
+            <DisplayAds ads={filtredAds} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
+
         </div>
     )
-}
+} 
 
-export default AdminUser;
+export default AdminAd;

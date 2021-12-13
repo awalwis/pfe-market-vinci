@@ -1,24 +1,25 @@
 import {useEffect, useState} from "react";
 import {userService} from 'services/users.service'
-import {getAll} from 'services/adsApi'
+import {adService} from 'services/ads.service'
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUsers, faComments } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faComments, faListUl } from '@fortawesome/free-solid-svg-icons'
 import { authService } from "services/auth.service";
+import { categoryService } from "services/categories.service";
 import {useHistory} from "react-router-dom";
 
 const Admin = () => {
 
-    library.add(faUsers, faComments)
+    library.add(faUsers, faComments, faListUl)
 
     const history = useHistory();
 
     let currentUser = authService.getCurrentUser();
     let roleCurrentUser = '';
     if (currentUser) {
-        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+        roleCurrentUser = authService.getRoleCurrentUser()
     }
     if(roleCurrentUser!=="admin"){
         history.push("/");
@@ -27,6 +28,7 @@ const Admin = () => {
     const [isLoading, setLoading] = useState(true);
     const [countUsers, setCountUsers] = useState(0);
     const [countAds, setCountAds] = useState(0);
+    const [countCategories, setCountCategories] = useState(0); 
 
     useEffect(() => {
         setLoading(true);
@@ -37,9 +39,12 @@ const Admin = () => {
         let responseUser = await userService.getAll();
         const countUsers = responseUser.data.users.length; 
         setCountUsers(countUsers);
-        let responseAd = await getAll();
+        let responseAd = await adService.getAll();
         const countAds = responseAd.ads.length
         setCountAds(countAds);
+        let responseCategory = await categoryService.getAll();
+        const countCategories = responseCategory.data.categories.length; 
+        setCountCategories(countCategories); 
         setLoading(false);
     }
 
@@ -47,22 +52,33 @@ const Admin = () => {
         history.push("/admin/utilisateurs");
     }
 
+    const navigateToAds = () => {
+        history.push("/admin/annonces"); 
+    }
+
     if(isLoading){
         return (
             <>
                 <h1 className="center">Zone administrateur</h1>
                 <div className="main-part">
-                    <div className="cpanel" onClick={e => navigateToUsers()}>
+                    <div className="cpanel" >
                         <div className="icon-part">
                             <FontAwesomeIcon icon="users" /><br/>
                             <small>Utilisateurs</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
+                            <Loader.SmallLoader />
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="list-ul"/><br/>
+                            <small>Catégories</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
@@ -81,11 +97,18 @@ const Admin = () => {
                             <p>{countUsers}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-blue cpanel" onClick={e => navigateToAds()}>
                         <div className="icon-part">
                             <i><FontAwesomeIcon icon="comments" /></i><br/>
                             <small>Annonces</small>
                             <p>{countAds}</p>
+                        </div>
+                    </div>
+                    <div className="cpanel-blue cpanel">
+                        <div className="icon-part">
+                            <FontAwesomeIcon icon="list-ul"/><br/>
+                            <small>Catégories</small>
+                            <p>{countCategories}</p>
                         </div>
                     </div>
                 </div>

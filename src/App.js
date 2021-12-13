@@ -11,6 +11,7 @@ import { authService } from "services/auth.service";
 import Navbar from "components/Navbar/Navbar";
 import AdminUser from "components/Admin/AdminUser";
 import AdminCategory from "components/Admin/AdminCategory";
+import AdminAd from "components/Admin/AdminAd";
 
 
 
@@ -37,6 +38,7 @@ const App = () => {
                 <Route path="/annonces/:id" component={AdItem} />
                 <Route path="/admin/categories" component={AdminCategory} />
                 <Route path="/admin/utilisateurs" component={AdminUser} />
+                <Route path="/admin/annonces" component={AdminAd} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/profile/:email" component={Profile} />
                 <Route path="/" component={Home} />

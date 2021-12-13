@@ -68,10 +68,10 @@ const DisplayUsers = (props) => {
                                 <Form.Select defaultValue={user.role}
                                     onChange={e => changeSelectValue(user ,e.target.value)}
                                 >
-                                    <option value="user">utilisateur</option>
+                                    <option value="utilisateur">utilisateur</option>
                                     <option value="admin">admin</option>
-                                    <option value="mute">limité</option>
-                                    <option value="banned">banni</option>
+                                    <option value="limite">limité</option>
+                                    <option value="banni">banni</option>
                                 </Form.Select> 
                             </td>
                             <td className='tdDelete'>

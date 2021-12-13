@@ -1,26 +1,26 @@
 import React from "react";
-//import AdDisplayPictures from "components/Ad/AdDisplayPictures";
 
 
-const AdDetail = ({ad,adPictures})=>{ 
+const AdDetail = ({ad,adMedias,category})=>{ 
 
     return (
         <>
             <div>
-                <p>Titre: {ad.ad.title}</p>
-                <p>Description: {ad.ad.description}</p>
-                <p>Prix: {ad.ad.price}</p>
-                <p>Date de publication: {ad.ad.date}</p>
-                <p>Catégorie: {ad.ad.category}</p>
-                <p>Etat: {ad.ad.sate}</p>
-                <p>Status: {ad.ad.type}</p>
-             </div>
-             <div>
-                 <img src={adPictures[0].url}/>
-             </div>
-             
+                <p>Titre: {ad.title}</p>
+                <p>Description: {ad.description}</p>
+                <p>Prix: {ad.price}</p>
+                <p>Date de publication: {ad.date}</p>
+                <p>Catégorie: {category.name}</p>
+                <p>Etat: {ad.state}</p>
+                <p>Status: {ad.type}</p>
+            </div>
+            <div> 
+            {adMedias.map(m => {
+            return <img key={m.id_media} src={m.url} alt=""/>;
+            })}
+            </div>      
         </>
-        )
+    )
 }
 
 export default AdDetail

@@ -8,6 +8,10 @@ const getAll = () => {
 const getByEmail = (email) => {
     return axios.get(`${apiurl}/${email}`)
 }
+const getById = (id) => {
+    return axios.get(`${apiurl}/${id}`)
+    .then(response => response.data);
+}
 
 const create = newObject => {
     return axios.post(apiurl, newObject)
@@ -26,6 +30,6 @@ export const userService = {
     create,
     update,
     getByEmail,
+    getById,
     deleteUser
 }
-

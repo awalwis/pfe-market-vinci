@@ -37,21 +37,27 @@ const Login = () => {
         }
     }
     return (
-        <div className="customForm" id="loginForm">
-            <h1>Connexion</h1>
-            <Form onSubmit={login}>
-                    <Form.Group  className="mb-3" controlId="formGridAddress1">
-                        <Form.Label>Addresse e-mail institutionnelle</Form.Label>
-                        <Form.Control placeholder="email" onChange={handleUserChange} name="email" required pattern="[A-Za-z0-9-_.]+@(student.){0,1}vinci.be"/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridPassword" >
-                        <Form.Label>Mot de Passe</Form.Label>
-                        <Form.Control onChange={handleUserChange} name="password"  type="password" required/>
-                    </Form.Group>
-                <Button variant="outline-primary" type="submit">
-                    Se connecter
-                </Button>
-            </Form>
+        <div>
+            <div className="customForm" id="loginForm">
+                <h1 className="center">Connexion</h1>
+                <Form onSubmit={login}>
+                        <Form.Group  className="mb-3" controlId="formGridAddress1">
+                            <Form.Label>Addresse e-mail institutionnelle :</Form.Label>
+                            <Form.Control placeholder="Entrez votre adresse email vinci" onChange={handleUserChange} name="email" required pattern="[A-Za-z0-9-_.]+@(student.){0,1}vinci.be"/>
+                        </Form.Group>
+                        <Form.Group as={Col} controlId="formGridPassword" >
+                            <Form.Label>Mot de passe :</Form.Label>
+                            <Form.Control placeholder="Entrez votre mot de passe" onChange={handleUserChange} name="password"  type="password" required/>
+                        </Form.Group>
+                    <br/>    
+                    <div className="center">
+                    <Button variant="outline-primary" type="submit">
+                        Se connecter
+                    </Button>
+                    </div>
+                </Form>
+            </div>
+            <a href="/register"><p className="center">Pas encore de compte? Inscrivez vous en cliquant ici</p></a>
         </div>
     )
 }

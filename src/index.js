@@ -2,16 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { ProviderWrapper as TodosProvider } from 'contexts/adsContext';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom";
 
 ReactDOM.render(
-    <TodosProvider>
       <Router>
           <App/>
       </Router>
-    </TodosProvider>
+   
     ,
   document.getElementById('root')
 );

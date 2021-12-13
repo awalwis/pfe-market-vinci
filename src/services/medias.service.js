@@ -2,7 +2,6 @@ import axios from "axios";
 const apiurl ='https://pfe-market-vinci-backend.herokuapp.com/api/medias'
 
 const createNewMedia = (newMedia) => {
-    console.log(JSON.stringify(newMedia))
    return axios
     .post(apiurl,newMedia)
     .then( response => response.data );
@@ -19,19 +18,18 @@ const get = (id)=>{
 const getByAdId = (id_ad)=>{
     return  axios
     .get(`${apiurl}/ad/${id_ad}`)
-    .then( response => response.data );
+    .then( response => response.data.medias );
  }
  
 const getAll = () => {
     return axios
     .get(apiurl)
-    .then( response => response.data );
+    .then( response => response.data.medias);
 }
 
-export {
+export const mediaService = {
     createNewMedia,
     get,
     getByAdId,
     getAll
-
 }
