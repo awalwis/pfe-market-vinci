@@ -3,10 +3,12 @@ import { authService } from "./auth.service";
 const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
 
 let currentUser = authService.getCurrentUser(); 
-
-let config = {  
-    headers: {
-        Authorization: currentUser["token"]
+let config = {};
+if(currentUser){
+    config = {  
+        headers: {
+            Authorization: currentUser["token"]
+        }
     }
 }
 
