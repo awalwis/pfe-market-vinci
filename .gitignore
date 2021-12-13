@@ -1,6 +1,7 @@
 # Byte-compiled / optimlized / DDL files
 db.json
 # dependencies
+package-lock.json
 /node_modules
 /.pnp
 .pnp.js
