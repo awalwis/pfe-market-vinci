@@ -7,10 +7,9 @@ import {mediaService} from "services/medias.service"
 
 const FileUploadComponent = (id) => {
 
-    const [url2,setFileUrl]=useState("")
+    const [url,setFileUrl]=useState("")
     const [type,setFileType]=useState("")
     const id_ad=id.id
-    const url ="https://pfemedias.blob.core.windows.net/medias/hqdefault.jpg"
     
     const fileParams = ({ meta }) => {
         return { url: 'https://httpbin.org/post' }
