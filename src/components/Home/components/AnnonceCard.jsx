@@ -8,7 +8,7 @@ const AnnonceCard = ({annonce}) => {
     }
     
     return(
-        <Container className="border" style={{"height":"200px", "width":"150px"}}
+        <Container className="border" style={{"height":"200px", "width":"150px", "cursor":"pointer"}}
             onClick={(e) =>
                 {e.preventDefault()
                 showDetails(annonce.id_ad)}}>
