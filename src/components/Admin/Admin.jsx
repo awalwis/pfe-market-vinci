@@ -76,14 +76,14 @@ const Admin = () => {
                 <div className="main-part">
                     <div className="cpanel" onClick={e => navigateToUsers()}>
                         <div className="icon-part">
-                            <FontAwesomeIcon icon="users" /><br/>
+                            <i><FontAwesomeIcon icon="users" /></i><br/>
                             <small>Utilisateurs</small>
                             <p>{countUsers}</p>
                         </div>
                     </div>
                     <div className="cpanel-blue cpanel">
                         <div className="icon-part">
-                            <FontAwesomeIcon icon="comments" /><br/>
+                            <i><FontAwesomeIcon icon="comments" /></i><br/>
                             <small>Annonces</small>
                             <p>{countAds}</p>
                         </div>

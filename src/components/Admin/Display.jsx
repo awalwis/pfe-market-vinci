@@ -1,5 +1,4 @@
 import React from "react"; 
-import {useState} from "react";
 import { Button, Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import {useHistory} from "react-router-dom";
@@ -37,6 +36,8 @@ const DisplayUsers = (props) => {
             }
         )
     }
+
+    console.log(users);
 
     if(props.isLoading){
         return(

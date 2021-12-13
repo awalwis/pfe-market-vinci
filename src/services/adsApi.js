@@ -1,13 +1,13 @@
 import axios from "axios";
-const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/annonces'
+const apiurl = process.env.REACT_APP_URL_API + '/api/annonces'
 
 
 /*create a ad*/
 
 const createNewAd = (newAd) => {
-   return axios
-    .post(apiurl,newAd)
-    .then( response => response.data );
+    return axios
+        .post(apiurl, newAd)
+        .then(response => response.data);
 }
 
 /*update a ad*/
