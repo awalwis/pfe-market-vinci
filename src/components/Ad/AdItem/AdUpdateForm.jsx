@@ -5,14 +5,14 @@ import Category from "components/Category/Category";
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,adMedias}) => {
 
-    const [title, setTitle] = useState(ad.ad.title)
-    const [description, setDescription] = useState(ad.ad.description)
-    const [price,setPrice] = useState(parseInt(ad.ad.price)) 
-    const [type, setType] = useState(ad.ad.type)
-    const [state, setState] = useState(ad.ad.state)
-    const id_user = parseInt(ad.ad.id_user)
-    const [id_category,setCategory] = useState(parseInt(ad.ad.id_category))
-    const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.ad.displayed_picture))
+    const [title, setTitle] = useState(ad.title)
+    const [description, setDescription] = useState(ad.description)
+    const [price,setPrice] = useState(parseInt(ad.price)) 
+    const [type, setType] = useState(ad.type)
+    const [state, setState] = useState(ad.state)
+    const id_user = parseInt(ad.id_user)
+    const [id_category,setCategory] = useState(parseInt(ad.id_category))
+    const[displayed_picture,setDisplayedPicture] = useState(parseInt(ad.displayed_picture))
     const[isChangeDisplayPicture,setIsChangeDisplayPicture]=useState(false)
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
