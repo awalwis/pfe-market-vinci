@@ -1,5 +1,6 @@
 import axios from 'axios'
-const apiurl = process.env.REACT_APP_URL_API + '/api/utilisateurs'
+//const apiurl = process.env.REACT_APP_URL_API + '/api/utilisateurs'
+const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/utilisateurs'
 
 const getAll = () => {
     return axios.get(apiurl)
