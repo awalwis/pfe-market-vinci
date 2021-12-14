@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BlobServiceClient } from "@azure/storage-blob";
 import uuid from 'react-uuid';
+import { authService } from "./auth.service";
 
 const sasToken = process.env.REACT_APP_SAS_TOKEN;
 const containerName = process.env.REACT_APP_CONTAINER_NAME;
@@ -9,8 +10,26 @@ const storageAccountName = process.env.REACT_APP_STORAGE_ACCOUNT_NAME;
 const apiurl = process.env.REACT_APP_URL_API + '/api/medias'
 
 const createNewMedia = (newMedia) => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
     return axios
-        .post(apiurl, newMedia)
+        .post(apiurl, newMedia, config)
+        .then(response => response.data);
+}
+
+const deleteMedia = (id) => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios
+        .delete(`${apiurl}/${id}`, config)
         .then(response => response.data);
 }
 
@@ -23,14 +42,26 @@ const get = (id) => {
 
 /*get all media for this id_ad*/
 const getByAdId = (id_ad) => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
     return axios
-        .get(`${apiurl}/ad/${id_ad}`)
+        .get(`${apiurl}/ad/${id_ad}`, config)
         .then(response => response.data.medias);
 }
 
 const getAll = () => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
     return axios
-        .get(apiurl)
+        .get(apiurl, config)
         .then(response => response.data.medias);
 }
 
@@ -99,6 +130,7 @@ const UploadMedias = async (file, id_user) => {
 
 export const mediaService = {
     createNewMedia,
+    deleteMedia,
     get,
     getByAdId,
     getAll,
