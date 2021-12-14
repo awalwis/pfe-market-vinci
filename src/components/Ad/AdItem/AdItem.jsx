@@ -8,6 +8,7 @@ import {mediaService} from 'services/medias.service'
 import {userService} from "services/users.service";
 import { categoryService } from "services/categories.service";
 import { ToastContainer, toast } from 'react-toastify';
+import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
 
 const AdItem = ()=>{
@@ -142,9 +143,9 @@ const AdItem = ()=>{
     if(isLoading){
        
         return (
-            <div>
-                Loading...
-            </div>
+            <>
+                <Loader.BigLoader />  
+            </>
         )
     }
 
