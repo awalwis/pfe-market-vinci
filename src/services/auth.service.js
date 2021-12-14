@@ -22,8 +22,9 @@ async function login(email, password) {
         }
         user = userDto;
         localStorage.setItem("currentUser", JSON.stringify(user));
+        return user;
     }
-    return user;
+    return null;
 }
 
 
