@@ -1,21 +1,75 @@
-import { useEffect, useState } from "react";
-import {Badge, Button, Card} from "react-bootstrap";
-import {useParams} from "react-router-dom";
+import { useState } from "react";
+import {Card} from "react-bootstrap";
 import {userService} from "../../services/users.service";
 import "styles/style.css"
-import {Loader} from "components/Loading/Loading";
 import {authService} from "services/auth.service"
+import { toast, ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdatePwd = () => {
 
     const [updatedUser, setUpdatedUser] = useState()
     const [modifPwd, setModifPwd] = useState(false);
 
+    const bcrypt = require('bcryptjs');
 
-    const checkPassword = (e) =>{
+    async function checkPassword (e) {
         e.preventDefault();
-        if(updatedUser.new_password1===updatedUser.new_password2)alert("ok")
-        console.log(updatedUser)
+        
+        let currentUser = authService.getCurrentUser();
+        let userPassword;
+        let userUpdated;
+        await userService.getById(currentUser.id_user).then((response) => {
+            userPassword = response.user.password;
+            userUpdated = response.user;
+        })
+
+        if(!bcrypt.compareSync(updatedUser.password, userPassword)){
+            toast.error('Erreur: mot de passe actuel incorrect', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });
+
+        }else if(updatedUser.new_password1!==updatedUser.new_password2){     
+            toast.error('Erreur: nouveau mots de passes différents', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });
+
+        }else {
+            toast.success('Succès: Mot de passe mis à jour', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });
+            let salt = bcrypt.genSaltSync(10);
+            let newPassword = {
+                first_name: userUpdated.first_name,
+                last_name: userUpdated.last_name, 
+                role: userUpdated.role,
+                campus: userUpdated.campus,
+                email: userUpdated.email,
+                password: bcrypt.hashSync(updatedUser.new_password1, salt),
+            }
+            userService.update(userUpdated.id_user, newPassword);
+        } 
     }
 
 
@@ -53,8 +107,9 @@ const UpdatePwd = () => {
                 <button onClick={(e)=>toggleModifPwd(e)}>Annuler</button>
                 <button onClick={(e)=>checkPassword(e)}>Confirmer</button>
             </Card.Body>
-
         </Card>
+
+        <ToastContainer/>
     </form>)
 }
 

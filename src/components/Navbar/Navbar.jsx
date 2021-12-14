@@ -3,6 +3,9 @@ import {authService} from "services/auth.service";
 import {Nav} from "react-bootstrap";
 import {Link, NavLink, useHistory} from "react-router-dom";
 import "styles/style.css"
+
+
+
 const Navbar= ({loggedIn, roleCurrentUser}) => {
     const currentUser = authService.getCurrentUser();
     let logBtn;
@@ -38,7 +41,7 @@ const Navbar= ({loggedIn, roleCurrentUser}) => {
         onSelect={(selectedKey) => {
             if (selectedKey==='logout') {
                 authService.logout();
-                history.push("/");
+                history.push("/login");
             }
         }}
     >
