@@ -1,6 +1,6 @@
 import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Switch, Route, useRouteMatch, BrowserRouter as Router} from "react-router-dom";
+import {Switch, Route, useRouteMatch} from "react-router-dom";
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 

@@ -4,7 +4,7 @@ import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
 import { CategoriesAPI } from "services/categories";
 import AnnonceList from "./components/AnnonceList";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function Home() {
 
