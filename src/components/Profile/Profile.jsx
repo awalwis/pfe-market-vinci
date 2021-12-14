@@ -21,8 +21,6 @@ const Profile =  () => {
 
     const modifierStatusModif = (e) => {
         e.preventDefault();
-        console.log("profile: ", data.data.user)
-        console.log("current: ", authService.getCurrentUser())
         setStatusModif(!statusModif);
     }
     const toggleModifPwd = (e) => {
