@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {userService} from "../../services/users.service";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
+import UpdatePwd from "components/Profile/UpdatePwd";
 import {authService} from "services/auth.service"
 
 
@@ -11,23 +12,27 @@ const Profile =  () => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState(null);
-    const email = useParams().email
+    const email = useParams().email;
     const [statusColor, setStatusColor] = useState('');
     const [statusModif, setStatusModif] = useState(false);
+    const [modifPwd, setModifPwd] = useState(false);
     const [updatedUser, setUpdatedUser] = useState()
     const [modifAuthorized, setModifAuthorized] = useState(false);
 
     const modifierStatusModif = (e) => {
         e.preventDefault();
-        console.log("profile: ", data.data.user)
-        console.log("current: ", authService.getCurrentUser())
         setStatusModif(!statusModif);
+    }
+    const toggleModifPwd = (e) => {
+        e.preventDefault();
+        setModifPwd(!modifPwd);
     }
 
     function submitUpdate(e) {
         e.preventDefault();
         //todo  !! mettre un token dans le header !!
-        userService.update(updatedUser.id_user,updatedUser).then(()=>{
+        userService.update(updatedUser.id_user,updatedUser).then(async ()=>{
+            await fetchData();
             setStatusModif(false);
         })
         console.log("to submit: ", updatedUser)
@@ -59,25 +64,26 @@ const Profile =  () => {
         
     }
 
-    useEffect(()=>{
-        const fetchData = async ()=>{
-            console.log("email ",email)
-            const data = await userService.getByEmail(email);
-            setData(data);
-            if(data.data.user.role === "admin"){
-                setStatusColor("danger");
-            }else if(data.data.user.role === "mute"){
-                setStatusColor("warning");
-            }else if(data.data.user.role === "banned"){
-                setStatusColor("danger");
-            } else {
-                setStatusColor("primary");
-            }
-            console.log(statusColor);
-            setLoading(false);
-            setUpdatedUser(data.data.user)
-            if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
+    const fetchData = async ()=>{
+        console.log("email ",email)
+        const data = await userService.getByEmail(email);
+        setData(data);
+        if(data.data.user.role === "admin"){
+            setStatusColor("danger");
+        }else if(data.data.user.role === "mute"){
+            setStatusColor("warning");
+        }else if(data.data.user.role === "banned"){
+            setStatusColor("danger");
+        } else {
+            setStatusColor("primary");
         }
+        console.log(statusColor);
+        setLoading(false);
+        setUpdatedUser(data.data.user)
+        if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
+    }
+    useEffect(()=>{
+        
         fetchData();
     },[email]);
 
@@ -88,9 +94,9 @@ const Profile =  () => {
                 <Loader.BigLoader />
             </div>
         )
-
+    if(modifPwd)return (<UpdatePwd/>)
     if (data){
-        return (
+        return (<>
             <form>
                 <Card border="primary" className={"customForm"}>
                     <Card.Header className="center">Mes informations</Card.Header>
@@ -104,7 +110,7 @@ const Profile =  () => {
                             <option>Louvain la neuve</option></select> }</li> 
                             {statusModif && <li>Mot de passe: <input name="password" onChange={handleUserChange} type="text" /></li>}
                         </ul>
-                        {modifAuthorized && <button onClick={(e)=>modifierStatusModif(e)}>{!statusModif && "Modifier profil"}{statusModif && "Annuler"}</button>}
+                        {modifAuthorized && <><button onClick={(e)=>modifierStatusModif(e)}>{!statusModif && "Modifier profil"}{statusModif && "Annuler"}</button> <button onClick={(e)=>toggleModifPwd(e)}>modif Pwd</button></>}
                         {statusModif && <button onClick={(e)=>submitUpdate(e)}>Confirmer</button>}
                     </Card.Body>
                     <Card.Footer>
@@ -115,7 +121,7 @@ const Profile =  () => {
                     </Card.Footer>
                 </Card>
             </form>
-        )}
+        </>)}
         else 
             return (
             <>

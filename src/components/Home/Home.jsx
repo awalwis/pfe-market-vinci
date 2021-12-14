@@ -85,7 +85,6 @@ function Home() {
                         {data && <AnnonceList annonces={data.ads}/>}
                     </Container>
                 </Container>
-                
             </Container>
             <ToastContainer />
         </>

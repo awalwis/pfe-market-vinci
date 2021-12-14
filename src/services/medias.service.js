@@ -2,8 +2,6 @@ import axios from "axios";
 import { BlobServiceClient } from "@azure/storage-blob";
 import uuid from 'react-uuid';
 
-
-
 const sasToken = process.env.REACT_APP_SAS_TOKEN;
 const containerName = process.env.REACT_APP_CONTAINER_NAME;
 const storageAccountName = process.env.REACT_APP_STORAGE_ACCOUNT_NAME;
