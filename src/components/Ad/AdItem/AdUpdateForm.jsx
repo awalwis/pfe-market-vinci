@@ -3,7 +3,7 @@ import {adService} from 'services/ads.service'
 import Category from "components/Category/Category";
 import DropzoneAreaComponent from "../AdNewForm/DropzoneArea";
 import { mediaService } from "services/medias.service";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -89,7 +89,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                 return
             }
         }
-        if(id_category==0){
+        if(id_category===0){
             toast.error('Erreur : Categorie requise !', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -143,7 +143,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         await Promise.all(mediaPromise);
         let mediasChild = await mediaService.getByAdId(ad.id_ad);
         const mediaChildPromise = mediasChild.map(async (mediaChild)=>{
-            if(mediaChild.type=="image"){
+            if(mediaChild.type==="image"){
                 const newAd = {
                     date,
                     title,
@@ -186,7 +186,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         setIsChangeDisplayPicture(!isChangeDisplayPicture)
     }
     const handleDisplayPicture=async (e)=>{
-        if(e.currentTarget.id != displayed_picture){
+        if(e.currentTarget.id !== displayed_picture){
             let idToast = toast.loading("Modification de la photo favorite",{position: "bottom-right"})
             setDisplayedPicture(e.currentTarget.id)
             const newAd = {
@@ -236,7 +236,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                     <div>   
                         <p>Choissez l'image que vous souhaiter utiliser</p>
                         {adMedias.filter(medias=>medias.type==="image").map(media => {
-                            if(displayed_picture == media.id_media){
+                            if(displayed_picture === media.id_media){
                                 return (
                                     <div key={media.id_media}>
                                         <img src={media.url} alt="" />
