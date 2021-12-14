@@ -1,5 +1,6 @@
 import axios from "axios";
-const apiurl = process.env.REACT_APP_URL_API + '/api/medias'
+const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/medias'
+//const apiurl = process.env.REACT_APP_URL_API + '/api/medias'
 
 const createNewMedia = (newMedia) => {
     return axios
