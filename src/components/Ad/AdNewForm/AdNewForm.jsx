@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import {useParams,useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {adService} from 'services/ads.service'
 import { mediaService } from "services/medias.service";
 import {authService} from "services/auth.service";
@@ -101,7 +101,7 @@ const AdNewForm = () => {
                 return
             }
         }
-        if(id_category==0){
+        if(id_category===0){
             toast.error('Erreur : Categorie requise !', {
                 position: "bottom-right",
                 autoClose: 3000,
@@ -176,7 +176,7 @@ const AdNewForm = () => {
         await Promise.all(mediaPromise);
         let mediasChild = await mediaService.getByAdId(id_ad);
         await mediasChild.map(async (mediaChild)=>{
-            if(mediaChild.type=="image"){
+            if(mediaChild.type==="image"){
                 const newAd = {
                     date,
                     description,
