@@ -4,6 +4,7 @@ import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
 import { CategoriesAPI } from "services/categories";
 import AnnonceList from "./components/AnnonceList";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Home() {
 
@@ -63,28 +64,31 @@ function Home() {
     }, [])
 
     return (
-        <Container>
-            <h1>Market Vinci - 2021</h1>
-            <h4>Filtres</h4>
-            <Container className="d-flex flex-column">
-                <Container className="d-flex flex-row justify-content-start">
-                    <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={handleCategoryChange} className="d-flex border" style={{"width":"200px"}}>
-                        {categories && categories.categories.map((row) => {
-                            return(
-                                <option>{row.name}</option>
-                            )
-                        }) }
-                    </Form.Select>
-                    <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
-                    <Form.Control onChange={handleMinPriceChange} placeholder="Prix min" className="d-flex border" style={{"width":"100px"}}/>
-                    <Form.Control onChange={handleMaxPriceChange} placeholder="Prix max" className="d-flex border" style={{"width":"100px"}}/>
+        <>
+            <Container>
+                <h1>Market Vinci - 2021</h1>
+                <h4>Filtres</h4>
+                <Container className="d-flex flex-column">
+                    <Container className="d-flex flex-row justify-content-start">
+                        <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={handleCategoryChange} className="d-flex border" style={{"width":"200px"}}>
+                            {categories && categories.categories.map((row) => {
+                                return(
+                                    <option key={row.id_category}>{row.name}</option>
+                                )
+                            }) }
+                        </Form.Select>
+                        <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
+                        <Form.Control onChange={handleMinPriceChange} placeholder="Prix min" className="d-flex border" style={{"width":"100px"}}/>
+                        <Form.Control onChange={handleMaxPriceChange} placeholder="Prix max" className="d-flex border" style={{"width":"100px"}}/>
+                    </Container>
+                    <Container>
+                        {data && <AnnonceList annonces={data.ads}/>}
+                    </Container>
                 </Container>
-                <Container>
-                    {data && <AnnonceList annonces={data.ads}/>}
-                </Container>
+                
             </Container>
-            
-        </Container>
+            <ToastContainer />
+        </>
     )
 }
 export default Home;
