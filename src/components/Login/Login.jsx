@@ -1,8 +1,10 @@
 import {useState} from "react";
 import {Col,  Button, Form} from "react-bootstrap";
 import "styles/style.css"
+import "styles/login.css"
 import {useHistory} from "react-router-dom";
 import {authService} from "services/auth.service";
+import loginIcon from "images/login.png";
 
 const Login = () => {
     const history = useHistory();
@@ -14,10 +16,12 @@ const Login = () => {
 
     const login = (event) => {
         event.preventDefault();
-        let user = authService.login(newUser.email,newUser.password).then(()=>{
-            console.log("usr: ",user);
-            if(user){
-                console.log("history push")
+        authService.login(newUser.email,newUser.password).then((response)=>{
+            if(response === null) {
+                console.log("credentials not correct");
+                history.push("/login");
+            }else{
+                console.log("credentials correct");
                 history.push("/");
             }
         });
@@ -37,7 +41,8 @@ const Login = () => {
         }
     }
     return (
-        <div>
+        <div className="center"> 
+             <img className="icon-img" src={loginIcon} alt="icon"/>
             <div className="customForm" id="loginForm">
                 <h1 className="center">Connexion</h1>
                 <Form onSubmit={login}>
@@ -51,7 +56,7 @@ const Login = () => {
                         </Form.Group>
                     <br/>    
                     <div className="center">
-                    <Button variant="outline-primary" type="submit">
+                    <Button variant="outline-primary col-12" type="submit">
                         Se connecter
                     </Button>
                     </div>
