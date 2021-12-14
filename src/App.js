@@ -14,7 +14,7 @@ import AdItem from "components/Ad/AdItem/AdItem";
 import AdminUser from "components/Admin/AdminUser";
 import AdminCategory from "components/Admin/AdminCategory";
 import AdminAd from "components/Admin/AdminAd";
-import NavBar from "components/Navbar/NavBar"
+import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
 
@@ -42,7 +42,7 @@ const App = () => {
         <ScrollToTop />
         <GlobalStyles />
         <BaseOptionChartStyle />
-                <NavBar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser}/>
+                <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser}/>
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
