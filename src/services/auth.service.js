@@ -39,8 +39,10 @@ const getCurrentUser = () => {
 }
 
 const getRoleCurrentUser = () => {
-    let decodedToken = jwt.verify(getCurrentUser().token, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs");
-    return decodedToken.role;
+    if (getCurrentUser()) {
+        let decodedToken = jwt.verify(getCurrentUser().token, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs");
+        return decodedToken.role;
+    }
 }
 
 async function register(user) {
