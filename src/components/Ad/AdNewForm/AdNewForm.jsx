@@ -7,10 +7,9 @@ import Category from "components/Category/Category";
 import DropzoneAreaComponent from "./DropzoneArea";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, Stack,Box,FormControl ,
+import { Button, Stack,Box,
     FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
 
-import { LoadingButton } from '@mui/lab';
 
 
 const AdNewForm = () => {
@@ -46,10 +45,12 @@ const AdNewForm = () => {
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
+       
     }
 
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
+        
     }
     
     const handleIsPaying =(e)=>{
@@ -205,6 +206,7 @@ const AdNewForm = () => {
                     id="outlined-number"
                     label="Prix de l'annonce"
                     type="number"
+                    onChange={handlePriceChange}
                     required        
                 />
             </div>
@@ -215,7 +217,6 @@ const AdNewForm = () => {
         <Box>
             <Stack spacing={5}>
                 <TextField
-                
                     id="outlined-required"
                     label="Titre de l'annonce"
                     placeholder="Entrez un titre pour votre annonce"
@@ -223,7 +224,6 @@ const AdNewForm = () => {
                     required
                     />
                 <TextField
-               
                     id="outlined-required"
                     label="Description de l'annonce"
                     placeholder="Entrez une description pour votre annonce"
@@ -236,16 +236,14 @@ const AdNewForm = () => {
             <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"
                  onChange={handleIsPaying}
             >
-                    
-            <FormControlLabel value="isFree" control={<Radio />} label="A donner" />
-            <FormControlLabel value="isPaying" control={<Radio />} label="A vendre" />
+            <FormControlLabel value="isFree" control={<Radio />} label="A donner" aria-required />
+            <FormControlLabel value="isPaying" control={<Radio />} label="A vendre" aria-required />
             </RadioGroup>
             {isPaying && showAddPrice()}
-            <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>   
+            <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>  <br/>
             <Button variant="contained" size="medium" onClick={handleSubmit}>Créer</Button> 
             <ToastContainer/>
-        </Box>
-        
+        </Box> 
     )
 }
 

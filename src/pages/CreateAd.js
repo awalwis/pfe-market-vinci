@@ -8,6 +8,7 @@ import AuthLayout from 'layouts/AuthLayout';
 import Page from 'components/Page';
 import { MHidden } from 'components/@material-extend';
 import AdNewForm  from 'components/Ad/AdNewForm/AdNewForm';
+import { borderColor } from '@mui/system';
 
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 480,
@@ -16,6 +17,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
     minHeight: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
+  
   }));
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -27,7 +29,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 export default function CreateAd() {
     return (
       <RootStyle>
-        <Container maxWidth="sm">
+        <Container sx={{ maxWidth :'sm',border :"solid"}}>
           <ContentStyle>
             <Stack sx={{ mb: 3 }}>
               <Typography variant="h4" gutterBottom>
@@ -35,9 +37,7 @@ export default function CreateAd() {
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>Entre tes informations ci-dessous.</Typography>
             </Stack>
-  
             <AdNewForm />
-  
           </ContentStyle>
         </Container>
       </RootStyle>
