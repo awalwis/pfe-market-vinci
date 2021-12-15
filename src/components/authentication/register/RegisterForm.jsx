@@ -4,16 +4,20 @@ import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import bcrypt from "bcryptjs";
+import {authService} from "../../../services/auth.service";
+import SelectInput from "@mui/material/Select/SelectInput";
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [showPassword, setShowPassword] = useState(false);
+  const bcrypt = require('bcryptjs');
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -22,7 +26,8 @@ export default function RegisterForm() {
       .required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    password1: Yup.string().required('Mot de passe requis'),
+    password2: Yup.string().required('Veuillez confirmer votre mot de passe')
   });
 
   const formik = useFormik({
@@ -30,11 +35,29 @@ export default function RegisterForm() {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password1: '',
+      password2: '',
+      campus:''
     },
+
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      console.log(formik.values)
+      if (formik.values.password1!==formik.values.password2) {alert("mots de passe differents");return ;}
+      let salt = bcrypt.genSaltSync(10);
+      const userObject =
+          {
+            last_name: formik.values.lastName,
+            first_name: formik.values.firstName,
+            email: formik.values.email,
+            password: bcrypt.hashSync(formik.values.password1, salt),
+            campus: formik.values.campus,
+          }
+      if(authService.register(userObject)){
+        //setNewUser(emptyUser);
+        history.push("/")
+      }
+      history.push('/dashboard', { replace: true });
     }
   });
 
@@ -47,37 +70,45 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="First name"
+              label="Prénom"
               {...getFieldProps('firstName')}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
             />
-
             <TextField
               fullWidth
-              label="Last name"
+              label="Nom"
               {...getFieldProps('lastName')}
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
             />
           </Stack>
-
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <TextField
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label="Addresse mail"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
+            <Select
+                fullWidth
+                label="Campus"
+                {...getFieldProps('campus')}
+                error={Boolean(touched.lastName && errors.lastName)}
+                helperText={touched.lastName && errors.lastName}
+            ><children></children></Select>
 
+          </Stack>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <TextField
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
+            label="Mot de passe"
+            {...getFieldProps('password1')}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -90,6 +121,25 @@ export default function RegisterForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
+          <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Confirmer mot de passe"
+            {...getFieldProps('password2')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            error={Boolean(touched.password && errors.password)}
+            helperText={touched.password && errors.password}
+          />
+          </Stack>
 
           <LoadingButton
             fullWidth

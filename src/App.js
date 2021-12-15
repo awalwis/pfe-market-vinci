@@ -1,4 +1,4 @@
-import Register from "components/Register/Register";
+import Register from "pages/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
@@ -17,7 +17,7 @@ import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
 // components
 import ScrollToTop from './components/ScrollToTop';
-import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+
 
 
 
@@ -37,7 +37,6 @@ const App = () => {
         <ThemeConfig>
         <ScrollToTop />
         <GlobalStyles />
-        <BaseOptionChartStyle />
                 <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
                 <Switch>
                     <Route path="/login" component={Login} />
