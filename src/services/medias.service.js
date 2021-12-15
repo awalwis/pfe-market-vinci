@@ -108,11 +108,7 @@ const deleteBlob = async (urlMedia) => {
     let url = urlMedia;
 
     const urlsplit = url.split('/')
-    console.log(urlsplit[4]);
-
     await deleteBlobInContainer(containerClient, urlsplit[4]);
-
-    console.log("DELETED");
 
 };
 

@@ -6,6 +6,9 @@ import "styles/style.css"
 import {useHistory} from "react-router-dom";
 import {Loader} from "components/Loading/Loading";
 import DisplayCategories from "./DisplayCategories"
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+
 
 const AdminCategory = () => {
 
@@ -39,23 +42,34 @@ const AdminCategory = () => {
         })
     }
 
-    const addCategory = () => {
-        console.log(valueInput);
+    const addCategory = async () => {
+        let idToast = toast.loading("Ajout d'une categorie",{position: "bottom-right"})
         let category = {
             name:valueInput,
             parent_category:0
         }
-        console.log(category);
-        categoryService.create(category).then(
-            (response)=>{
-                setRefreshKey(refreshKey+1)
-            }
-        )
+        await categoryService.create(category)
+        toast.update(idToast,{
+            render: 'Categorie Ajoutée !',
+            type: "success",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        setRefreshKey(refreshKey+1)
     }
 
     if(isLoading){
         return(
-            <Loader.BigLoader />  
+            <>
+                <Loader.BigLoader />
+            </>
         )
     }else{
         return (
@@ -68,6 +82,7 @@ const AdminCategory = () => {
                         <FormControl onChange={e => {setValueInput(e.target.value)}} placeholder="Ajouter categorie" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
                     </InputGroup>
                 </form>
+                <ToastContainer />
             </>
         )
     }

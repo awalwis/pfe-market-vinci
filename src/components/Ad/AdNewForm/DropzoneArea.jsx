@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Theaters } from '@material-ui/icons';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { toast } from 'react-toastify';
+import Box from '@mui/material/Box';
 
 
 const DropzoneAreaComponent = (props) => {
@@ -77,6 +78,7 @@ const DropzoneAreaComponent = (props) => {
     }
     
     return(
+        <Box component="span" sx={{ p: 5 }}>
         <DropzoneArea
             key={key}
             dropzoneText={"Drag and drop an image or video here or click"}
@@ -94,6 +96,7 @@ const DropzoneAreaComponent = (props) => {
             classesName={"MuiSnackbar-anchorOriginBottomRight"}
             showAlerts={false}
         />
+        </Box>
     )
 }
 export default DropzoneAreaComponent;

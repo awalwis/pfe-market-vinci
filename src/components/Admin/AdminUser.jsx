@@ -5,6 +5,7 @@ import "styles/style.css"
 import { authService } from "services/auth.service";
 import Display from "./DisplayUsers"
 import {useHistory} from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 const AdminUser = () => {
 
@@ -92,6 +93,8 @@ const AdminUser = () => {
             </Form>
 
             <Display users={filtredUsers} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
+
+            <ToastContainer />
         </div>
     )
 }

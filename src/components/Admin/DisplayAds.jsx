@@ -1,9 +1,11 @@
 import React from "react"; 
 import { Button, Form, Table } from 'react-bootstrap';
-import { adService } from "services/ads.service"; 
+import { adService } from "services/ads.service";
+import {mediaService} from 'services/medias.service'
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
+import { toast } from 'react-toastify';
 
 export default function Display(props) {
 
@@ -16,8 +18,8 @@ const DisplayAds = (props) => {
         history.push("/annonces/"+id);
     }
 
-    const changeSelectValue = (ad, selectValue) => {
-        console.log(selectValue)
+    const changeSelectValue = async (ad, selectValue) => {
+        let idToast = toast.loading("Changement d'etat",{position: "bottom-right"})
         let newAd = {
            title: ad.title,
            description: ad.description, 
@@ -29,17 +31,44 @@ const DisplayAds = (props) => {
            id_user: ad.id_user,
            id_category: ad.id_category
         }
-        console.log(ad); 
-        console.log(newAd);
-        adService.update(ad.id_ad, newAd);
+        await adService.update(ad.id_ad, newAd);
+        toast.update(idToast,{
+            render: 'Etat changé !',
+            type: "success",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
     }
 
-    const deleteAd = (id) => {
-        adService.remove(id).then(
-            (response)=>{
-                props.setRefreshKey(props.refreshKey+1)
-            }
-        )
+    const deleteAd = async (id) => {
+        let idToast = toast.loading("Suppression de l'annonce",{position: "bottom-right"})
+        let medias = await mediaService.getByAdId(id);
+        console.log(medias);
+        medias.map((media)=>{
+            mediaService.deleteBlob(media.url)
+        })
+        await adService.remove(id)
+        toast.update(idToast,{
+            render: 'Annonce supprimée !',
+            type: "info",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        props.setRefreshKey(props.refreshKey+1)
     }
 
     if(props.isLoading){
@@ -104,7 +133,7 @@ return (
                     <th>date</th>
                     <th>type</th>
                     <th>prix</th>
-                    <th>state</th>
+                    <th>etat</th>
                     <th>supprimer une annonce</th>
                 </tr>
             </thead>

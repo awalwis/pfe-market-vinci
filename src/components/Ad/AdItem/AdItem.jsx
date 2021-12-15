@@ -10,6 +10,7 @@ import { categoryService } from "services/categories.service";
 import { ToastContainer, toast } from 'react-toastify';
 import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
+import NotFound from "pages/Page404"
 
 const AdItem = ()=>{
 
@@ -46,9 +47,19 @@ const AdItem = ()=>{
         setIsOpen(!isOpen);
     }
 
-    const handleDelete = () => {
-        adService.remove(id);
-        toast.info('Annonce supprimée !', {
+    const handleDelete = async () => {
+        let idToast = toast.loading("Suppression de l'annonce",{position: "bottom-right"})
+        console.log(medias);
+        const allPromise = medias.map(async (media) => {
+            console.log(media.url);
+            await mediaService.deleteBlob(media.url)
+        })
+        await Promise.all(allPromise);
+        await adService.remove(id);
+        toast.update(idToast,{
+            render: 'Annonce supprimée !',
+            type: "info",
+            isLoading: false,
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -135,7 +146,7 @@ const AdItem = ()=>{
     if(notExist && isLoading){
         return(
             <div>
-                <h2>Cette annonce n'existe pas</h2>
+               <NotFound/>
             </div>
         )
     }
