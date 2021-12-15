@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
+      - run: 
+          name: Build
+          command: CI=false npm run build
 
 workflows:
   heroku_deploy:
@@ -24,10 +27,6 @@ workflows:
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           requires:
             - build
-          pre-steps:
-            - run:
-                name: Build
-                command: npm run build
           filters:
             branches:
               only: main
