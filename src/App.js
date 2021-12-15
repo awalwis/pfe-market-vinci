@@ -1,10 +1,10 @@
-import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 
 // components
+import Register from "components/Register/Register";
 import ScrollToTop from 'components/ScrollToTop';
 import { BaseOptionChartStyle } from 'components/charts/BaseOptionChart';
 import Home from "components/Home/Home";
@@ -17,6 +17,8 @@ import AdminAd from "components/Admin/AdminAd";
 import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
+import Footer from"pages/Footer"
+import CreateAd from "pages/CreateAd"
 import { ToastContainer } from 'react-toastify';
 
 //services
@@ -45,7 +47,7 @@ const App = () => {
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/home" component={Home} />
-                <Route path="/ajouter" component={AdNewForm} />
+                <Route path="/ajouter" component={CreateAd} />
                 <Route path="/annonces/:id" component={AdItem} />
                 <Route path="/admin/categories" component={AdminCategory} />
                 <Route path="/admin/utilisateurs" component={AdminUser} />

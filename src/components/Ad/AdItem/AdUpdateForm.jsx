@@ -9,9 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
-import {Button} from "react-bootstrap";
+import { Button, Stack,Container,
+    FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
+import {Button as ButtonReact}  from "react-bootstrap";
 
-const CheckBox = (type) => {
+/*const CheckBox = (type) => {
 
     library.add(faHeart, far)
 
@@ -30,7 +32,8 @@ const CheckBox = (type) => {
             </>
         )
     }
-}
+}*/
+
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
 
@@ -156,6 +159,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                     id_user,
                     displayed_picture: mediaChild.id_media     
                 };
+                console.log(newAd)
                 await adService.update(ad.id_ad, newAd)
                 return
             }
@@ -184,6 +188,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         }      
     }     
     const handlePictureChange=()=>{
+        library.add(faHeart, far)
         setIsChangeDisplayPicture(!isChangeDisplayPicture)
     }
     const handleDisplayPicture=async (e)=>{
@@ -289,53 +294,83 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
     }
 
     return (
-            <div>
-                <form onSubmit={handleSubmit}>
-                    Titre: <input type="text" name="title" defaultValue={ad.title} onChange={handleUpdate}/>
-                    Description: <input type="text" name="description" defaultValue={ad.description}onChange={handleUpdate}/>
-                    Prix: <input type="number"name="price" defaultValue={ad.price} onChange={handleUpdate}/>
-                    <div onChange={handleUpdate}>
-                        <CheckBox type={type} />
-                    </div>
-                    <Category setCategory={setCategory} idDefault={id_category}/>
-                    <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>
-                    <button type="submit">Modifier</button>    
-                </form>  
-                <button onClick={handlePictureChange}>Modifier vos images</button>
-                {isChangeDisplayPicture &&
-                    <div>   
-                        <p>Choissez l'image que vous souhaiter utiliser</p>
-                        {adMedias.map(media => {
-                            if(media.type==="video"){
-                                return (
-                                    <div key={media.id_media}>
-                                        <img src={media.url} alt="" />
-                                        <Button variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
-                                    </div>
-                                )
-                            }
-                            if(displayed_picture == media.id_media){
-                                return (
-                                    <div key={media.id_media}>
-                                        <img src={media.url} alt="" />
-                                        <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon="heart"/>
-                                        <Button variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
-                                    </div>
-                                )
-                            }else{
-                                return (
-                                    <div key={media.id_media}>
-                                        <img src={media.url} alt="" />
-                                        <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon={["far","heart"]}/>
-                                        <Button variant="danger" data-type={media.type} data-fav={false} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
-                                    </div>
-                                )
-                            }
-                            
-                        })}
-                    </div>
-                }
-            </div>
-        );
+
+         <Container sx={{ maxWidth :'sm',border :"solid"}}>
+            <Stack spacing={5}>
+                <TextField
+                    id="outlined-required"
+                    label="Titre de l'annonce"
+                    name="title"
+                    defaultValue={ad.title}
+                    onChange={handleUpdate}
+                    required
+                    />
+                <TextField
+                    id="outlined-required"
+                    label="Description de l'annonce"
+                    name="description"
+                    defaultValue={ad.description}
+                    onChange={handleUpdate}
+                    required
+                />
+                <TextField
+                        fullWidth
+                        id="outlined-number"
+                        label="Prix de l'annonce"
+                        type="number"
+                        name="price"
+                        defaultValue={ad.price}
+                        onChange={handleUpdate}
+                        required        
+                />
+              </Stack>
+                <FormLabel component="legend">Type d'annonce</FormLabel>
+                <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"
+                    defaultValue={ad.type}
+                    onChange={handleUpdate}
+                >
+                <FormControlLabel name="type" value="a donner" control={<Radio />} label="A donner" aria-required />
+                <FormControlLabel name="type" value="a vendre" control={<Radio />} label="A vendre" aria-required />
+                </RadioGroup>
+             
+            <Category setCategory={setCategory} idDefault={id_category}/>
+            <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>   
+            <Button variant="contained" size="medium" onClick={handleSubmit}>Modifier</Button> 
+            <Button variant="contained" size="medium" onClick={handlePictureChange}>Modifier vos images</Button> 
+            {isChangeDisplayPicture &&
+                 <div>   
+                 <p>Choissez l'image que vous souhaiter utiliser</p>
+                 {adMedias.map(media => {
+                     if(media.type==="video"){
+                         return (
+                             <div key={media.id_media}>
+                                 <img src={media.url} alt="" />
+                                 <ButtonReact variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</ButtonReact>
+                             </div>
+                         )
+                     }
+                     if(displayed_picture == media.id_media){
+                         return (
+                             <div key={media.id_media}>
+                                 <img src={media.url} alt="" />
+                                 <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon="heart"/>
+                                 <ButtonReact variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</ButtonReact>
+                             </div>
+                         )
+                     }else{
+                         return (
+                             <div key={media.id_media}>
+                                 <img src={media.url} alt="" />
+                                 <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon={["far","heart"]}/>
+                                 <ButtonReact variant="danger" data-type={media.type} data-fav={false} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</ButtonReact>
+                             </div>
+                         )
+                     }
+                     
+                 })}
+             </div>
+            }
+        </Container>    
+    );         
 };
 export default AdUpdateForm;

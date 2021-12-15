@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react"
 import { categoryService } from "services/categories.service"
-import { Form } from 'react-bootstrap';
+import { Box, FormControl, NativeSelect,InputLabel } from '@mui/material';
 
 const Category=({setCategory, idDefault})=>{
 
@@ -19,9 +19,21 @@ const Category=({setCategory, idDefault})=>{
     }
 
     if(idDefault){
-        return(
-            <Form.Select value={idDefault} onChange={handleCategoryChange}>
-                <option value='0'>---Choisir categorie---</option>
+        //when update
+        return(           
+            <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Categorie
+              </InputLabel>
+              <NativeSelect onChange={handleCategoryChange}
+                defaultValue={idDefault}
+                inputProps={{
+                  name: 'category',
+                  id: 'uncontrolled-native',
+                }}
+              >
+                <option value='0'>---Choisir une categorie---</option>
                 {categories.map(category => {
                     if(!category.parent_category){
                         return(
@@ -33,25 +45,35 @@ const Category=({setCategory, idDefault})=>{
                         )
                     }
                 })}
-            </Form.Select>                                         
+
+              </NativeSelect>
+            </FormControl>
+          </Box>              
         )
     }else{
         return(
-            <Form.Select defaultValue={'0'} onChange={handleCategoryChange}>
-                <option value='0'>---Choisir categorie---</option>
-                {categories.map(category => {
-                    if(!category.parent_category){
-                        return(
-                            <option key={category.id_category} disabled>--{category.name}--</option>
-                        )
-                    }else{
-                        return(
-                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
-                        )
-                    }
+            //when create
+            <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                Categorie
+              </InputLabel>
+              <NativeSelect onChange={handleCategoryChange}
+                defaultValue={0}
+                inputProps={{
+                  name: 'category',
+                  id: 'uncontrolled-native',
+                }}
+              >
+                <option value='0'>---Choisir une categorie---</option>
+               {categories.map(category => {
+                    if(category.parent_category) return <option key={category.id_category} value={category.id_category}>{category.name}</option>;
                 })}
-            </Form.Select>                                      
+              </NativeSelect>
+            </FormControl>
+          </Box>                 
         )
     }
 }
 export default Category
+
