@@ -75,10 +75,36 @@ const getAll = () => {
         .then(response => response.data);
 }
 
+const getAllUser = (id_user) => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios
+        .get(apiurl + "/user/" + id_user, config)
+        .then(response => response.data);
+}
+
+const getAllAvailableUser = (id_user) => {
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios
+        .get(apiurl + "/available/user/" + id_user, config)
+        .then(response => response.data);
+}
+
 export const adService = {
     createNewAd,
     remove,
     update,
     get,
-    getAll
+    getAll,
+    getAllUser,
+    getAllAvailableUser
 }

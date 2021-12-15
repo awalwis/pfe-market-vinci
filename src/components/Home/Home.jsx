@@ -18,12 +18,21 @@ function Home() {
 
     // Functions
     async function handleCategoryChange(event){
-        await setCategory(event.target.value)
-        await setFilter(`?categorie=${event.target.value}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
-        await setFilter((state) => {
-            AnnoncesAPI.getAds(state).then((elt) => setData(elt));
-            return state;
-        })
+        let nameCategory = event.target.value.replaceAll("-", "");
+        if(nameCategory != "Tout"){
+            await setCategory(nameCategory)
+            await setFilter(`?categorie=${nameCategory}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
+            await setFilter((state) => {
+                AnnoncesAPI.getAds(state).then((elt) => setData(elt));
+                return state;
+            })
+        }else{
+            await setFilter(``)
+            await setFilter((state) => {
+                AnnoncesAPI.getAds(state).then((elt) => setData(elt));
+                return state;
+            })
+        }
     }
     async function handleTriChange(){
         if(tri==="ASC"){
@@ -71,10 +80,17 @@ function Home() {
                 <Container className="d-flex flex-column">
                     <Container className="d-flex flex-row justify-content-start">
                         <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={handleCategoryChange} className="d-flex border" style={{"width":"200px"}}>
+                            <option key={0}>--Tout--</option>
                             {categories && categories.categories.map((row) => {
-                                return(
-                                    <option key={row.id_category}>{row.name}</option>
-                                )
+                                if(!row.parent_category){
+                                    return(
+                                        <option key={row.id_category} disabled>--{row.name}--</option>
+                                    )
+                                }else{
+                                    return(
+                                        <option key={row.id_category}>{row.name}</option>
+                                    )
+                                }
                             }) }
                         </Form.Select>
                         <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
