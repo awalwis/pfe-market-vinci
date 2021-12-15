@@ -5,9 +5,9 @@ import { AnnoncesAPI } from "services/annonces";
 import AnnonceFilters from "./components/AnnonceFilters";
 import AnnonceList from "./components/AnnonceList";
 import AnnonceSort from "./components/AnnonceSort";
+import { ToastContainer } from 'react-toastify';
 
 const Home = () => {
-import { ToastContainer } from 'react-toastify';
 
 
     const [data, setData] = useState();
@@ -83,21 +83,23 @@ import { ToastContainer } from 'react-toastify';
     }, [])
 
     return (
-        <Container>
-            <h1>Market Vinci</h1>
-            <h4>Annonces</h4>
-            <Container className="d-flex flex-column">
-                <Container style={{"float":"right"}}>
-                    <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} handleCategoryChange={handleCategoryChange}
-                        handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
-                    <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
-                </Container>
+        <>
+            <Container>
+                <h1>Market Vinci</h1>
+                <h4>Annonces</h4>
+                <Container className="d-flex flex-column">
+                    <Container style={{"float":"right"}}>
+                        <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} handleCategoryChange={handleCategoryChange}
+                            handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
+                        <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
+                    </Container>
 
-                <Container>
-                    {data && <AnnonceList annonces={data.ads}/>}
+                    <Container>
+                        {data && <AnnonceList annonces={data.ads}/>}
+                    </Container>
                 </Container>
             </Container>
-            <ToastContainer />
+            <ToastContainer/>
         </>
     )
 }
