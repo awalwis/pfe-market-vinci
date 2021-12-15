@@ -6,7 +6,6 @@ const AnnonceCard = ({annonce, picture}) => {
     function showDetails(id){
         console.log(id)
     }
-    
     return(
         <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={picture!==null?picture.url:"holder.js/100px180"} />
