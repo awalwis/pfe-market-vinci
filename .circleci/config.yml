@@ -27,7 +27,7 @@ workflows:
           pre-steps:
             - run:
                 name: Build
-                command: npm build
+                command: npm run build
           filters:
             branches:
               only: main
