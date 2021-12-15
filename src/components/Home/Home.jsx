@@ -7,6 +7,7 @@ import AnnonceList from "./components/AnnonceList";
 import AnnonceSort from "./components/AnnonceSort";
 
 const Home = () => {
+import { ToastContainer } from 'react-toastify';
 
 
     const [data, setData] = useState();
@@ -14,20 +15,29 @@ const Home = () => {
     const [tri, setTri] = useState(true);
     const [category, setCategory] = useState("");
     const [prixMin, setPrixMin] = useState("0");
-    const [prixMax, setPrixMax] = useState("3000"); 
+    const [prixMax, setPrixMax] = useState("3000");
     const [openFilter, setOpenFilter] = useState(false);
 
     // Functions
     async function handleCategoryChange(event){
-        await setCategory(event.target.value)
-        await setFilter(`?categorie=${event.target.value}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
-        await setFilter((state) => {
-            AnnoncesAPI.getAds(state).then((elt) => setData(elt));
-            return state;
-        })
+        let nameCategory = event.target.value.replaceAll("-", "");
+        if(nameCategory != "Tout"){
+            await setCategory(nameCategory)
+            await setFilter(`?categorie=${nameCategory}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
+            await setFilter((state) => {
+                AnnoncesAPI.getAds(state).then((elt) => setData(elt));
+                return state;
+            })
+        }else{
+            await setFilter(``)
+            await setFilter((state) => {
+                AnnoncesAPI.getAds(state).then((elt) => setData(elt));
+                return state;
+            })
+        }
     }
     async function handleTriChange(newTri){
-        if(newTri){ 
+        if(newTri){
             // change à non alphabétique
             await setTri(false)
             await setFilter(`?categorie=${category}&tri=DESC&prixMin=${prixMin}&prixMax=${prixMax}`)
@@ -82,13 +92,13 @@ const Home = () => {
                         handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
                     <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
                 </Container>
-                
+
                 <Container>
                     {data && <AnnonceList annonces={data.ads}/>}
                 </Container>
             </Container>
-            
-        </Container>
+            <ToastContainer />
+        </>
     )
 }
 export default Home;

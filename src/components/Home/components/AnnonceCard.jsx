@@ -15,7 +15,7 @@ const AnnonceCard = ({annonce, picture}) => {
         objectFit: 'cover',
         position: 'absolute'
       });
-    
+
     return(
         <><Card>
             <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -37,7 +37,7 @@ const AnnonceCard = ({annonce, picture}) => {
                 </Stack>
             </Stack>
     </Card></>
-        
+
     )
 }
 export default AnnonceCard;

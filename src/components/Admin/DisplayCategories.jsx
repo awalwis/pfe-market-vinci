@@ -5,11 +5,13 @@ import {ListGroup,Badge,InputGroup,FormControl,Button} from "react-bootstrap";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import parse from 'html-react-parser';
+import { toast } from 'react-toastify';
 
 const ConstructP = (props) => {
     let value = props.value;
 
-    const deleteSubCategory = (e)=>{
+    const deleteSubCategory = async (e)=>{
+        let idToast = toast.loading("Suppression d'une sous categorie",{position: "bottom-right"})
         let idDelete=-1;
         let children = e.target.parentNode.childNodes;
         for(let i =0; i<children.length;i++){
@@ -18,11 +20,21 @@ const ConstructP = (props) => {
             }
         }
         console.log(idDelete)
-        categoryService.deleteCategory(idDelete).then(
-            (response)=>{
-                props.setRefreshKey(props.refreshKey+1)
-            }
-        )
+        await categoryService.deleteCategory(idDelete)
+        toast.update(idToast,{
+            render: 'Sous categorie Supprimée !',
+            type: "info",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        props.setRefreshKey(props.refreshKey+1);
     }
 
     let i = 0;
@@ -37,7 +49,7 @@ const ConstructP = (props) => {
                         <Button onClick={e => {deleteSubCategory(e)}} variant="danger">DELETE</Button>
                     </div>
                 )
-            }else if(i==0){
+            }else if(i===0){
                 nameParent = e;
                 i++;
             }else{
@@ -88,28 +100,50 @@ const DisplayCategories = (props) => {
         }
     }
 
-    const deleteCategory = (e)=>{
+    const deleteCategory = async (e)=>{
+        let idToast = toast.loading("Suppression d'une categorie",{position: "bottom-right"})
         let idDelete = e.target.parentNode.parentNode.dataset.key;
-        categoryService.deleteCategory(idDelete).then(
-            (response)=>{
-                props.setRefreshKey(props.refreshKey+1)
-            }
-        )
+        await categoryService.deleteCategory(idDelete)
+        toast.update(idToast,{
+            render: 'Categorie Supprimée !',
+            type: "info",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        props.setRefreshKey(props.refreshKey+1)
     }
     
-    const addSubCategory = (e) => {
+    const addSubCategory = async (e) => {
+        e.preventDefault();
+        let idToast = toast.loading("Ajout d'une sous categorie",{position: "bottom-right"})
         setCategoriesSubMap([]);
-        let id = parseInt(e);
+        let id = parseInt(e.target.parentNode.parentNode.dataset.key);
         let category = {
             name:valueInput,
             parent_category:id
         }
-        console.log(category);
-        categoryService.create(category).then(
-            (response)=>{
-                props.setRefreshKey(props.refreshKey+1)
-            }
-        )
+        await categoryService.create(category)
+        toast.update(idToast,{
+            render: 'Sous categorie Ajoutée !',
+            type: "success",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        props.setRefreshKey(props.refreshKey+1)
     }
     
     if(props.isLoading){
@@ -129,10 +163,10 @@ const DisplayCategories = (props) => {
                         data-key={key}
                     >
                         <div className="ms-2 me-auto">
-                            <Button onClick={e => {deleteCategory(e)}} variant="danger">DELETE</Button>
                             <div className="fw-bold">{value[0]}</div>
+                            <Button onClick={e => {deleteCategory(e)}} variant="danger">DELETE</Button>
                             <ConstructP value={value} setRefreshKey={props.setRefreshKey} refreshKey={props.refreshKey}/>
-                            <form onSubmit={e => {e.preventDefault(); addSubCategory(e.target.parentNode.parentNode.dataset.key)}}>
+                            <form onSubmit={addSubCategory}>
                                 <InputGroup size="sm" className="mb-3">
                                     <FormControl onChange={e => {setValueInput(e.target.value)}} placeholder="Ajouter sous categorie" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
                                 </InputGroup>

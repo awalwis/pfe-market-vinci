@@ -1,15 +1,112 @@
 import { useEffect, useState } from "react";
-import {Badge, Button, Card} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
+import {Badge, Card, Button} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {userService} from "../../services/users.service";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import UpdatePwd from "components/Profile/UpdatePwd";
 import {authService} from "services/auth.service"
+import { adService } from "services/ads.service";
+import { mediaService } from "services/medias.service";
 
+const DisplayTable = ({adsAvailable,adsPending,adsSold,mapUrl,id_user,currentIdUser,currentUserRole}) => {
+    if(id_user == currentIdUser || currentUserRole === "admin"){
+        return(
+            <>
+                <h2>Annonces Disponible</h2>
+                <DisplayTableAvailable adsAvailable={adsAvailable} mapUrl={mapUrl} />
+                <h2>Annonces en attente</h2>
+                <DisplayTablePending adsPending={adsPending} mapUrl={mapUrl} />
+                <h2>Annonces vendue</h2>
+                <DisplayTableSold adsSold={adsSold} mapUrl={mapUrl} />
+            </>
+        )  
+    }else{
+        return(
+            <>
+                <h2>Annonces Disponible</h2>
+                <DisplayTableAvailable adsAvailable={adsAvailable} mapUrl={mapUrl} />
+            </>
+        )  
+    }
+    
+}
+
+const DisplayTableAvailable = ({adsAvailable, mapUrl}) => {
+    const history = useHistory();
+
+    const handleButton = (e) =>{
+        history.push("/annonces/"+e.target.dataset.id);
+    }
+    return(
+        adsAvailable.map((ad)=>{
+            return(
+                <Card key={ad.id_ad} style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mapUrl[ad.id_ad]} />
+                    <Card.Body>
+                        <Card.Title>{ad.title}</Card.Title>
+                        <Card.Text>
+                            {ad.description}
+                        </Card.Text>
+                        <Button data-id={ad.id_ad} onClick={handleButton} variant="primary">Plus info</Button>
+                    </Card.Body>
+                </Card>
+            )
+        }) 
+    )  
+}
+
+const DisplayTablePending = ({adsPending, mapUrl}) => {
+    const history = useHistory();
+
+    const handleButton = (e) =>{
+        history.push("/annonces/"+e.target.dataset.id);
+    }
+    return(
+        adsPending.map((ad)=>{
+            return(
+                <Card key={ad.id_ad} style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mapUrl[ad.id_ad]} />
+                    <Card.Body>
+                        <Card.Title>{ad.title}</Card.Title>
+                        <Card.Text>
+                            {ad.description}
+                        </Card.Text>
+                        <Button data-id={ad.id_ad} onClick={handleButton} variant="primary">Plus info</Button>
+                    </Card.Body>
+                </Card>
+            )
+        }) 
+    )  
+}
+
+const DisplayTableSold = ({adsSold, mapUrl}) => {
+    const history = useHistory();
+
+    const handleButton = (e) =>{
+        history.push("/annonces/"+e.target.dataset.id);
+    }
+    return(
+        adsSold.map((ad)=>{
+            return(
+                <Card key={ad.id_ad} style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={mapUrl[ad.id_ad]} />
+                    <Card.Body>
+                        <Card.Title>{ad.title}</Card.Title>
+                        <Card.Text>
+                            {ad.description}
+                        </Card.Text>
+                        <Button data-id={ad.id_ad} onClick={handleButton} variant="primary">Plus info</Button>
+                    </Card.Body>
+                </Card>
+            )
+        }) 
+    )  
+}
 
 const Profile =  () => {
-
+    const history = useHistory()
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const email = useParams().email;
@@ -18,6 +115,10 @@ const Profile =  () => {
     const [modifPwd, setModifPwd] = useState(false);
     const [updatedUser, setUpdatedUser] = useState()
     const [modifAuthorized, setModifAuthorized] = useState(false);
+    const [adsAvailable, setAdsAvailbale] = useState([]);
+    const [adsPending, setAdsPending] = useState([]);
+    const [adsSold, setAdsSold] = useState([]);
+    const [mapUrl, setMapUrl] = useState({});
 
     const modifierStatusModif = (e) => {
         e.preventDefault();
@@ -37,6 +138,7 @@ const Profile =  () => {
         })
         console.log("to submit: ", updatedUser)
     }
+
     const handleUserChange = (event) => {
         switch (event.target.name) {
             case "last_name":
@@ -61,7 +163,6 @@ const Profile =  () => {
                 console.log("error input")
                 break
         }
-        
     }
 
     const fetchData = async ()=>{
@@ -77,14 +178,37 @@ const Profile =  () => {
         } else {
             setStatusColor("primary");
         }
-        console.log(statusColor);
         setLoading(false);
         setUpdatedUser(data.data.user)
         if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
+        let adsUser;
+        if(data.data.user.id_user == authService.getCurrentUser().id_user || authService.getRoleCurrentUser() === "admin"){
+            adsUser = await adService.getAllUser(data.data.user.id_user)
+            setAdsPending(adsUser.ads.filter(ad=>ad.state==="en attente"));
+            setAdsSold(adsUser.ads.filter(ad=>ad.state==="vendu"));
+        }else{
+            adsUser = await adService.getAllAvailableUser(data.data.user.id_user)
+        }
+        setAdsAvailbale(adsUser.ads.filter(ad=>ad.state==="disponible"));
+        let mapUrl = {}
+        const allPromise = adsUser.ads.map(async (ad)=>{
+            let medias = await mediaService.getByAdId(ad.id_ad)
+            medias.map((media)=>{
+                if(media.id_media==ad.displayed_picture){
+                    mapUrl[ad.id_ad]=media.url
+                }
+            })
+        }) 
+        await Promise.all(allPromise);
+        setMapUrl(mapUrl);
     }
+
     useEffect(()=>{
-        
-        fetchData();
+        if(!authService.getCurrentUser()){
+            history.push("/")
+        }else{
+            fetchData();
+        }
     },[email]);
 
 
@@ -95,8 +219,9 @@ const Profile =  () => {
             </div>
         )
     if(modifPwd)return (<UpdatePwd/>)
-    if (data){
-        return (<>
+
+    return (
+        <>
             <form>
                 <Card border="primary" className={"customForm"}>
                     <Card.Header className="center">Mes informations</Card.Header>
@@ -121,16 +246,9 @@ const Profile =  () => {
                     </Card.Footer>
                 </Card>
             </form>
-        </>)}
-        else 
-            return (
-            <>
-                <p>Veuillez vous connecter</p>
-                <Button href="/login" variant="outline-primary" type="submit">
-                    Se connecter
-                </Button>
-            </>
-            )
+            <DisplayTable adsAvailable={adsAvailable} adsPending={adsPending} adsSold={adsSold} mapUrl={mapUrl} id_user={data.data.user.id_user} currentIdUser={authService.getCurrentUser().id_user}  currentUserRole={authService.getRoleCurrentUser()}/>
+        </>
+    )
 }
 
    

@@ -26,13 +26,7 @@ const AnnonceList = ({annonces}) => {
     }, [])
 
     return(
-        // <Container className="d-inline-flex flex-wrap flex-row justify-content-start">
-        //     {annonces.map((annonce) => {
-        //         return(
-        //             <AnnonceCard key={annonce.id_ad} annonce={annonce} picture={matchPicture(annonce.displayed_picture)}/>
-        //         )
-        //     }) }
-        // </Container>
+
         <Grid container spacing={3}>
             {annonces.map((annonce) => (
             <Grid key={annonce.id_ad} item xs={12} sm={6} md={3}>

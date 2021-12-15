@@ -10,13 +10,15 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      # install dependencies
       - run:
           name: Install Dependencies
           command: npm install
       - run:
           name: Run tests
           command: npm run test
+      - run: 
+          name: Build
+          command: CI=false npm run build
 
 workflows:
   heroku_deploy:

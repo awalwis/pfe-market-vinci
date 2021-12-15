@@ -72,14 +72,14 @@ const Admin = () => {
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel">
+                    <div className="cpanel-blue cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-green cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="list-ul"/><br/>
                             <small>Catégories</small>
@@ -96,19 +96,19 @@ const Admin = () => {
                 <div className="main-part">
                     <div className="cpanel" onClick={e => navigateToUsers()}>
                         <div className="icon-part">
-                            <i><FontAwesomeIcon icon="users" /></i><br/>
+                            <FontAwesomeIcon icon="users" /><br/>
                             <small>Utilisateurs</small>
                             <p>{countUsers}</p>
                         </div>
                     </div>
                     <div className="cpanel-blue cpanel" onClick={e => navigateToAds()}>
                         <div className="icon-part">
-                            <i><FontAwesomeIcon icon="comments" /></i><br/>
+                            <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
                             <p>{countAds}</p>
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel" onClick={e => navigateToCategories()}>
+                    <div className="cpanel-green cpanel" onClick={e => navigateToCategories()}>
                         <div className="icon-part">
                             <FontAwesomeIcon icon="list-ul"/><br/>
                             <small>Catégories</small>
