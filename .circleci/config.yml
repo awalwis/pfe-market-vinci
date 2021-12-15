@@ -17,8 +17,9 @@ jobs:
           name: Run tests
           command: npm run test
       - run: 
-          name: Npm build
+          name: Build
           command: npm run build
+          
 workflows:
   heroku_deploy:
     jobs:
