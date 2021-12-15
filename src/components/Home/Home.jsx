@@ -4,14 +4,14 @@ import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
 import AnnonceFilters from "./components/AnnonceFilters";
 import AnnonceList from "./components/AnnonceList";
-import { authService } from "services/auth.service";
+import AnnonceSort from "./components/AnnonceSort";
 
 const Home = () => {
 
 
     const [data, setData] = useState();
     const [filter, setFilter] = useState("?categorie=&tri=ASC&prixMin=0&prixMax=3000");
-    const [tri, setTri] = useState("ASC");
+    const [tri, setTri] = useState(true);
     const [category, setCategory] = useState("");
     const [prixMin, setPrixMin] = useState("0");
     const [prixMax, setPrixMax] = useState("3000"); 
@@ -27,15 +27,15 @@ const Home = () => {
         })
     }
     async function handleTriChange(){
-        if(tri==="ASC"){
-            await setTri("DESC")
+        if(tri){
+            await setTri(false)
             await setFilter(`?categorie=${category}&tri=DESC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
         } else {
-            await setTri("ASC")
+            await setTri(true)
             await setFilter(`?categorie=${category}&tri=ASC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
@@ -76,8 +76,9 @@ const Home = () => {
             <h4>Annonces</h4>
             <Container className="d-flex flex-column">
                 <Container style={{"float":"right"}}>
-                    <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} handleCategoryChange={handleCategoryChange} handleTriChange={handleTriChange}
+                    <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} handleCategoryChange={handleCategoryChange}
                         handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
+                    <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
                 </Container>
                 
                 <Container>

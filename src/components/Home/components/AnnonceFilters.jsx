@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { CategoriesAPI } from "services/categories";
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
@@ -32,10 +32,10 @@ AnnonceFilters.propTypes = {
 
 export default function AnnonceFilters({ 
     isOpenFilter,
-    onResetFilter,
     onOpenFilter,
     onCloseFilter,
-    handleCategoryChange, handleTriChange, handleMinPriceChange, handleMaxPriceChange}) {
+    category,
+    handleCategoryChange, handleMinPriceChange, handleMaxPriceChange}) {
     const [categories, setCategories] = useState();
 
 
@@ -61,8 +61,9 @@ export default function AnnonceFilters({
         color="inherit"
         endIcon={<Icon icon={roundFilterList} />}
         onClick={onOpenFilter}
+        className="mb-4"
       >
-        Filters&nbsp;
+        Filtres&nbsp;
       </Button>
 
           <Drawer
@@ -73,7 +74,60 @@ export default function AnnonceFilters({
               sx: { width: 280, border: 'none', overflow: 'hidden' }
             }}
           >
-              HELLO MOTHERFUCKER
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              sx={{ px: 1, py: 2 }}
+            >
+              <Typography variant="subtitle1" sx={{ ml: 1 }}>
+                Filtres
+              </Typography>
+              <IconButton onClick={onCloseFilter}>
+                <Icon icon={closeFill} width={20} height={20} />
+              </IconButton>
+            </Stack>
+
+            <Divider />
+
+            <Scrollbar sx={{p:3}}>
+              <Stack spacing={3} sx={{ p: 3 }}>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Catégorie
+                  </Typography>
+                  <Form.Select defaultValue={category && category.name} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
+                    {categories && categories.categories.map((row) => {
+                      if(!row.parent_category){
+                        return(
+                          <option key={row.id_category} disabled>--{row.name}--</option>
+                        )
+                      } else {
+                        return(
+                          <option key={row.id_category}>{row.name}</option>
+                        )
+                      }
+                      
+                    })}
+                  </Form.Select>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Prix minimum
+                  </Typography>
+                  <Form.Control onChange={(e) => {handleMinPriceChange(e)}} 
+                    placeholder="Prix minimum" className="d-flex border" style={{"width":"200px"}}/>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Prix maximum
+                  </Typography>
+                  <Form.Control onChange={(e) => {handleMaxPriceChange(e)}} 
+                    placeholder="Prix maximum" className="d-flex border" style={{"width":"200px"}}/>
+                </div>
+              </Stack>
+            </Scrollbar>
+
           </Drawer>
     </>
     )
