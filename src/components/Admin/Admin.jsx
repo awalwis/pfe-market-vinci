@@ -72,14 +72,14 @@ const Admin = () => {
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel">
+                    <div className="cpanel-blue cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="comments" /><br/>
                             <small>Annonces</small>
                             <Loader.SmallLoader />
                         </div>
                     </div>
-                    <div className="cpanel-blue cpanel">
+                    <div className="cpanel-green cpanel">
                         <div className="icon-part">
                             <FontAwesomeIcon icon="list-ul"/><br/>
                             <small>Catégories</small>
