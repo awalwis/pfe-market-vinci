@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -10,23 +10,61 @@ import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/mater
 import { LoadingButton } from '@mui/lab';
 import bcrypt from "bcryptjs";
 import {authService} from "../../../services/auth.service";
-import SelectInput from "@mui/material/Select/SelectInput";
+import {FormControl, FormHelperText, InputLabel, MenuItem} from "@material-ui/core";
 
 // ----------------------------------------------------------------------
+
 
 export default function RegisterForm() {
   const history = useHistory();
   const [showPassword, setShowPassword] = useState(false);
+  const [campus, setCampus] = useState("Woluwe");
   const bcrypt = require('bcryptjs');
 
+
+
+  const validate = values => {
+    const errors = {};
+    if (!values.firstName) {
+      errors.firstName = 'Prénom requis';
+    } else if (values.firstName.length > 15) {
+      errors.firstName = 'Must be 15 characters or less';
+    }
+
+    if (!values.lastName) {
+      errors.lastName = 'Nom requis';
+    } else if (values.lastName.length < 2) {
+      errors.lastName = 'Nom trop court';
+    }
+
+    if (!values.email) {
+      errors.email = 'Email requis';
+    } else if (!/^[a-z]+.[a-z]+@(student.)?vinci.be/i.test(values.email)) {
+      errors.email = 'Invalid email address';
+    }
+
+    if (!values.password1) {
+      errors.password1 = 'Mot de passe requis';
+    } else if (values.password1.length<6) {
+      errors.password1 = 'Mot de passe trop court';
+    }
+    if (!values.password2) {
+      errors.password1 = 'Veuillez confirmer votre mot de passe';
+    } else if (values.password1!==values.password2) {
+      errors.password2 = 'Les mots de passe ne concordent pas';
+    }
+    if (!values.campus) {
+      errors.campus = 'Campus requis';
+    }
+
+    return errors;
+  };
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password1: Yup.string().required('Mot de passe requis'),
+    firstName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Prénom requis'),
+    lastName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Nom requis'),
+    email: Yup.string(),
+    campus: Yup.string(),
+    password1: Yup.string().min(6, 'Minimum 6 caractères!').max(20, 'Maximum 20 caractères!').required('Mot de passe requis'),
     password2: Yup.string().required('Veuillez confirmer votre mot de passe')
   });
 
@@ -39,10 +77,11 @@ export default function RegisterForm() {
       password2: '',
       campus:''
     },
-
-    validationSchema: RegisterSchema,
+    validate,
     onSubmit: () => {
+      console.log("submit:")
       console.log(formik.values)
+      /*
       if (formik.values.password1!==formik.values.password2) {alert("mots de passe differents");return ;}
       let salt = bcrypt.genSaltSync(10);
       const userObject =
@@ -57,11 +96,43 @@ export default function RegisterForm() {
         //setNewUser(emptyUser);
         history.push("/")
       }
-      history.push('/dashboard', { replace: true });
+      history.push('/dashboard', { replace: true });  */
     }
   });
 
+
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  console.log("formik: ", formik)
+  let campuses = [
+    {
+      value: 'Woluwe',
+      label: 'Woluwe',
+    },
+    {
+      value: 'Ixelles',
+      label: 'Ixelles',
+    },
+    {
+      value: 'Louvain la neuve',
+      label: 'Louvain la neuve',
+    }
+  ];
+
+
+
+  const validateEmail = () => {
+    console.log("validation mail: ", formik.values.email)
+    if (!formik.values.email) {
+      alert("no mail")
+      formik.errors.firstName = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@vinci.be$/i.test(formik.values.email)) {
+      alert("format mail")
+      formik.errors.firstName = 'Invalid email address';
+    }
+
+
+    return errors;
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -93,13 +164,23 @@ export default function RegisterForm() {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-            <Select
+            <TextField
                 fullWidth
+                id="outlined-select-currency"
+                select
                 label="Campus"
+                value={campus}
+                onChange={(e)=>{setCampus(e.target.value)}}
                 {...getFieldProps('campus')}
-                error={Boolean(touched.lastName && errors.lastName)}
-                helperText={touched.lastName && errors.lastName}
-            ><children></children></Select>
+                error={Boolean(touched.campus && errors.campus)}
+                helperText={touched.campus && errors.campus}
+            >
+              {campuses.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+              ))}
+            </TextField>
 
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -109,6 +190,7 @@ export default function RegisterForm() {
             type={showPassword ? 'text' : 'password'}
             label="Mot de passe"
             {...getFieldProps('password1')}
+
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -118,8 +200,8 @@ export default function RegisterForm() {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
+            error={Boolean(touched.password1 && errors.password1)}
+            helperText={touched.password1 && errors.password1}
           />
           <TextField
             fullWidth
@@ -127,6 +209,8 @@ export default function RegisterForm() {
             type={showPassword ? 'text' : 'password'}
             label="Confirmer mot de passe"
             {...getFieldProps('password2')}
+            error={Boolean(touched.password2 && errors.password2)}
+            helperText={touched.password2 && errors.password2}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -136,8 +220,8 @@ export default function RegisterForm() {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
+            error={Boolean(touched.password2 && errors.password2)}
+            helperText={touched.password2 && errors.password2}
           />
           </Stack>
 
@@ -148,7 +232,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Register
+            S'inscrire
           </LoadingButton>
         </Stack>
       </Form>

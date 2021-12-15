@@ -17,14 +17,14 @@ import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
 
+
 //services
 import { authService } from "services/auth.service";
 
 
-import ThemeConfig from './theme';
-import GlobalStyles from './theme/globalStyles';
-// components
-import ScrollToTop from './components/ScrollToTop';
+
+
+
 
 
 
@@ -45,12 +45,7 @@ const App = () => {
         <ThemeConfig>
         <ScrollToTop />
         <GlobalStyles />
-<<<<<<< HEAD
                 <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
-=======
-        <BaseOptionChartStyle />
-                <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser}/>
->>>>>>> fd895b9d09fe4cf9ab2f31dce701996fb41b360a
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />

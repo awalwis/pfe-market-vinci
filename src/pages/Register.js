@@ -1,12 +1,11 @@
-import { Link as RouterLink } from 'react-router-dom';
+
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography } from '@mui/material';
-// layouts
-import AuthLayout from '../layouts/AuthLayout';
+
 // components
 import Page from '../components/Page';
-import { MHidden } from '../components/@material-extend';
+
 import  RegisterForm  from 'components/authentication/register/RegisterForm';
 
 
@@ -18,14 +17,6 @@ const RootStyle = styled(Page)(({ theme }) => ({
   }
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
-  width: '100%',
-  maxWidth: 464,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
-}));
 
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
@@ -42,14 +33,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Register() {
   return (
     <RootStyle title="Register | Minimal-UI">
-      <AuthLayout>
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Login
-        </Link>
-      </AuthLayout>
-
-
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
@@ -76,14 +59,6 @@ export default function Register() {
             .
           </Typography>
 
-          <MHidden width="smUp">
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
-                Login
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
       </Container>
     </RootStyle>
