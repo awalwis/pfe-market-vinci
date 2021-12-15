@@ -7,6 +7,10 @@ import Category from "components/Category/Category";
 import DropzoneAreaComponent from "./DropzoneArea";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button, Stack,Box,FormControl ,
+    FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
+
+import { LoadingButton } from '@mui/lab';
 
 
 const AdNewForm = () => {
@@ -62,9 +66,7 @@ const AdNewForm = () => {
         setPrice(parseInt(e.target.value));
  
     }
-    /* const handleCategorieChange=(e)=>{
-        setCategory(parseInt(e.target.value))
-    } */
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if(medias.length<1){
@@ -197,29 +199,75 @@ const AdNewForm = () => {
     const showAddPrice=()=>{
 
             return(
-                <div>
-                    Entrez un prix pour cette annonce <input type="number" onChange={handlePriceChange} required/>
-                </div>
+            <div>
+                <TextField
+                    fullWidth
+                    id="outlined-number"
+                    label="Prix de l'annonce"
+                    type="number"
+                    required        
+                />
+            </div>
             )
     }
     
     return (
-        <div>
+        <Box>
+            <Stack spacing={5}>
+                <TextField
+                
+                    id="outlined-required"
+                    label="Titre de l'annonce"
+                    placeholder="Entrez un titre pour votre annonce"
+                    onChange={handleTitleChange}
+                    required
+                    />
+                <TextField
+               
+                    id="outlined-required"
+                    label="Description de l'annonce"
+                    placeholder="Entrez une description pour votre annonce"
+                    onChange={handleDescriptionChange}
+                    required
+                />
+                <Category setCategory={setCategory}/>
+                <FormLabel component="legend">Type d'annonce</FormLabel>
+            </Stack> 
+            <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"
+                 onChange={handleIsPaying}
+            >
+                    
+            <FormControlLabel value="isFree" control={<Radio />} label="A donner" />
+            <FormControlLabel value="isPaying" control={<Radio />} label="A vendre" />
+            </RadioGroup>
+            {isPaying && showAddPrice()}
+            <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>   
+            <Button variant="contained" size="medium" onClick={handleSubmit}>Créer</Button> 
+            <ToastContainer/>
+        </Box>
+        
+    )
+}
+
+export default AdNewForm
+
+/*
+
             <form onSubmit={handleSubmit}>    
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
                 Entrez un titre pour votre annonce <input type="text" value={title} onChange={handleTitleChange} required/> 
-                Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
-                    <Category setCategory={setCategory}/>
+                   Entrez une description pour votre annonce <input type="textarea" value={description} onChange={handleDescriptionChange} required/>
+  
                     <div onChange={event=>handleIsPaying(event)}>
                         A donner <input type="radio" name="type" value="isFree" required/>
                         A vendre <input type="radio" name="type" value="isPaying" required/>
                     </div>
                      {isPaying && showAddPrice()}
                      <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>
-                 <button type="submit">Créer</button>     
+                 <Button variant="contained" size="medium" type="submit">Créer</Button>     
             </form>
-            <ToastContainer />
-         </div>   
-    )
-}
+          <ToastContainer/>
 
-export default AdNewForm
+                   */
+
+

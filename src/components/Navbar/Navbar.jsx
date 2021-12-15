@@ -15,6 +15,7 @@ import UserIcone from "@mui/icons-material/EmojiPeople"
 import AdminIcone from "@mui/icons-material/AdminPanelSettings"
 import {NavLink, useHistory} from "react-router-dom";
 import {Nav} from "react-bootstrap";
+import ListItemText from '@mui/material/ListItemText';
 
 export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
   const [state, setState] = useState({
@@ -33,6 +34,19 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
     authService.logout();
     history.push("/login");
   }
+  const handleHome=()=>{
+    history.push("/home")
+  }
+  
+  const handleProfil=()=>{
+      history.push(`/profile/${currentUser.email}`)  
+  }
+  const handleCreateAd=()=>{
+    history.push("/ajouter")
+  }
+  const handleAdmin=()=>{
+    history.push("/admin")
+  }
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -49,48 +63,48 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
             >
-         
-            <List>
-                <ListItem button>
+            
+            <List>  
+                <ListItem button onClick={handleHome} >
                     <ListItemIcon>
                         <HomeIcone/>
                     </ListItemIcon>
-                    <NavLink to="/home" className="navBtn nav-link">Accueil</NavLink> 
+                    <ListItemText primary="Accueil" />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={handleProfil}>
                     <ListItemIcon>
                         <PeopleIcone/>
                     </ListItemIcon>
-                    <NavLink to={`/profile/${currentUser.email}`} className="navBtn nav-link">Profile</NavLink> 
+                    <ListItemText primary="Profil" />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={handleCreateAd}>
                     <ListItemIcon>
                         <AdIcone/>
                     </ListItemIcon>
-                    <NavLink to="/ajouter" className="navBtn nav-link">Créer une annonce</NavLink> 
+                    <ListItemText primary="Créer une annonce" />
                 </ListItem>
                 {isAdmin &&
-                <ListItem button>
+                <ListItem button onClick={handleAdmin}>
                     <ListItemIcon>
                         <AdminIcone/>
                     </ListItemIcon>
-                    <NavLink to="/admin" className="navBtn nav-link">Zone administrative</NavLink> 
+                    <ListItemText primary="Zone administrative" />
                 </ListItem>
                 }
             </List>
             <Divider/>
             <List>
-            <ListItem button>
+            <ListItem button onClick={handleLogout}>
                 <ListItemIcon>
                     <LogOutIcone/>
                 </ListItemIcon>
-                <Nav.Item><Nav.Link  className="navBtn nav-link" onClick={handleLogout}>Deconnexion</Nav.Link></Nav.Item>
+                <ListItemText primary="Deconnexion" />
             </ListItem>
             <ListItem>
                 <ListItemIcon>
                     <UserIcone/>
                 </ListItemIcon>
-                <Nav.Link eventKey="disabled" disabled>  {currentUser.email}  </Nav.Link>
+                <ListItemText secondary={currentUser.email} />
             </ListItem>
             </List>
             </Box>

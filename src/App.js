@@ -18,8 +18,7 @@ import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
 import Footer from"pages/Footer"
-import DefaultPage from 'pages/DefaultPage';
-
+import CreateAd from "pages/CreateAd"
 //services
 import { authService } from "services/auth.service";
 
@@ -49,14 +48,14 @@ const App = () => {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/home" component={Home} />
-                    <Route path="/ajouter" component={AdNewForm} />
+                    <Route path="/ajouter" component={CreateAd} />
                     <Route path="/annonces/:id" component={AdItem} />
                     <Route path="/admin/categories" component={AdminCategory} />
                     <Route path="/admin/utilisateurs" component={AdminUser} />
                     <Route path="/admin/annonces" component={AdminAd} />
                     <Route path="/admin" component={Admin} />
                     <Route path="/profile/:email" component={Profile} />
-                    <Route path="/" component={DefaultPage} />
+                    <Route path="/" component={Home} />
                 </Switch>
             <Footer/>
     </ThemeConfig>
