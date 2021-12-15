@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
+import {Button} from "react-bootstrap";
 
 const CheckBox = (type) => {
 
@@ -99,7 +100,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                 draggable: true,
                 progress: undefined,
                 theme: 'colored'
-                });
+            });
             return
         }
         let idToast = toast.loading("Modification de l'annonce",{position: "bottom-right"})
@@ -186,9 +187,15 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         setIsChangeDisplayPicture(!isChangeDisplayPicture)
     }
     const handleDisplayPicture=async (e)=>{
-        if(e.currentTarget.id !== displayed_picture){
-            let idToast = toast.loading("Modification de la photo favorite",{position: "bottom-right"})
-            setDisplayedPicture(e.currentTarget.id)
+        let id;
+        if(e.currentTarget){
+            id = e.currentTarget.id;
+        }else{
+            id = e;
+        }
+        if(id !== displayed_picture){
+            let idToastModif = toast.loading("Modification de la photo favorite",{position: "bottom-right"})
+            setDisplayedPicture(id)
             const newAd = {
                 date,
                 title,
@@ -198,10 +205,10 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                 state,
                 id_category,
                 id_user,
-                displayed_picture: parseInt(e.currentTarget.id)
+                displayed_picture: parseInt(id)
             };
             await adService.update(ad.id_ad, newAd)
-            toast.update(idToast,{
+            toast.update(idToastModif,{
                 render: 'Photo favorite modifiée !',
                 type: "success",
                 isLoading: false,
@@ -215,7 +222,70 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                 theme: 'colored'
             });            
         }
-        
+    }
+
+    const deletePicture=async (e)=>{
+        let idToast = toast.loading("Suppression de l'image",{position: "bottom-right"})
+        if(e.target.dataset.type === "video"){
+            await mediaService.deleteMedia(e.target.dataset.id);
+            await mediaService.deleteBlob(e.target.dataset.url);
+            toast.update(idToast,{
+                render: 'Video supprimée !',
+                type: "success",
+                isLoading: false,
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });    
+            setRefreshKey(refreshKey+1);
+            return;
+        }
+        if(adMedias.filter(medias=>medias.type==="image").length>1){
+            if(e.target.dataset.fav){
+                adMedias.filter(medias=>medias.type==="image").map((media)=>{
+                    if(media.id_media!=e.target.dataset.id){
+                        handleDisplayPicture(media.id_media);
+                        return;
+                    }
+                })
+
+            }
+            await mediaService.deleteMedia(e.target.dataset.id);
+            await mediaService.deleteBlob(e.target.dataset.url);
+            toast.update(idToast,{
+                render: 'Image supprimée !',
+                type: "success",
+                isLoading: false,
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });    
+            setRefreshKey(refreshKey+1);
+        }else{
+            toast.update(idToast,{
+                render: '1 image minimum !',
+                type: "error",
+                isLoading: false,
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored'
+            });  
+        }
     }
 
     return (
@@ -235,12 +305,21 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                 {isChangeDisplayPicture &&
                     <div>   
                         <p>Choissez l'image que vous souhaiter utiliser</p>
-                        {adMedias.filter(medias=>medias.type==="image").map(media => {
-                            if(displayed_picture === media.id_media){
+                        {adMedias.map(media => {
+                            if(media.type==="video"){
+                                return (
+                                    <div key={media.id_media}>
+                                        <img src={media.url} alt="" />
+                                        <Button variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
+                                    </div>
+                                )
+                            }
+                            if(displayed_picture == media.id_media){
                                 return (
                                     <div key={media.id_media}>
                                         <img src={media.url} alt="" />
                                         <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon="heart"/>
+                                        <Button variant="danger" data-type={media.type} data-fav={true} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
                                     </div>
                                 )
                             }else{
@@ -248,6 +327,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                                     <div key={media.id_media}>
                                         <img src={media.url} alt="" />
                                         <FontAwesomeIcon id={media.id_media} onClick={handleDisplayPicture} icon={["far","heart"]}/>
+                                        <Button variant="danger" data-type={media.type} data-fav={false} data-url={media.url} data-id={media.id_media} onClick={deletePicture}>Supprimer</Button>
                                     </div>
                                 )
                             }

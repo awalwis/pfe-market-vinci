@@ -23,7 +23,15 @@ const Category=({setCategory, idDefault})=>{
             <Form.Select value={idDefault} onChange={handleCategoryChange}>
                 <option value='0'>---Choisir categorie---</option>
                 {categories.map(category => {
-                    if(category.parent_category) return <option key={category.id_category} value={category.id_category}>{category.name}</option>;
+                    if(!category.parent_category){
+                        return(
+                            <option key={category.id_category} disabled>--{category.name}--</option>
+                        )
+                    }else{
+                        return(
+                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
+                        )
+                    }
                 })}
             </Form.Select>                                         
         )
@@ -32,7 +40,15 @@ const Category=({setCategory, idDefault})=>{
             <Form.Select defaultValue={'0'} onChange={handleCategoryChange}>
                 <option value='0'>---Choisir categorie---</option>
                 {categories.map(category => {
-                    if(category.parent_category) return <option key={category.id_category} value={category.id_category}>{category.name}</option>;
+                    if(!category.parent_category){
+                        return(
+                            <option key={category.id_category} disabled>--{category.name}--</option>
+                        )
+                    }else{
+                        return(
+                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
+                        )
+                    }
                 })}
             </Form.Select>                                      
         )

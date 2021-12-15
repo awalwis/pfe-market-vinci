@@ -46,9 +46,19 @@ const AdItem = ()=>{
         setIsOpen(!isOpen);
     }
 
-    const handleDelete = () => {
-        adService.remove(id);
-        toast.info('Annonce supprimée !', {
+    const handleDelete = async () => {
+        let idToast = toast.loading("Suppression de l'annonce",{position: "bottom-right"})
+        console.log(medias);
+        const allPromise = medias.map(async (media) => {
+            console.log(media.url);
+            await mediaService.deleteBlob(media.url)
+        })
+        await Promise.all(allPromise);
+        await adService.remove(id);
+        toast.update(idToast,{
+            render: 'Annonce supprimée !',
+            type: "info",
+            isLoading: false,
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: false,

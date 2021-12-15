@@ -1,9 +1,12 @@
 import React from "react"; 
 import { Button, Form, Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
+import { adService } from "services/ads.service";
+import {mediaService} from 'services/medias.service'
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
+import { toast } from 'react-toastify';
 
 export default function Display(props) {
 
@@ -16,7 +19,8 @@ const DisplayUsers = (props) => {
         history.push("/profile/"+email);
     }
 
-    const changeSelectValue = (user, selectValue) => {
+    const changeSelectValue = async (user, selectValue) => {
+        let idToast = toast.loading("Changement du role",{position: "bottom-right"})
         let newUser = {
            id_user: user.id_user,
            email: user.email,
@@ -26,18 +30,51 @@ const DisplayUsers = (props) => {
            campus: user.campus,
            role: selectValue
         }
-        userService.update(user.id_user, newUser)
+        await userService.update(user.id_user, newUser)
+        toast.update(idToast,{
+            render: 'Role changé !',
+            type: "success",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
     }
 
-    const deleteUser = (id) => {
-        userService.deleteUser(id).then(
-            (response)=>{
-                props.setRefreshKey(props.refreshKey+1)
-            }
-        )
+    const deleteUser = async (id) => {
+        let idToast = toast.loading("Suppression de l'utilisateur",{position: "bottom-right"})
+        let adsUser = await adService.getAllUser(id);
+        console.log(adsUser);
+        const allPromise = adsUser.ads.map(async (ad)=>{
+            let mediasAds = await mediaService.getByAdId(ad.id_ad);
+            console.log(mediasAds);
+            mediasAds.map(async (media)=>{
+                console.log(media.url);
+                await mediaService.deleteBlob(media.url);
+            })
+        })
+        await Promise.all(allPromise);
+        await userService.deleteUser(id);
+        toast.update(idToast,{
+            render: 'Utilisateur supprimé !',
+            type: "success",
+            isLoading: false,
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored'
+        });
+        props.setRefreshKey(props.refreshKey+1)
     }
-
-    console.log(users);
 
     if(props.isLoading){
         return(

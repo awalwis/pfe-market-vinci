@@ -5,6 +5,7 @@ import "styles/style.css"
 import { authService } from "services/auth.service";
 import DisplayAds from "./DisplayAds"
 import {useHistory} from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 const AdminAd = () => {
 
@@ -88,6 +89,8 @@ const AdminAd = () => {
             </Form>
 
             <DisplayAds ads={filtredAds} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
+
+            <ToastContainer />
 
         </div>
     )
