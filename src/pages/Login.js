@@ -6,8 +6,7 @@ import { Card, Stack, Link, Container, Typography } from '@mui/material';
 // components
 import Page from 'components/Page';
 
-import LoginForm  from 'components/authentication/login/LoginForm.js';
-
+import LoginForm  from 'components/authentication/login/LoginForm';
 
 // ----------------------------------------------------------------------
 

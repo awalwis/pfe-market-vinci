@@ -1,14 +1,14 @@
-<<<<<<< HEAD
+
 import Register from "pages/Register";
-=======
->>>>>>> 9d811da4b77bcab8797716567a45b4793bf90031
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 
 // components
-import Register from "components/Register/Register";
+
 import ScrollToTop from 'components/ScrollToTop';
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
@@ -45,7 +45,6 @@ const App = () => {
         <ThemeConfig>
             <ScrollToTop />
             <GlobalStyles />
-            <BaseOptionChartStyle />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
             <Switch>
                 <Route path="/login" component={Login} />

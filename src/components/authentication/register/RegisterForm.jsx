@@ -40,7 +40,7 @@ export default function RegisterForm() {
     if (!values.email) {
       errors.email = 'Email requis';
     } else if (!/^[a-z]+.[a-z]+@(student.)?vinci.be/i.test(values.email)) {
-      errors.email = 'Invalid email address';
+      errors.email = 'Format non valide';
     }
 
     if (!values.password1) {
@@ -81,8 +81,7 @@ export default function RegisterForm() {
     onSubmit: () => {
       console.log("submit:")
       console.log(formik.values)
-      /*
-      if (formik.values.password1!==formik.values.password2) {alert("mots de passe differents");return ;}
+
       let salt = bcrypt.genSaltSync(10);
       const userObject =
           {
@@ -93,16 +92,18 @@ export default function RegisterForm() {
             campus: formik.values.campus,
           }
       if(authService.register(userObject)){
-        //setNewUser(emptyUser);
-        history.push("/")
+        console.log("registered")
+        history.push("/login")
+        return;
       }
-      history.push('/dashboard', { replace: true });  */
+      console.log("problem ?")
+       history.push("/register")
     }
   });
 
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-  console.log("formik: ", formik)
+
   let campuses = [
     {
       value: 'Woluwe',
@@ -120,19 +121,6 @@ export default function RegisterForm() {
 
 
 
-  const validateEmail = () => {
-    console.log("validation mail: ", formik.values.email)
-    if (!formik.values.email) {
-      alert("no mail")
-      formik.errors.firstName = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@vinci.be$/i.test(formik.values.email)) {
-      alert("format mail")
-      formik.errors.firstName = 'Invalid email address';
-    }
-
-
-    return errors;
-  };
 
   return (
     <FormikProvider value={formik}>
