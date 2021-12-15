@@ -2,18 +2,20 @@
 import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
-import { CategoriesAPI } from "services/categories";
+import AnnonceFilters from "./components/AnnonceFilters";
 import AnnonceList from "./components/AnnonceList";
+import { authService } from "services/auth.service";
 
-function Home() {
+const Home = () => {
 
-    const [categories, setCategories] = useState();
+
     const [data, setData] = useState();
     const [filter, setFilter] = useState("?categorie=&tri=ASC&prixMin=0&prixMax=3000");
     const [tri, setTri] = useState("ASC");
     const [category, setCategory] = useState("");
     const [prixMin, setPrixMin] = useState("0");
     const [prixMax, setPrixMax] = useState("3000"); 
+    const [openFilter, setOpenFilter] = useState(false);
 
     // Functions
     async function handleCategoryChange(event){
@@ -57,28 +59,27 @@ function Home() {
             return state;
         })
     }
+    const handleOpenFilter = () => {
+        setOpenFilter(true);
+    };
+
+    const handleCloseFilter = () => {
+        setOpenFilter(false);
+    };
     useEffect(() => {
-        CategoriesAPI.getCategories().then((elt) => setCategories(elt));
         AnnoncesAPI.getAds(filter).then((elt) => setData(elt));
     }, [])
 
     return (
         <Container>
             <h1>Market Vinci</h1>
-            <h4>Filtres</h4>
+            <h4>Annonces</h4>
             <Container className="d-flex flex-column">
-                <Container className="d-flex flex-row justify-content-start">
-                    <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={handleCategoryChange} className="d-flex border" style={{"width":"200px"}}>
-                        {categories && categories.categories.map((row) => {
-                            return(
-                                <option>{row.name}</option>
-                            )
-                        }) }
-                    </Form.Select>
-                    <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
-                    <Form.Control onChange={handleMinPriceChange} placeholder="Prix min" className="d-flex border" style={{"width":"100px"}}/>
-                    <Form.Control onChange={handleMaxPriceChange} placeholder="Prix max" className="d-flex border" style={{"width":"100px"}}/>
+                <Container style={{"float":"right"}}>
+                    <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} handleCategoryChange={handleCategoryChange} handleTriChange={handleTriChange}
+                        handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
                 </Container>
+                
                 <Container>
                     {data && <AnnonceList annonces={data.ads}/>}
                 </Container>
