@@ -26,8 +26,9 @@ const Home = () => {
             return state;
         })
     }
-    async function handleTriChange(){
-        if(tri){
+    async function handleTriChange(newTri){
+        if(newTri){ 
+            // change à non alphabétique
             await setTri(false)
             await setFilter(`?categorie=${category}&tri=DESC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
@@ -35,6 +36,7 @@ const Home = () => {
                 return state;
             })
         } else {
+            // change à alphabétique
             await setTri(true)
             await setFilter(`?categorie=${category}&tri=ASC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {

@@ -28,7 +28,7 @@ export default function AnnonceSort({tri, handleTriChange}){
           >
             Sort By:&nbsp;
             <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                {tri?"[Z-A]":"[A-Z]"}
+                {tri?"[A-Z]":"[Z-A]"}
             </Typography>
           </Button>
           <Menu
@@ -41,18 +41,20 @@ export default function AnnonceSort({tri, handleTriChange}){
           >
             <MenuItem
                 key={1}
-                selected={tri===false}
-                onClick={(e) => {e.preventDefault();handleTriChange();handleClose()}}
+                selected={tri===true}
+                onClick={(e) => {e.preventDefault();handleTriChange(false);handleClose()}}
                 sx={{ typography: 'body2' }}
             >
+                {/* Alphabétique */}
                 [A-Z]
             </MenuItem>
             <MenuItem
-                key={1}
-                selected={tri===true}
-                onClick={(e) => {e.preventDefault();handleTriChange();handleClose()}}
+                key={2}
+                selected={tri===false}
+                onClick={(e) => {e.preventDefault();handleTriChange(true);handleClose()}}
                 sx={{ typography: 'body2' }}
             >
+                {/* Non Alphabétique */}
                 [Z-A]
             </MenuItem>
           </Menu>
