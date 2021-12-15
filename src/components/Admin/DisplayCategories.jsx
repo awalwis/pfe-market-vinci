@@ -37,7 +37,7 @@ const ConstructP = (props) => {
                         <Button onClick={e => {deleteSubCategory(e)}} variant="danger">DELETE</Button>
                     </div>
                 )
-            }else if(i==0){
+            }else if(i===0){
                 nameParent = e;
                 i++;
             }else{

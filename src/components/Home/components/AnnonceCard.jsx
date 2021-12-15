@@ -1,6 +1,6 @@
-import { Container } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
-const AnnonceCard = ({annonce}) => {
+const AnnonceCard = ({annonce, picture}) => {
 
     // TODO: renvoyer vers la page de details
     function showDetails(id){
@@ -8,16 +8,19 @@ const AnnonceCard = ({annonce}) => {
     }
     
     return(
-        <Container className="border" style={{"height":"200px", "width":"150px", "cursor":"pointer"}}
-            onClick={(e) =>
-                {e.preventDefault()
-                showDetails(annonce.id_ad)}}>
-            <div>{annonce.title}</div>
-            <div>{annonce.description}</div>
-            <div>{annonce.price}</div>
-            <div>{annonce.date}</div>
-            <div>{annonce.type==="give"?"À donner":"À vendre"}</div>
-        </Container>
+        <Card style={{ width: '18rem' }}>
+        <Card.Img variant="top" src={picture!==null?picture.url:"holder.js/100px180"} />
+        <Card.Body>
+            <Card.Title>{annonce.title}</Card.Title>
+            <Card.Text>
+                {annonce.price}
+            </Card.Text>
+            <Card.Text>
+                {annonce.description}
+            </Card.Text>
+            <Button onClick={showDetails} variant="primary">Plus d'infos</Button>
+        </Card.Body>
+        </Card>
     )
 }
 export default AnnonceCard;

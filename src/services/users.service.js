@@ -1,16 +1,29 @@
 import axios from 'axios'
-//const apiurl = process.env.REACT_APP_URL_API + '/api/utilisateurs'
-const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/utilisateurs'
+import { authService } from "./auth.service";
+const apiurl = process.env.REACT_APP_URL_API + '/api/utilisateurs'
+//const apiurl = 'https://pfe-market-vinci-backend.herokuapp.com/api/utilisateurs'
 
 const getAll = () => {
-    return axios.get(apiurl)
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios.get(apiurl, config)
 }
 
 const getByEmail = (email) => {
     return axios.get(`${apiurl}/${email}`)
 }
 const getById = (id) => {
-    return axios.get(`${apiurl}/${id}`)
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios.get(`${apiurl}/${id}`, config)
         .then(response => response.data);
 }
 
@@ -19,11 +32,23 @@ const create = newObject => {
 }
 
 const update = (id, newObject) => {
-    return axios.put(`${apiurl}/${id}`, newObject)
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios.put(`${apiurl}/${id}`, newObject, config)
 }
 
 const deleteUser = (id) => {
-    return axios.delete(`${apiurl}/${id}`)
+    let currentUser = authService.getCurrentUser();
+    let config = {
+        headers: {
+            Authorization: currentUser["token"]
+        }
+    }
+    return axios.delete(`${apiurl}/${id}`, config)
 }
 
 export const userService = {

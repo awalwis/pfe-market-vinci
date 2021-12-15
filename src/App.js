@@ -1,17 +1,25 @@
 import Register from "pages/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from "pages/Login";
-import Admin from "components/Admin/Admin";
-import {Switch, Route, useRouteMatch, BrowserRouter as Router} from "react-router-dom";
+import {Switch, Route, useRouteMatch} from "react-router-dom";
+import ThemeConfig from 'theme';
+import GlobalStyles from 'theme/globalStyles';
+
+// components
+import ScrollToTop from 'components/ScrollToTop';
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
 import AdItem from "components/Ad/AdItem/AdItem";
-import { authService } from "services/auth.service";
-import Navbar from "components/Navbar/Navbar";
 import AdminUser from "components/Admin/AdminUser";
 import AdminCategory from "components/Admin/AdminCategory";
 import AdminAd from "components/Admin/AdminAd";
+import Navbar from "components/Navbar/Navbar"
+import Login from "pages/Login";
+import Admin from "components/Admin/Admin";
+
+//services
+import { authService } from "services/auth.service";
+
 
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
@@ -37,7 +45,12 @@ const App = () => {
         <ThemeConfig>
         <ScrollToTop />
         <GlobalStyles />
+<<<<<<< HEAD
                 <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
+=======
+        <BaseOptionChartStyle />
+                <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser}/>
+>>>>>>> fd895b9d09fe4cf9ab2f31dce701996fb41b360a
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
