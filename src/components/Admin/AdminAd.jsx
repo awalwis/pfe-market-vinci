@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import { adService } from "services/ads.service";
-import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
+import {Col, Row, Form} from "react-bootstrap";
 import "styles/style.css"
 import { authService } from "services/auth.service";
 import DisplayAds from "./DisplayAds"
 import {useHistory} from "react-router-dom";
+import { MenuItem,Select,InputLabel,FormControl,TextField } from "@mui/material";
 import { ToastContainer } from 'react-toastify';
 
 const AdminAd = () => {
@@ -65,25 +66,25 @@ const AdminAd = () => {
             <Form>
                 <Row className="g-2">
                     <Col xs={11}>
-                        <FloatingLabel controlId="floatingInputGrid" label="Entrez votre recherche">
-                            <FormControl
-                                type="search"
+                        <FormControl fullWidth>
+                            <TextField
+                                fullWidth
+                                id="outlined-number"
+                                label="Entrez votre recherche"
                                 placeholder="Entrez votre recherche : titre ou état de l'annonce"
-                                className="me-2"
-                                aria-label="Search"
-                                onChange={e => setQuery(e.target.value)}
-                            />
-                        </FloatingLabel>
+                                type="search"
+                                onChange={e => setQuery(e.target.value)}    
+                            />  
+                        </FormControl>
                     </Col>
                     <Col xs={1}>
-                        <FloatingLabel label="Filtres">
-                            <Form.Select 
-                                onChange={e => changeSelectValue(e.target.value)}
-                            >
-                                <option value="state">état</option>
-                                <option value="title">titre</option>
-                            </Form.Select>
-                        </FloatingLabel>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Filtre</InputLabel>
+                            <Select onChange={e => changeSelectValue(e.target.value)}>
+                                <MenuItem value="state">Etat</MenuItem>
+                                <MenuItem value="title">Titre</MenuItem>
+                            </Select>              
+                      </FormControl>
                     </Col>
                 </Row>
             </Form>

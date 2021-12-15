@@ -8,7 +8,7 @@ import DropzoneAreaComponent from "./DropzoneArea";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, Stack,Box,
-    FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
+    FormLabel,RadioGroup,FormControlLabel,Radio,TextField,FormControl } from '@mui/material';
 
 
 
@@ -214,14 +214,15 @@ const AdNewForm = () => {
     }
     
     return (
-        <Box>
+        <FormControl>
             <Stack spacing={5}>
                 <TextField
                     id="outlined-required"
                     label="Titre de l'annonce"
                     placeholder="Entrez un titre pour votre annonce"
                     onChange={handleTitleChange}
-                    required
+                    
+                    
                     />
                 <TextField
                     id="outlined-required"
@@ -243,7 +244,7 @@ const AdNewForm = () => {
             <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>  <br/>
             <Button variant="contained" size="medium" onClick={handleSubmit}>Créer</Button> 
             <ToastContainer/>
-        </Box> 
+        </FormControl> 
     )
 }
 

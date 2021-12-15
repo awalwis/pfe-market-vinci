@@ -13,27 +13,6 @@ import { Button, Stack,Container,
     FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
 import {Button as ButtonReact}  from "react-bootstrap";
 
-/*const CheckBox = (type) => {
-
-    library.add(faHeart, far)
-
-    if(type==="a donner"){
-        return(
-            <>
-                A donner  <input type="radio" name="type" value="a donner" defaultChecked required/>
-                A vendre  <input type="radio" name="type" value="a vendre" required/>
-            </>
-        )
-    }else{
-        return(
-            <>
-                A donner  <input type="radio" name="type" value="a donner" required/>
-                A vendre  <input type="radio" name="type" value="a vendre" defaultChecked required/>
-            </>
-        )
-    }
-}*/
-
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
 
@@ -349,7 +328,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                              </div>
                          )
                      }
-                     if(displayed_picture == media.id_media){
+                     if(displayed_picture === media.id_media){
                          return (
                              <div key={media.id_media}>
                                  <img src={media.url} alt="" />

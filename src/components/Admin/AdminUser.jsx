@@ -1,11 +1,13 @@
 import {useEffect, useState} from "react";
 import {userService} from 'services/users.service'
-import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
+import {Col, Row, Form} from "react-bootstrap";
 import "styles/style.css"
 import { authService } from "services/auth.service";
 import Display from "./DisplayUsers"
 import {useHistory} from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
+import PeopleIcone from "@material-ui/icons/PeopleOutlined"
+import { MenuItem,Select,InputLabel,FormControl,TextField } from "@mui/material";
 
 const AdminUser = () => {
 
@@ -22,7 +24,7 @@ const AdminUser = () => {
 
     const [isLoading, setLoading] = useState(true);
     const [users, setUsers] = useState('');
-    const [query, setquery] = useState(''); 
+    const [query, setQuery] = useState(''); 
     const [select, setSelect] = useState('email');
     const [refreshKey, setRefreshKey] = useState(0);
 
@@ -63,31 +65,31 @@ const AdminUser = () => {
 
     return (
         <div>
-            <h1 className="center">Utilisateurs</h1>
+            <h1 className="center">Utilisateurs <PeopleIcone/></h1>
             
             <Form>
                 <Row className="g-2">
                     <Col xs={11}>
-                        <FloatingLabel controlId="floatingInputGrid" label="Entrez votre recherche">
-                            <FormControl
+                         <FormControl fullWidth>
+                            <TextField
+                                fullWidth
+                                id="outlined-number"
+                                label="Entrez votre recherche"
+                                placeholder="Entrez votre recherche : titre ou état de l'annonce"
                                 type="search"
-                                placeholder="Entrez votre recherche : email, campus ou le role"
-                                className="me-2"
-                                aria-label="Search"
-                                onChange={e => setquery(e.target.value)}
-                            />
-                        </FloatingLabel>
+                                onChange={e => setQuery(e.target.value)}    
+                            />  
+                        </FormControl>
                     </Col>
                     <Col xs={1}>
-                        <FloatingLabel label="Filtres">
-                            <Form.Select 
-                                onChange={e => changeSelectValue(e.target.value)}
-                            >
-                                <option value="email">Email</option>
-                                <option value="role">Role</option>
-                                <option value="campus">Campus</option>
-                            </Form.Select>
-                        </FloatingLabel>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Filtre</InputLabel>
+                            <Select onChange={e => changeSelectValue(e.target.value)}>
+                                <MenuItem value="email">Email</MenuItem>
+                                <MenuItem value="role">Role</MenuItem>
+                                <MenuItem value="campus">Campus</MenuItem>
+                            </Select>              
+                      </FormControl>
                     </Col>
                 </Row>
             </Form>

@@ -7,7 +7,9 @@ import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
-
+import DeleteIcone from "@material-ui/icons/DeleteRounded"
+import PeopleIcone from "@material-ui/icons/PeopleRounded"
+import { FormControl,InputLabel,MenuItem,Select } from "@mui/material";
 export default function Display(props) {
 
 const DisplayUsers = (props) => {
@@ -89,8 +91,11 @@ const DisplayUsers = (props) => {
             users.map((user) => {
                 return(
                     <tr className="tuple" key={user.id_user} >
-                            <td onClick={e => navigateToUserProfile(user.email)}>
+                          
+                            
+                           <td onClick={e => navigateToUserProfile(user.email)}>
                                 {user.last_name}
+                                
                             </td>
                             <td onClick={e => navigateToUserProfile(user.email)}>
                                 {user.first_name}
@@ -102,17 +107,22 @@ const DisplayUsers = (props) => {
                                 {user.campus}
                             </td>
                             <td>
-                                <Form.Select defaultValue={user.role}
-                                    onChange={e => changeSelectValue(user ,e.target.value)}
-                                >
-                                    <option value="utilisateur">utilisateur</option>
-                                    <option value="admin">admin</option>
-                                    <option value="limite">limité</option>
-                                    <option value="banni">banni</option>
-                                </Form.Select> 
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Rôle</InputLabel>
+                                    <Select
+                                        defaultValue={user.role}   
+                                        label="role"
+                                        onChange={e => changeSelectValue(user ,e.target.value)}
+                                    >
+                                        <MenuItem value="utilisateur">utilisateur</MenuItem>
+                                        <MenuItem value="admin">admin</MenuItem>
+                                        <MenuItem value="limite">limité</MenuItem>
+                                        <MenuItem value="banni">banni</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}>Supprimer</Button>
+                                <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}> <DeleteIcone/></Button>
                             </td>
                     </tr>
                 )
@@ -140,7 +150,6 @@ return (
                     <th>email</th>
                     <th>campus</th>
                     <th>role</th>
-                    <th>supprimer un compte</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,3 +160,16 @@ return (
 )
 
 }
+
+/**
+ *    <List>
+                               <ListItem  onClick={e => navigateToUserProfile(user.email)}>
+                               <ListItemIcon>
+                               <PeopleIcone/>
+                                
+                            </ListItemIcon>
+                               <ListItemText primary={user.last_name}/>
+                               </ListItem>
+
+                           </List>
+ */

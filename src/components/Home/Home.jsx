@@ -19,7 +19,7 @@ function Home() {
     // Functions
     async function handleCategoryChange(event){
         let nameCategory = event.target.value.replaceAll("-", "");
-        if(nameCategory != "Tout"){
+        if(nameCategory !== "Tout"){
             await setCategory(nameCategory)
             await setFilter(`?categorie=${nameCategory}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
