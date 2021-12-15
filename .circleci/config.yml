@@ -13,7 +13,7 @@ jobs:
       # install dependencies
       - run:
           name: Install Dependencies
-          command: npm install
+          command: npm build
       - run:
           name: Run tests
           command: npm run test
