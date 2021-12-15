@@ -54,14 +54,8 @@ const getByAdId = (id_ad) => {
 }
 
 const getAll = () => {
-    let currentUser = authService.getCurrentUser();
-    let config = {
-        headers: {
-            Authorization: currentUser["token"]
-        }
-    }
     return axios
-        .get(apiurl, config)
+        .get(apiurl)
         .then(response => response.data.medias);
 }
 
