@@ -25,6 +25,9 @@ input:invalid {
 .navBtn {
   text-decoration: none;
 }
+.btn-drawer {
+  font-size: x-large;
+}
 
 /*TABLE USERS*/
 

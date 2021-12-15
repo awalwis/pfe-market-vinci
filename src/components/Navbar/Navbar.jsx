@@ -100,7 +100,7 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
             <div>
             {['Menu'].map((anchor) => (
                 <React.Fragment key={anchor}>
-                <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+                <Button className ="btn-drawer"onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                 <Drawer
                     anchor={anchor}
                     open={state[anchor]}
