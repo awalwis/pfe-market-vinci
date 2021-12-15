@@ -10,6 +10,7 @@ import { categoryService } from "services/categories.service";
 import { ToastContainer, toast } from 'react-toastify';
 import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
+import NotFound from "pages/Page404"
 
 const AdItem = ()=>{
 
@@ -135,7 +136,7 @@ const AdItem = ()=>{
     if(notExist && isLoading){
         return(
             <div>
-                <h2>Cette annonce n'existe pas</h2>
+               <NotFound/>
             </div>
         )
     }

@@ -1,15 +1,14 @@
-import { motion } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Button, Typography, Container } from '@mui/material';
 // components
-import { MotionContainer, varBounceIn } from '../components/animate';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
+  title :"404 Page Not Found",
   display: 'flex',
   minHeight: '100%',
   alignItems: 'center',
@@ -21,33 +20,25 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function Page404() {
   return (
-    <RootStyle title="404 Page Not Found | Minimal-UI">
+    <RootStyle>
       <Container>
-        <MotionContainer initial="initial" open>
+        
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
-            <motion.div variants={varBounceIn}>
+         
               <Typography variant="h3" paragraph>
-                Sorry, page not found!
+                Page introuvable!
               </Typography>
-            </motion.div>
+          
             <Typography sx={{ color: 'text.secondary' }}>
-              Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL?
-              Be sure to check your spelling.
+              Nous sommes navrés de ne pas avoir trouver la page que vous cherchiez. Il se peut qu'il est une erreur dans l'URL.
+              Veuillez vérifier et réessayer
             </Typography>
-
-            <motion.div variants={varBounceIn}>
-              <Box
-                component="img"
-                src="/static/illustrations/illustration_404.svg"
-                sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
-              />
-            </motion.div>
-
-            <Button to="/" size="large" variant="contained" component={RouterLink}>
-              Go to Home
+            <br/>
+            <Button to="/home" size="large" variant="contained" component={RouterLink}>
+              Revenir à l'accueil
             </Button>
           </Box>
-        </MotionContainer>
+      
       </Container>
     </RootStyle>
   );

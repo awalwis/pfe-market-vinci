@@ -1,10 +1,10 @@
-import Register from "components/Register/Register";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Switch, Route, useRouteMatch} from "react-router-dom";
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 
 // components
+import Register from "components/Register/Register";
 import ScrollToTop from 'components/ScrollToTop';
 import { BaseOptionChartStyle } from 'components/charts/BaseOptionChart';
 import Home from "components/Home/Home";
@@ -17,6 +17,8 @@ import AdminAd from "components/Admin/AdminAd";
 import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
+import Footer from"pages/Footer"
+import DefaultPage from 'pages/DefaultPage';
 
 //services
 import { authService } from "services/auth.service";
@@ -38,7 +40,7 @@ const App = () => {
 
 
     return (
-        <ThemeConfig>
+    <ThemeConfig>
         <ScrollToTop />
         <GlobalStyles />
         <BaseOptionChartStyle />
@@ -54,9 +56,9 @@ const App = () => {
                     <Route path="/admin/annonces" component={AdminAd} />
                     <Route path="/admin" component={Admin} />
                     <Route path="/profile/:email" component={Profile} />
-                    <Route path="/" component={Home} />
+                    <Route path="/" component={DefaultPage} />
                 </Switch>
-
+            <Footer/>
     </ThemeConfig>
 
     )
