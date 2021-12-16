@@ -91,3 +91,14 @@ body {
 .formButton {
   display: block;
 }
+
+.TrashButton:hover {
+  color: red !important;
+}
+
+.notification {
+  margin-right: 5%;
+  width: 10px;
+  height: 0px;
+  float: right;
+}
