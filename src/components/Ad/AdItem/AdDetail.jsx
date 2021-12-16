@@ -36,7 +36,7 @@ const AdDetail = ({ad,adMedias,category})=>{
                     </Carousel>
                 </Container>
                 <Container className="d-flex flex-column">
-                    <Typography variant="h3">{Number(ad.price)===0?"Gratuit":fNumber(Number(ad.price))+"€"}</Typography>
+                    <Typography variant="h3">{Number(ad.price)===0?"À donner":fNumber(Number(ad.price))+"€"}</Typography>
                     <Typography variant="h5" className="mb-2">{ad.description}</Typography>
                     <ul>
                         <li><Typography>Date de publication: {ad.date}</Typography></li>
