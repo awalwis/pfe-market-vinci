@@ -29,7 +29,7 @@ const Home = () => {
                 return state;
             })
         }else{
-            await setFilter(`?categorie=Tout&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
+            await setFilter(`?categorie=&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
