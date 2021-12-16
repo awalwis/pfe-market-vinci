@@ -7,6 +7,7 @@ import { Box, Card, Link, Container, Typography } from '@mui/material';
 import Page from '../components/Page';
 
 import  RegisterForm  from 'components/authentication/register/RegisterForm';
+import {Link as RouterLink} from "react-router-dom";
 
 
 // ----------------------------------------------------------------------
@@ -32,9 +33,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   return (
-    <RootStyle title="Register | Minimal-UI">
+    <RootStyle title="Inscription Market Vinci">
       <Container>
-        <ContentStyle>
+        <ContentStyle >
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
               Formulaire d'inscription
@@ -44,19 +45,13 @@ export default function Register() {
             </Typography>
           </Box>
 
-
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
+            Déjà inscrit ? &nbsp;
+            <Link component={RouterLink} underline="always" sx={{ color: 'text.primary' }} to="/login">
+              Connectez-vous ici !
             </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
-            </Link>
-            .
           </Typography>
 
         </ContentStyle>
