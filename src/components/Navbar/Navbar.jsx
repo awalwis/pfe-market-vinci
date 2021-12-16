@@ -121,7 +121,7 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
                 <React.Fragment key={anchor}>
                 <Button className ="btn-drawer"onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                 <Drawer
-                    anchor={anchor}
+                    anchor="left"
                     open={state[anchor]}
                     onClose={toggleDrawer(anchor, false)}
                 >

@@ -60,6 +60,7 @@ const App = () => {
                 <Route path="/profile/:email" component={Profile} />
                 <Route path="/" component={Home} />
             </Switch>
+            <Footer/>
         </ThemeConfig>
 
     )

@@ -25,7 +25,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 export default function CreateAd() {
     return (
       <RootStyle>
-        <Container sx={{ maxWidth :'sm',border :"solid"}}>
+        <Container sx={{ maxWidth :'sm',border :"solid" ,borderRadius : 10}}>
           <ContentStyle>
             <Stack sx={{ mb: 3 }}>
               <Typography variant="h4" gutterBottom>

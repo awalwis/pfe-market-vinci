@@ -6,7 +6,8 @@ import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import parse from 'html-react-parser';
 import { toast } from 'react-toastify';
-import { TextField,FormControl,Button } from "@mui/material";
+import { TextField,FormControl,Button,Stack } from "@mui/material";
+import { padding, spacing, width } from "@mui/system";
 
 const ConstructP = (props) => {
     let value = props.value;
@@ -46,9 +47,10 @@ const ConstructP = (props) => {
                 i++;
                 return(
                     <div key={'child'+nameParent+i}>
-                        {parse(e)}
-                        
-                        <Button onClick={e => {deleteSubCategory(e)}} variant="contained"color="error">DELETE</Button>
+                         <Stack direction="row" >
+                            {parse(e)}
+                        <Button variant="contained"color="error" size="small" onClick={e => {deleteSubCategory(e)}}  >DELETE</Button>  
+                        </Stack> 
                     </div>
                 )
             }else if(i===0){
@@ -165,9 +167,12 @@ const DisplayCategories = (props) => {
                         data-key={key}
                     >
                         <div className="ms-2 me-auto">
+                        <Stack direction={{ xs: 'column'}} spacing={2}>
                             <div className="fw-bold">{value[0]}</div>
-                            <Button variant="contained" color="error" onClick={e => {deleteCategory(e)}}>DELETE</Button>
+                        
+                           
                             <ConstructP value={value} setRefreshKey={props.setRefreshKey} refreshKey={props.refreshKey}/>
+                            </Stack>
                             <form onSubmit={addSubCategory}>
                             <FormControl fullWidth>
                             <TextField
@@ -199,5 +204,5 @@ const DisplayCategories = (props) => {
 export default DisplayCategories;
 
 /**
- * <Button onClick={e => {deleteCategory(e)}} variant="danger">DELETE</Button>
+ *     <Button variant="contained" color="error" onClick={e => {deleteCategory(e)}} size="small">DELETE</Button>
  */

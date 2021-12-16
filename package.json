@@ -20,7 +20,6 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/lab": "^5.0.0-alpha.59",
     "@mui/material": "^5.2.4",
-    "@mui/x-data-grid": "^5.2.0",
     "@react-google-maps/api": "^2.7.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -52,6 +51,7 @@
     "react-uuid": "^1.0.2",
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
+    "styled-components": "^5.3.3",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.9"
   },
