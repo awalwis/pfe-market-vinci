@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { Link as RouterLink} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -29,7 +28,7 @@ const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
-        email: Yup.string().email('Format non valide').required('Email is required'),
+        email: Yup.string().email('Format non valide').required('Email requis'),
         password: Yup.string().required('Password is required')
     });
 
@@ -98,9 +97,6 @@ const LoginForm = () => {
                     label="Remember me"
                 />
 
-                <Link component={RouterLink} variant="subtitle2" to="#">
-                    Forgot password?
-                </Link>
             </Stack>
 
             <LoadingButton
@@ -110,7 +106,7 @@ const LoginForm = () => {
                 variant="contained"
                 loading={isSubmitting}
             >
-                Login
+                Connexion
             </LoadingButton>
         </Form>
     </FormikProvider>
