@@ -132,6 +132,7 @@ const AdNewForm = () => {
             type,
             id_user        
         };
+        console.log(newAd)
         adService.createNewAd(newAd)
         .then(async res=>{
             await addMedia(res.id_ad, id_user)
@@ -214,37 +215,38 @@ const AdNewForm = () => {
     }
     
     return (
-        <FormControl>
+        <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <TextField
-                    id="outlined-required"
                     label="Titre de l'annonce"
                     placeholder="Entrez un titre pour votre annonce"
                     onChange={handleTitleChange}
+                    required
                     
                     
                     />
                 <TextField
-                    id="outlined-required"
                     label="Description de l'annonce"
                     placeholder="Entrez une description pour votre annonce"
                     onChange={handleDescriptionChange}
+                    multiline
+                    rows={3}
                     required
                 />
                 <Category setCategory={setCategory}/>
                 <FormLabel component="legend">Type d'annonce</FormLabel>
             </Stack> 
             <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"
-                 onChange={handleIsPaying}
+                 onChange={handleIsPaying}   
             >
-            <FormControlLabel value="isFree" control={<Radio />} label="A donner" aria-required />
-            <FormControlLabel value="isPaying" control={<Radio />} label="A vendre" aria-required />
+            <FormControlLabel value="isFree" control={<Radio required={true} />} label="A donner" aria-required />
+            <FormControlLabel value="isPaying" control={<Radio required={true}/>} label="A vendre" aria-required />
             </RadioGroup>
             {isPaying && showAddPrice()}
             <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>  <br/>
-            <Button variant="contained" size="medium" onClick={handleSubmit}>Créer</Button> 
+            <Button variant="contained" size="medium" type="submit">Créer</Button> 
             <ToastContainer/>
-        </FormControl> 
+        </form> 
     )
 }
 

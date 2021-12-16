@@ -1,5 +1,5 @@
 import React from "react"; 
-import { Button, Form, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
@@ -9,7 +9,7 @@ import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
 import DeleteIcone from "@material-ui/icons/DeleteRounded"
 import PeopleIcone from "@material-ui/icons/PeopleRounded"
-import { FormControl,InputLabel,MenuItem,Select } from "@mui/material";
+import { FormControl,InputLabel,MenuItem,Select,Button } from "@mui/material";
 export default function Display(props) {
 
 const DisplayUsers = (props) => {
@@ -122,7 +122,7 @@ const DisplayUsers = (props) => {
                                 </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}> <DeleteIcone/></Button>
+                            <Button variant="outlined" color="error" onClick={e => deleteUser(user.id_user)} startIcon={<DeleteIcone />}>Supprimer</Button>
                             </td>
                     </tr>
                 )

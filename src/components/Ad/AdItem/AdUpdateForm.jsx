@@ -290,6 +290,8 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                     label="Description de l'annonce"
                     name="description"
                     defaultValue={ad.description}
+                    multiline
+                    rows={3}
                     onChange={handleUpdate}
                     required
                 />

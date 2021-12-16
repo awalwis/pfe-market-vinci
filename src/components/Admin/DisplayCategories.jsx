@@ -1,11 +1,12 @@
 import React from "react";
 import {useState} from "react";
 import {categoryService} from 'services/categories.service'
-import {ListGroup,Badge,InputGroup,FormControl,Button} from "react-bootstrap";
+import {ListGroup,Badge,InputGroup} from "react-bootstrap";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import parse from 'html-react-parser';
 import { toast } from 'react-toastify';
+import { TextField,FormControl,Button } from "@mui/material";
 
 const ConstructP = (props) => {
     let value = props.value;
@@ -46,7 +47,8 @@ const ConstructP = (props) => {
                 return(
                     <div key={'child'+nameParent+i}>
                         {parse(e)}
-                        <Button onClick={e => {deleteSubCategory(e)}} variant="danger">DELETE</Button>
+                        
+                        <Button onClick={e => {deleteSubCategory(e)}} variant="contained"color="error">DELETE</Button>
                     </div>
                 )
             }else if(i===0){
@@ -164,12 +166,19 @@ const DisplayCategories = (props) => {
                     >
                         <div className="ms-2 me-auto">
                             <div className="fw-bold">{value[0]}</div>
-                            <Button onClick={e => {deleteCategory(e)}} variant="danger">DELETE</Button>
+                            <Button variant="contained" color="error" onClick={e => {deleteCategory(e)}}>DELETE</Button>
                             <ConstructP value={value} setRefreshKey={props.setRefreshKey} refreshKey={props.refreshKey}/>
                             <form onSubmit={addSubCategory}>
-                                <InputGroup size="sm" className="mb-3">
-                                    <FormControl onChange={e => {setValueInput(e.target.value)}} placeholder="Ajouter sous categorie" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                                </InputGroup>
+                            <FormControl fullWidth>
+                            <TextField
+                                variant="standard"
+                                fullWidth
+                                placeholder="Ajouter une sous catégorie"
+                                type="search"
+                                onChange={e => {setValueInput(e.target.value)}}  
+                                required 
+                            />  
+                        </FormControl>
                             </form>
                         </div>
                         <Badge variant="primary" pill>
@@ -188,3 +197,7 @@ const DisplayCategories = (props) => {
 }
 
 export default DisplayCategories;
+
+/**
+ * <Button onClick={e => {deleteCategory(e)}} variant="danger">DELETE</Button>
+ */

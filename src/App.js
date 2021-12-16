@@ -36,6 +36,9 @@ const App = () => {
         loggedIn = true;
         roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
     }
+    if(roleCurrentUser ==="banni"){
+        loggedIn=false
+    }
     console.log("App.js: ", loggedIn);
 
 

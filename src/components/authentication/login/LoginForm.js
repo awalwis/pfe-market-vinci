@@ -44,7 +44,7 @@ const LoginForm = () => {
             console.log(formik.values)
             let user = authService.login(formik.values.email,formik.values.password).then(()=>{
                 console.log("usr: ",user);
-                if(user){
+                if(user || user.role === "banni"){
                     console.log("history push")
                     history.push("/");
                 }

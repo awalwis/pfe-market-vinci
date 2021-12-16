@@ -6,7 +6,7 @@ import { authService } from "services/auth.service";
 import Display from "./DisplayUsers"
 import {useHistory} from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-import PeopleIcone from "@material-ui/icons/PeopleOutlined"
+import PeopleIcone from "@material-ui/icons/PeopleRounded"
 import { MenuItem,Select,InputLabel,FormControl,TextField } from "@mui/material";
 
 const AdminUser = () => {
@@ -65,7 +65,7 @@ const AdminUser = () => {
 
     return (
         <div>
-            <h1 className="center">Utilisateurs <PeopleIcone/></h1>
+            <h2 className="center">Utilisateurs <PeopleIcone/></h2>
             
             <Form>
                 <Row className="g-2">
@@ -73,9 +73,8 @@ const AdminUser = () => {
                          <FormControl fullWidth>
                             <TextField
                                 fullWidth
-                                id="outlined-number"
                                 label="Entrez votre recherche"
-                                placeholder="Entrez votre recherche : titre ou état de l'annonce"
+                                placeholder="Entrez votre recherche : email, role  ou par campus de l'utilisateur"
                                 type="search"
                                 onChange={e => setQuery(e.target.value)}    
                             />  
@@ -83,8 +82,10 @@ const AdminUser = () => {
                     </Col>
                     <Col xs={1}>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Filtre</InputLabel>
-                            <Select onChange={e => changeSelectValue(e.target.value)}>
+                        <InputLabel >Filtre</InputLabel>
+                            <Select onChange={e => changeSelectValue(e.target.value)}
+                            defaultValue="email"
+                            >
                                 <MenuItem value="email">Email</MenuItem>
                                 <MenuItem value="role">Role</MenuItem>
                                 <MenuItem value="campus">Campus</MenuItem>

@@ -7,10 +7,10 @@ import {authService} from "services/auth.service";
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import PeopleIcone from "@mui/icons-material/People"
+import PeopleIcone from "@mui/icons-material/PersonRounded"
 import LogOutIcone from "@mui/icons-material/Logout"
 import HomeIcone from "@mui/icons-material/Home"
-import AdIcone from "@mui/icons-material/Add"
+import AdIcone from "@mui/icons-material/AddCircle"
 import UserIcone from "@mui/icons-material/EmojiPeople"
 import AdminIcone from "@mui/icons-material/AdminPanelSettings"
 import {useHistory} from "react-router-dom";

@@ -1,12 +1,12 @@
 import React from "react"; 
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
-import { FormControl,InputLabel,MenuItem,Select } from "@mui/material";
+import { FormControl,InputLabel,MenuItem,Select,Button } from "@mui/material";
 import DeleteIcone from "@material-ui/icons/DeleteRounded"
 
 export default function Display(props) {
@@ -100,7 +100,7 @@ const DisplayAds = (props) => {
                             </td>
                             <td>
                             <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">Etat</InputLabel>
+                                    <InputLabel >Etat</InputLabel>
                                     <Select
                                         defaultValue={ad.state}   
                                         label="state"
@@ -113,7 +113,7 @@ const DisplayAds = (props) => {
                                 </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outline-danger" onClick={e => deleteAd(ad.id_ad)}><DeleteIcone/></Button>
+                                <Button variant="outlined" color="error" onClick={e => deleteAd(ad.id_ad)} startIcon={<DeleteIcone />}>Supprimer</Button>
                             </td>
                     </tr>
                 )
