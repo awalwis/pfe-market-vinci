@@ -25,18 +25,30 @@ import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 //services
 import { authService } from "services/auth.service";
+import { useState, useEffect } from "react";
 
 
 const App = () => {
     useRouteMatch("/");
-    let loggedIn = false;
-    let currentUser = authService.getCurrentUser();
-    let roleCurrentUser = '';
-    if (currentUser) {
-        loggedIn = true;
-        roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [roleCurrentUser, setRoleCurrentUser] = useState();
+
+    useEffect(()=>{
+        fetchData()
+    },[])
+
+    async function fetchData() {
+        let currentUser = authService.getCurrentUser();
+        let roleCurrentUser = '';
+        if (currentUser) {
+            setLoggedIn(true)
+            await authService.getRoleCurrentUser().then((role) => setRoleCurrentUser(role))
+        }
+        if(roleCurrentUser ==="banni"){
+            setLoggedIn(false)
+        }
+        console.log("App.js: ", loggedIn);
     }
-    console.log("App.js: ", loggedIn);
 
 
     return (
