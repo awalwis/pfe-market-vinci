@@ -1,7 +1,7 @@
 
 import {useHistory} from "react-router-dom";
-import Card from "../../theme/overrides/Card";
-import {Button} from "@mui/material";
+import AnnonceList from "components/Home/components/AnnonceList";
+import {Button,Card } from "@mui/material";
 
 
 const DisplayMyAds = ({adsAvailable, adsPending, adsSold, mapUrl, id_user, currentIdUser, currentUserRole}) => {
@@ -13,20 +13,7 @@ const DisplayMyAds = ({adsAvailable, adsPending, adsSold, mapUrl, id_user, curre
             history.push("/annonces/" + e.target.dataset.id);
         }
         return (
-            ads.map((ad) => {
-                return (
-                    <Card key={ad.id_ad} style={{width: '18rem'}}>
-                        <Card.Img variant="top" src={mapUrl[ad.id_ad]}/>
-                        <Card.Body>
-                            <Card.Title>{ad.title}</Card.Title>
-                            <Card.Text>
-                                {ad.description}
-                            </Card.Text>
-                            <Button data-id={ad.id_ad} onClick={handleButton} variant="primary">Plus info</Button>
-                        </Card.Body>
-                    </Card>
-                )
-            })
+            <AnnonceList annonces={ads}/>
         )
     }
 

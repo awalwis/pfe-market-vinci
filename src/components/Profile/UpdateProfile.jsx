@@ -1,17 +1,12 @@
 import {useHistory} from "react-router-dom";
 import {useState} from "react";
-import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import bcrypt from "bcryptjs";
 import {authService} from "../../services/auth.service";
-import {Button, IconButton, InputAdornment, Stack, TextField} from "@mui/material";
+import {Button, Stack, TextField} from "@mui/material";
 import {MenuItem} from "@material-ui/core";
-import {Icon} from "@iconify/react/dist/iconify";
-import eyeFill from "@iconify/icons-eva/eye-fill";
-import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 import {LoadingButton} from "@mui/lab";
 import ProfileData from "./ProfileData";
-
 
 
 const UpdateProfile =  (user) => {
@@ -105,7 +100,7 @@ const UpdateProfile =  (user) => {
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Stack spacing={3}>
-                    <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+                    
                         <TextField
                             fullWidth
                             label="Prénom"
@@ -120,11 +115,9 @@ const UpdateProfile =  (user) => {
                             error={Boolean(touched.lastName && errors.lastName)}
                             helperText={touched.lastName && errors.lastName}
                         />
-                    </Stack>
-                    <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
-                        <TextField
+                      
+                        {user.role==="admin" && <TextField
                             placeholder={user.email}
-                            disabled
                             fullWidth
                             autoComplete="username"
                             type="email"
@@ -132,7 +125,7 @@ const UpdateProfile =  (user) => {
                             {...getFieldProps('email')}
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
-                        />
+                        />}
                         <TextField
 
                             fullWidth
@@ -154,7 +147,6 @@ const UpdateProfile =  (user) => {
                             ))}
                         </TextField>
 
-                    </Stack>
 
                     <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
                     <LoadingButton

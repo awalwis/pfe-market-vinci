@@ -93,14 +93,15 @@ const ProfileData =  () => {
         <Box sx={{ minWidth: 275 }}>
                 <Card variant="outlined" sx={{paddingX: "50px"}}>
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center"}}>
-                            Mon profil
-                        </Typography>
+                        <Stack spacing={3}>
+                            <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center"}}>
+                                Mon profil
+                            </Typography>
 
-                        <ListinfosUser user={data.data.user}/>
+                            <ListinfosUser user={data.data.user}/>
 
-                        {modifAuthorized && <><button onClick={(e)=>{setPage("updateInfos")}}>modif Pwd</button></>}
-
+                            {modifAuthorized && <><Button onClick={(e)=>{setPage("updateInfos")}}>Modifier mes informations</Button></>}
+                        </Stack>
                     </CardContent>
                 </Card>
             <DisplayMyAds adsAvailable={adsAvailable} adsPending={adsPending} adsSold={adsSold} mapUrl={mapUrl} id_user={data.data.user.id_user} currentIdUser={authService.getCurrentUser().id_user}  currentUserRole={authService.getRoleCurrentUser()}/>
