@@ -10,7 +10,7 @@ function FooterContent() {
     <>
       <Typography variant="body2" color="text.secondary"> 
       <Link color="inherit" href="mailto: adminMarketVinci@gmail.com">
-        Contacter Nous
+        Contacter nous
       </Link>
       
     </Typography>
