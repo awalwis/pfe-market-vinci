@@ -26,10 +26,14 @@ import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 //services
 import { authService } from "services/auth.service";
+import UnauthenticatedRoute from "components/Routes/UnauthenticatedRoute";
+import AuthenticatedRoute from "components/Routes/AuthenticatedRoute";
 import { useState, useEffect } from "react";
 
 
 const App = () => {
+
+
     useRouteMatch("/");
     const [loggedIn, setLoggedIn] = useState(false);
     const [roleCurrentUser, setRoleCurrentUser] = useState();
@@ -60,17 +64,17 @@ const App = () => {
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
             {currentUser && <NotificationsPopover />}
             <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/home" component={Home} />
-                <Route path="/ajouter" component={CreateAd} />
-                <Route path="/annonces/:id" component={AdItem} />
-                <Route path="/admin/categories" component={AdminCategory} />
-                <Route path="/admin/utilisateurs" component={AdminUser} />
-                <Route path="/admin/annonces" component={AdminAd} />
-                <Route path="/admin" component={Admin} />
-                <Route path="/profile/:email" component={Profile} />
-                <Route path="/" component={Home} />
+                <UnauthenticatedRoute path="/login" component={Login} appProps={loggedIn} />
+                <UnauthenticatedRoute path="/register" component={Register} appProps={loggedIn} />
+                <UnauthenticatedRoute path="/home" component={Home} appProps={loggedIn} />
+                <AuthenticatedRoute path="/ajouter" component={CreateAd} appProps={loggedIn} />
+                <AuthenticatedRoute path="/annonces/:id" component={AdItem} appProps={loggedIn} />
+                <AuthenticatedRoute path="/admin/categories" component={AdminCategory} appProps={loggedIn} />
+                <AuthenticatedRoute path="/admin/utilisateurs" component={AdminUser} appProps={loggedIn} />
+                <AuthenticatedRoute path="/admin/annonces" component={AdminAd} appProps={loggedIn} />
+                <AuthenticatedRoute path="/admin" component={Admin} appProps={undefined} />
+                <AuthenticatedRoute path="/profile/:email" component={Profile} appProps={loggedIn} />
+                <UnauthenticatedRoute path="/" component={Home} appProps={loggedIn} />
             </Switch>
             <Footer />
         </ThemeConfig>
