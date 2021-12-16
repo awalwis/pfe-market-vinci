@@ -33,13 +33,14 @@ const App = () => {
     useRouteMatch("/");
     const [loggedIn, setLoggedIn] = useState(false);
     const [roleCurrentUser, setRoleCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState();
 
     useEffect(()=>{
         fetchData()
     },[])
 
     async function fetchData() {
-        let currentUser = authService.getCurrentUser();
+        await authService.getCurrentUser().then((user) => setCurrentUser(user))
         let roleCurrentUser = '';
         if (currentUser) {
             setLoggedIn(true)
