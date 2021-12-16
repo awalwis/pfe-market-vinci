@@ -20,6 +20,7 @@ import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
 import CreateAd from "pages/CreateAd"
+import Footer from "pages/Footer"
 import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 
@@ -56,7 +57,7 @@ const App = () => {
             <ScrollToTop />
             <GlobalStyles />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
-            <NotificationsPopover />
+            {currentUser && <NotificationsPopover />}
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
@@ -70,6 +71,7 @@ const App = () => {
                 <Route path="/profile/:email" component={Profile} />
                 <Route path="/" component={Home} />
             </Switch>
+            <Footer />
         </ThemeConfig>
 
     )

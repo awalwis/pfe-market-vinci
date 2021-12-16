@@ -7,14 +7,14 @@ import Link from '@mui/material/Link';
 
 function FooterContent() {
   return (
-    <Typography variant="body2" color="text.secondary">
+    <>
+      <Typography variant="body2" color="text.secondary"> 
+      <Link color="inherit" href="mailto: adminMarketVinci@gmail.com">
+        Contacter nous
+      </Link>
       
-      <Link color="inherit" href="">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
     </Typography>
+    </>
   );
 }
 
@@ -43,7 +43,7 @@ export default function Footer() {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            My sticky footer can be found here.
+            Market Vinci
           </Typography>
           <FooterContent />
         </Container>

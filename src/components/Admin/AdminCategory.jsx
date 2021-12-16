@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react";
 import {categoryService} from 'services/categories.service'
 import { authService } from "services/auth.service";
-import {ListGroup,InputGroup,FormControl} from "react-bootstrap";
+import {ListGroup} from "react-bootstrap";
 import "styles/style.css"
 import {useHistory} from "react-router-dom";
 import {Loader} from "components/Loading/Loading";
 import DisplayCategories from "./DisplayCategories"
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import { TextField,FormControl } from "@mui/material";
 
 
 const AdminCategory = () => {
@@ -78,9 +79,16 @@ const AdminCategory = () => {
                     <DisplayCategories categories={categories} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
                 </ListGroup>
                 <form onSubmit={e => {e.preventDefault(); addCategory()}}>
-                    <InputGroup className="mb-3">
-                        <FormControl onChange={e => {setValueInput(e.target.value)}} placeholder="Ajouter categorie" aria-label="Default" aria-describedby="inputGroup-sizing-default" />
-                    </InputGroup>
+                <FormControl fullWidth>
+                            <TextField
+                                fullWidth
+                                label="Catégorie"
+                                placeholder="Ajouter une catégorie"
+                                type="search"
+                                onChange={e => {setValueInput(e.target.value)}}  
+                                required 
+                            />  
+                        </FormControl>
                 </form>
                 <ToastContainer />
             </>

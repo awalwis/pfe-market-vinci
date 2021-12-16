@@ -173,6 +173,7 @@ const AdItem = ()=>{
         <div>
             <AdDetail ad={ad} adMedias={medias} category={category}/>
             <Container>{buttonDisplay()}</Container>
+            <br/>
             {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey} setIsOpen={setIsOpen} adMedias={medias}/>}
             {sellerInfo &&
             <>

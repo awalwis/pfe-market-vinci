@@ -1,5 +1,4 @@
 import { ReactDOM } from 'react';
-import faker from 'faker';
 import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -119,9 +118,10 @@ export default function NotificationsPopover() {
       setNotifications(retrievedNotification.data.notifications);
     }
     const interval = setInterval(() => {
-      fetchData();
+      if (currentUser) {
+        fetchData();
+      }
     }, 30000);
-    console.log("CLear ?")
     return () => clearInterval(interval);
   }, []);
 
@@ -241,13 +241,4 @@ export default function NotificationsPopover() {
       </MenuPopover>
     </>
   );
-}
-
-const Render = () => {
-
-  const tick = () => {
-    NotificationsPopover();
-  }
-
-  setInterval(tick, 30000)
 }
