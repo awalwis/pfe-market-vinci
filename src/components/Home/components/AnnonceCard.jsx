@@ -47,7 +47,7 @@ const AnnonceCard = ({annonce}) => {
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="subtitle1">
-                   {fNumber(Number(annonce.price))}€
+                    {Number(annonce.price)===0?"Gratuit":fNumber(Number(annonce.price))+"€"}
                 </Typography>
                 </Stack>
             </Stack>
