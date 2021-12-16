@@ -3,10 +3,14 @@ import { styled } from '@mui/material/styles';
 import { Link as RouterLink, } from 'react-router-dom';
 import { fCurrency } from 'utils/formatNumber';
 import { authService } from 'services/auth.service';
+import { mediaService } from 'services/medias.service';
+import { useEffect, useState } from 'react';
 
-const AnnonceCard = ({annonce, picture}) => {
+const AnnonceCard = ({annonce}) => {
 
     const user = authService.getCurrentUser()
+
+    const [picture, setPicture] = useState()
 
     const ProductImgStyle = styled('img')({
         top: 0,
@@ -16,10 +20,15 @@ const AnnonceCard = ({annonce, picture}) => {
         position: 'absolute'
       });
 
+    useEffect(()=>{
+        mediaService.get(annonce.displayed_picture??1).then((elt) => setPicture(elt.url))
+    },[])
+
     return(
-        <><Card>
+        picture && 
+        (<Card>
             <Box sx={{ pt: '100%', position: 'relative' }}>
-                <ProductImgStyle alt={"Image produit"} src={picture?picture.url:""} />
+                <ProductImgStyle alt={"Image produit"} src={picture} />
             </Box>
             <Stack spacing={2} sx={{ p: 3 }}>
                 <Link to={`${user?`/annonces/${annonce.id_ad}`:"/login"}`} color="inherit" underline="hover" component={RouterLink}>
@@ -36,7 +45,7 @@ const AnnonceCard = ({annonce, picture}) => {
                 </Typography>
                 </Stack>
             </Stack>
-    </Card></>
+        </Card>)
 
     )
 }

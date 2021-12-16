@@ -25,7 +25,6 @@ const Home = () => {
             await setCategory(event.target.value)
             await setFilter(`?categorie=${event.target.value}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
-                console.log(state)
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
@@ -60,7 +59,6 @@ const Home = () => {
         await setPrixMin(event.target.value)
         await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${event.target.value}&prixMax=${prixMax}`)
         await setFilter((state) => {
-            console.log(state)
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
         })
@@ -69,7 +67,6 @@ const Home = () => {
         await setPrixMax(event.target.value)
         await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${event.target.value}`)
         await setFilter((state) => {
-            console.log(state)
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
         })
