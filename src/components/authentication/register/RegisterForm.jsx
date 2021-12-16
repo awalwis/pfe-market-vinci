@@ -21,8 +21,6 @@ export default function RegisterForm() {
   const [campus, setCampus] = useState("Woluwe");
   const bcrypt = require('bcryptjs');
 
-
-
   const validate = values => {
     const errors = {};
     if (!values.firstName) {
@@ -59,14 +57,6 @@ export default function RegisterForm() {
 
     return errors;
   };
-  const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Prénom requis'),
-    lastName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Nom requis'),
-    email: Yup.string(),
-    campus: Yup.string(),
-    password1: Yup.string().min(6, 'Minimum 6 caractères!').max(20, 'Maximum 20 caractères!').required('Mot de passe requis'),
-    password2: Yup.string().required('Veuillez confirmer votre mot de passe')
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -118,8 +108,6 @@ export default function RegisterForm() {
       label: 'Louvain la neuve',
     }
   ];
-
-
 
 
   return (

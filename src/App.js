@@ -1,5 +1,5 @@
 
-import Register from "pages/Register";
+
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +11,7 @@ import GlobalStyles from 'theme/globalStyles';
 
 import ScrollToTop from 'components/ScrollToTop';
 import Home from "components/Home/Home";
-import Profile from "components/Profile/Profile";
+import Profile from "pages/Profile";
 import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
 import AdItem from "components/Ad/AdItem/AdItem";
 import AdminUser from "components/Admin/AdminUser";
@@ -19,6 +19,7 @@ import AdminCategory from "components/Admin/AdminCategory";
 import AdminAd from "components/Admin/AdminAd";
 import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
+import Register from "pages/Register";
 import Admin from "components/Admin/Admin";
 import Footer from"pages/Footer"
 import CreateAd from "pages/CreateAd"
