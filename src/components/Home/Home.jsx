@@ -20,16 +20,17 @@ const Home = () => {
 
     // Functions
     async function handleCategoryChange(event){
-        let nameCategory = event.target.value.replaceAll("-", "");
-        if(nameCategory != "Tout"){
-            await setCategory(nameCategory)
-            await setFilter(`?categorie=${nameCategory}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
+        let nameCategory = event.target.value;
+        if(nameCategory !== "Tout"){
+            await setCategory(event.target.value)
+            await setFilter(`?categorie=${event.target.value}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
+                console.log(state)
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
         }else{
-            await setFilter(``)
+            await setFilter(`?categorie=Tout&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
@@ -38,7 +39,7 @@ const Home = () => {
     }
     async function handleTriChange(newTri){
         if(newTri){
-            // change à non alphabétique
+            // change à prix décroissant
             await setTri(false)
             await setFilter(`?categorie=${category}&tri=DESC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
@@ -46,7 +47,7 @@ const Home = () => {
                 return state;
             })
         } else {
-            // change à alphabétique
+            // change à prix croissant
             await setTri(true)
             await setFilter(`?categorie=${category}&tri=ASC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
@@ -57,16 +58,18 @@ const Home = () => {
     }
     async function handleMinPriceChange(event){
         await setPrixMin(event.target.value)
-        await setFilter(`?categorie=${category}&tri=${tri}&prixMin=${event.target.value}&prixMax=${prixMax}`)
+        await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${event.target.value}&prixMax=${prixMax}`)
         await setFilter((state) => {
+            console.log(state)
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
         })
     }
     async function handleMaxPriceChange(event){
         await setPrixMax(event.target.value)
-        await setFilter(`?categorie=${category}&tri=${tri}&prixMin=${prixMin}&prixMax=${event.target.value}`)
+        await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${event.target.value}`)
         await setFilter((state) => {
+            console.log(state)
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
         })

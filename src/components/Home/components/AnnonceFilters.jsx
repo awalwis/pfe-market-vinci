@@ -43,18 +43,6 @@ export default function AnnonceFilters({
         CategoriesAPI.getCategories().then((elt) => setCategories(elt));
     }, [])
     return(
-        // <Container className="d-flex flex-row justify-content-start">
-        //             <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
-        //                 {categories && categories.categories.map((row) => {
-        //                     return(
-        //                         <option>{row.name}</option>
-        //                     )
-        //                 }) }
-        //             </Form.Select>
-        //             <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
-        //             <Form.Control onChange={(e) => {handleMinPriceChange(e)}} placeholder="Prix min" className="d-flex border" style={{"width":"100px"}}/>
-        //             <Form.Control onChange={(e) => handleMaxPriceChange(e)} placeholder="Prix max" className="d-flex border" style={{"width":"100px"}}/>
-        //         </Container>
         <>
       <Button
         disableRipple

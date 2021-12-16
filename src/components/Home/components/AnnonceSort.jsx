@@ -26,9 +26,9 @@ export default function AnnonceSort({tri, handleTriChange}){
             className="ml-2 mb-4"
             endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
           >
-            Sort By:&nbsp;
+            Trier par:&nbsp;
             <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                {tri?"[A-Z]":"[Z-A]"}
+                {tri?"Le moins cher":"Le plus cher"}
             </Typography>
           </Button>
           <Menu
@@ -45,8 +45,7 @@ export default function AnnonceSort({tri, handleTriChange}){
                 onClick={(e) => {e.preventDefault();handleTriChange(false);handleClose()}}
                 sx={{ typography: 'body2' }}
             >
-                {/* Alphabétique */}
-                [A-Z]
+                Le moins cher
             </MenuItem>
             <MenuItem
                 key={2}
@@ -54,8 +53,7 @@ export default function AnnonceSort({tri, handleTriChange}){
                 onClick={(e) => {e.preventDefault();handleTriChange(true);handleClose()}}
                 sx={{ typography: 'body2' }}
             >
-                {/* Non Alphabétique */}
-                [Z-A]
+                Le plus cher
             </MenuItem>
           </Menu>
         </>
