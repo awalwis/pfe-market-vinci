@@ -14,8 +14,8 @@ const AdDetail = ({ad,adMedias,category})=>{
                     {ad.title}
                 </Typography>
             </Container>
-            <Container className="d-flex flex-row border bg-white rounded py-4" style={{"height":"21.875rem"}}>
-                <Container>
+            <Container className="d-flex flex-row justify-content-between border bg-white rounded py-4" style={{"height":"25rem"}}>
+                <Container className="d-flex">
                     <Carousel>
                         {adMedias.map(m => {
                             return(
@@ -33,9 +33,15 @@ const AdDetail = ({ad,adMedias,category})=>{
                                     }
                                 </Carousel.Item>)
                         })}
+                        <Carousel.Item>
+                            <ReactPlayer
+                                url={"https://pfemedias.blob.core.windows.net/medias/e5206f0-ed8-84-ef8a-b8d3d2d7bevideo-1638965093.mp4"}
+                                controls={true}
+                            />
+                        </Carousel.Item>
                     </Carousel>
                 </Container>
-                <Container>
+                <Container className="d-flex flex-column">
                     <Typography variant="h3">{fNumber(Number(ad.price))}€</Typography>
                     <Typography variant="h5" className="mb-2">{ad.description}</Typography>
                     <ul>
