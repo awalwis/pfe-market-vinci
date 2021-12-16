@@ -24,10 +24,14 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
   const history = useHistory();
  
   let isAdmin=false
+  let isLimite=false
   
-
-  if(roleCurrentUser==="admin")
+  if(roleCurrentUser==="admin"){
       isAdmin=true
+  }
+  if(roleCurrentUser==="limite"){
+      isLimite=true
+  }
 
   const handleLogout=()=>{
     authService.logout();
@@ -76,12 +80,14 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
                     </ListItemIcon>
                     <ListItemText primary="Profil" />
                 </ListItem>
+                {!isLimite &&
                 <ListItem button onClick={handleCreateAd}>
                     <ListItemIcon>
                         <AdIcone/>
                     </ListItemIcon>
                     <ListItemText primary="Créer une annonce" />
                 </ListItem>
+                }
                 {isAdmin &&
                 <ListItem button onClick={handleAdmin}>
                     <ListItemIcon>

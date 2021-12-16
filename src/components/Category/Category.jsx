@@ -23,7 +23,7 @@ const Category=({setCategory, idDefault})=>{
         return(           
            <Box sx={{ minWidth: 120 }}>
               <FormControl fullWidth>
-                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                     Categorie
                 </InputLabel>
                 <NativeSelect onChange={handleCategoryChange}

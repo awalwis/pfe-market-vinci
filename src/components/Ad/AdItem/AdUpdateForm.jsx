@@ -273,8 +273,9 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
     }
 
     return (
-
+        
          <Container sx={{ maxWidth :'sm',border :"solid"}}>
+             <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <TextField
                     id="outlined-required"
@@ -314,7 +315,8 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
              
             <Category setCategory={setCategory} idDefault={id_category}/>
             <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>   
-            <Button variant="contained" size="medium" onClick={handleSubmit}>Modifier</Button> 
+            <Button variant="contained" size="medium" type="submit">Modifier</Button> 
+            </form>
             <Button variant="contained" size="medium" onClick={handlePictureChange}>Modifier vos images</Button> 
             {isChangeDisplayPicture &&
                  <div>   
