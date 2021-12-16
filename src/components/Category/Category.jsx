@@ -65,8 +65,16 @@ const Category=({setCategory, idDefault})=>{
                 }}
               >
                 <option value='0'>---Choisir une categorie---</option>
-               {categories.map(category => {
-                    if(category.parent_category) return <option key={category.id_category} value={category.id_category}>{category.name}</option>;
+                {categories.map(category => {
+                    if(!category.parent_category){
+                        return(
+                            <option key={category.id_category} disabled>--{category.name}--</option>
+                        )
+                    }else{
+                        return(
+                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
+                        )
+                    }
                 })}
               </NativeSelect>
             </FormControl>

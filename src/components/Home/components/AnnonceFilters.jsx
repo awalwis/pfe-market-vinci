@@ -84,7 +84,8 @@ export default function AnnonceFilters({
                   <Typography variant="subtitle1" gutterBottom>
                     Catégorie
                   </Typography>
-                  <Form.Select defaultValue={category && category.name} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
+                  <Form.Select defaultValue={"Tout"} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
+                    <option key={0}>Tout</option>
                     {categories && categories.categories.map((row) => {
                       if(!row.parent_category){
                         return(

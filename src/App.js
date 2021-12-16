@@ -19,8 +19,9 @@ import AdminAd from "components/Admin/AdminAd";
 import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
-import Footer from"pages/Footer"
 import CreateAd from "pages/CreateAd"
+import Footer from "pages/Footer"
+import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 
 //services
@@ -47,6 +48,7 @@ const App = () => {
             <ScrollToTop />
             <GlobalStyles />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
+            <NotificationsPopover />
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />

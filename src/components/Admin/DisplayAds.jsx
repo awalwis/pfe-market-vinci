@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from 'react-bootstrap';
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
+import { notificationService } from "services/notifications.service";
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
@@ -20,7 +21,7 @@ const DisplayAds = (props) => {
         history.push("/annonces/"+id);
     }
 
-    const changeSelectValue = async (ad, selectValue) => {
+    const changeSelectValue = async (ad, selectValue,id_user,title) => {
         let idToast = toast.loading("Changement d'etat",{position: "bottom-right"})
         let newAd = {
            title: ad.title,
@@ -33,6 +34,14 @@ const DisplayAds = (props) => {
            id_user: ad.id_user,
            id_category: ad.id_category
         }
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"L''etat de votre annonce ''"+ title +"'' a été changé par ''"+selectValue+"''",
+            date:date,
+            id_user:id_user
+        }
+        await notificationService.createNotification(newNotif);
         await adService.update(ad.id_ad, newAd);
         toast.update(idToast,{
             render: 'Etat changé !',
@@ -49,14 +58,22 @@ const DisplayAds = (props) => {
         });
     }
 
-    const deleteAd = async (id) => {
+    const deleteAd = async (id, id_user, title) => {
         let idToast = toast.loading("Suppression de l'annonce",{position: "bottom-right"})
         let medias = await mediaService.getByAdId(id);
         console.log(medias);
         medias.map((media)=>{
-            mediaService.deleteBlob(media.url)
+            mediaService.deleteBlob(media.url);
         })
-        await adService.remove(id)
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre annonce ''"+ title +"'' a été supprimée",
+            date:date,
+            id_user:id_user
+        }
+        await notificationService.createNotification(newNotif);
+        await adService.remove(id);
         toast.update(idToast,{
             render: 'Annonce supprimée !',
             type: "info",
@@ -70,7 +87,7 @@ const DisplayAds = (props) => {
             progress: undefined,
             theme: 'colored'
         });
-        props.setRefreshKey(props.refreshKey+1)
+        props.setRefreshKey(props.refreshKey+1);
     }
 
     if(props.isLoading){
@@ -104,7 +121,7 @@ const DisplayAds = (props) => {
                                     <Select
                                         defaultValue={ad.state}   
                                         label="state"
-                                        onChange={e => changeSelectValue(ad ,e.target.value)}
+                                        onChange={e => changeSelectValue(ad,e.target.value,ad.id_user,ad.title)}
                                     >
                                         <MenuItem value="en attente">en attente</MenuItem>
                                         <MenuItem value="disponible">disponible</MenuItem>
@@ -113,7 +130,7 @@ const DisplayAds = (props) => {
                                 </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outlined" color="error" onClick={e => deleteAd(ad.id_ad)} startIcon={<DeleteIcone />}>Supprimer</Button>
+                                <Button variant="outlined" color="error" onClick={e => deleteAd(ad.id_ad, ad.id_user, ad.title)} startIcon={<DeleteIcone />}>Supprimer</Button>
                             </td>
                     </tr>
                 )

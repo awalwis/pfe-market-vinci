@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
+import { notificationService } from "services/notifications.service";
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
@@ -33,6 +34,14 @@ const DisplayUsers = (props) => {
            role: selectValue
         }
         await userService.update(user.id_user, newUser)
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre role a été changé en ''"+ selectValue +"''",
+            date:date,
+            id_user:user.id_user
+        }
+        await notificationService.createNotification(newNotif);
         toast.update(idToast,{
             render: 'Role changé !',
             type: "success",

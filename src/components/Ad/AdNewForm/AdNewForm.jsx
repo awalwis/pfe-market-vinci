@@ -7,8 +7,9 @@ import Category from "components/Category/Category";
 import DropzoneAreaComponent from "./DropzoneArea";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, Stack,Box,
-    FormLabel,RadioGroup,FormControlLabel,Radio,TextField,FormControl } from '@mui/material';
+import { Button, Stack,
+    FormLabel,RadioGroup,FormControlLabel,Radio,TextField} from '@mui/material';
+import { notificationService } from "services/notifications.service";
 
 
 
@@ -18,7 +19,7 @@ const AdNewForm = () => {
     const currentUser = authService.getCurrentUser();
     const [id_user, setIdUser] = useState(0)
 
-    if(!currentUser){
+    if(!currentUser || authService.getRoleCurrentUser() === "limite"){
         history.push('/')
     }
     
@@ -136,6 +137,14 @@ const AdNewForm = () => {
         adService.createNewAd(newAd)
         .then(async res=>{
             await addMedia(res.id_ad, id_user)
+            let currentDate = new Date();
+            let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+            let newNotif = {
+                message:"Votre annonce ''"+title+"'' a été crée",
+                date:date,
+                id_user:id_user
+            }
+            await notificationService.createNotification(newNotif);
             toast.update(idToast,{
                 render: 'Annonce ajoutée !',
                 type: "success",

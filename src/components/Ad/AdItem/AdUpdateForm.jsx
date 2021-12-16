@@ -12,6 +12,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { Button, Stack,Container,
     FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
 import {Button as ButtonReact}  from "react-bootstrap";
+import { notificationService } from "services/notifications.service";
 
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
@@ -87,6 +88,15 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         }
         let idToast = toast.loading("Modification de l'annonce",{position: "bottom-right"})
         await addMediaAndUpdate();
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre annonce ''"+title+"'' a été modifiée",
+            date:date,
+            id_user:id_user
+        }
+        console.log(newNotif);
+        await notificationService.createNotification(newNotif);
         setRefreshKey(refreshKey+1);
         toast.update(idToast,{
             render: 'Annonce modifiée !',
