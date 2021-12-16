@@ -9,7 +9,6 @@ import ScrollToTop from 'components/ScrollToTop';
 import { BaseOptionChartStyle } from 'components/charts/BaseOptionChart';
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
-import AdNewForm from "components/Ad/AdNewForm/AdNewForm"
 import AdItem from "components/Ad/AdItem/AdItem";
 import AdminUser from "components/Admin/AdminUser";
 import AdminCategory from "components/Admin/AdminCategory";
@@ -17,9 +16,8 @@ import AdminAd from "components/Admin/AdminAd";
 import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
-import Footer from"pages/Footer"
 import CreateAd from "pages/CreateAd"
-import { ToastContainer } from 'react-toastify';
+import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 //services
 import { authService } from "services/auth.service";
@@ -43,6 +41,7 @@ const App = () => {
             <GlobalStyles />
             <BaseOptionChartStyle />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
+            <NotificationsPopover />
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />

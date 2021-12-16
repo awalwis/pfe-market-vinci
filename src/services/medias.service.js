@@ -80,9 +80,7 @@ const uploadFileToBlob = async (file, id_user) => {
 
     const containerClient = blobService.getContainerClient(containerName);
 
-    let fileName = file.name.replaceAll("+", "");
-    fileName = fileName.replaceAll("  ", "%20");
-    fileName = fileName.replaceAll(" ", "%20");
+    let fileName = file.name.replace(/[-&\/\\#,+()$~%.'":*?<>{}' ']/g, '');
 
     fileName = uuid() + fileName;
 
