@@ -44,7 +44,9 @@ const App = () => {
             <ScrollToTop />
             <GlobalStyles />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
-            <NotificationsPopover />
+            {currentUser
+                ? <NotificationsPopover />
+                : ""}
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />

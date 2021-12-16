@@ -119,9 +119,10 @@ export default function NotificationsPopover() {
       setNotifications(retrievedNotification.data.notifications);
     }
     const interval = setInterval(() => {
-      fetchData();
+      if (currentUser) {
+        fetchData();
+      }
     }, 30000);
-    console.log("CLear ?")
     return () => clearInterval(interval);
   }, []);
 
@@ -241,13 +242,4 @@ export default function NotificationsPopover() {
       </MenuPopover>
     </>
   );
-}
-
-const Render = () => {
-
-  const tick = () => {
-    NotificationsPopover();
-  }
-
-  setInterval(tick, 30000)
 }
