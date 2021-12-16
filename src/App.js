@@ -40,8 +40,8 @@ const App = () => {
     },[])
 
     async function fetchData() {
-        await authService.getCurrentUser().then((user) => setCurrentUser(user))
-        let roleCurrentUser = '';
+        let user = await authService.getCurrentUser()
+        setCurrentUser(user)
         if (currentUser) {
             setLoggedIn(true)
             await authService.getRoleCurrentUser().then((role) => setRoleCurrentUser(role))
