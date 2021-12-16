@@ -5,11 +5,13 @@ async function login(email, password) {
 
     const bcrypt = require('bcryptjs');
     let user;
-    await userService.getByEmail(email).then(response => {
-        user = response.data.user;
-        console.log(user)
-    })
-    console.log(user)
+    try {
+        await userService.getByEmail(email).then(response => {
+            user = response.data.user;
+        })
+    }catch(error) {
+        console.log(error);
+    }
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign({ id_user: user.id_user, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256' });
         let userDto = {
