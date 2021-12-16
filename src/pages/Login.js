@@ -1,13 +1,10 @@
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Stack, Link, Container, Typography } from '@mui/material';
-// layouts
-import AuthLayout from 'layouts/AuthLayout';
+import { Stack, Container, Typography } from '@mui/material';
 // components
 import Page from 'components/Page';
-import LoginForm  from 'components/Login/LoginForm';
 
+import LoginForm  from 'components/authentication/login/LoginForm';
 
 // ----------------------------------------------------------------------
 
@@ -32,12 +29,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Minimal-UI">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link>
-      </AuthLayout>
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
@@ -46,6 +37,7 @@ export default function Login() {
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Entre tes informations ci-dessous.</Typography>
           </Stack>
+
           <LoginForm />
 
         </ContentStyle>
