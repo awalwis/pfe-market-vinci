@@ -5,8 +5,8 @@ import { Stack, Container, Typography } from '@mui/material';
 import Page from 'components/Page';
 
 import LoginForm  from 'components/authentication/login/LoginForm';
+import {Link as RouterLink} from "react-router-dom";
 
-// ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -28,9 +28,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Login() {
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Connexion Market Vinci">
       <Container maxWidth="sm">
-        <ContentStyle>
+        <ContentStyle >
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
               Connexion à Market Vinci
@@ -40,6 +40,12 @@ export default function Login() {
 
           <LoginForm />
 
+          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            Pas encore inscrit ? &nbsp;
+            <Link component={RouterLink} underline="always" sx={{ color: 'text.primary' }} to="/register">
+              Inscrivez-vous ici !
+            </Link>
+          </Typography>
         </ContentStyle>
       </Container>
     </RootStyle>

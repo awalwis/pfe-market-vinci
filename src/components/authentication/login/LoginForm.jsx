@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
-import { Link as RouterLink} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { toast, ToastContainer } from 'react-toastify';
 // material
 import {
     Link,
@@ -26,10 +26,12 @@ import {authService} from "services/auth.service";
 const LoginForm = () => {
     const history = useHistory();
 
+    const [refreshKey, setRefreshKey] = useState(0);
+
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
-        email: Yup.string().email('Format non valide').required('Email is required'),
+        email: Yup.string().email('Format non valide').required('Email requis'),
         password: Yup.string().required('Password is required')
     });
 
@@ -41,12 +43,25 @@ const LoginForm = () => {
         },
         validationSchema: LoginSchema,
         onSubmit: () => {
-            console.log(formik.values)
-            let user = authService.login(formik.values.email,formik.values.password).then(()=>{
-                console.log("usr: ",user);
-                if(user || user.role === "banni"){
-                    console.log("history push")
-                    history.push("/");
+            authService.login(formik.values.email,formik.values.password).then((response)=>{
+                if(response === null){                    
+                    toast.error('Erreur: Adresse email ou mot de passe invalide', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored'
+                    });
+                    console.log("test"); 
+                    setRefreshKey(refreshKey+1);
+                    formik.setFieldValue("email","");
+                    formik.setFieldValue("password","");
+                    formik.setSubmitting(false);
+                }else{
+                    history.push("/"); 
                 }
             });
         }
@@ -60,7 +75,9 @@ const LoginForm = () => {
 
 
 
-    return (    <FormikProvider value={formik}>
+    return (    
+    <>
+    <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Stack spacing={3}>
                 <TextField
@@ -98,9 +115,6 @@ const LoginForm = () => {
                     label="Remember me"
                 />
 
-                <Link component={RouterLink} variant="subtitle2" to="#">
-                    Forgot password?
-                </Link>
             </Stack>
 
             <LoadingButton
@@ -110,11 +124,12 @@ const LoginForm = () => {
                 variant="contained"
                 loading={isSubmitting}
             >
-                Login
+                Connexion
             </LoadingButton>
         </Form>
-    </FormikProvider>
-
+        </FormikProvider>
+    <ToastContainer/>
+    </>
     )
 }
 export default LoginForm;

@@ -1,25 +1,56 @@
-import { Button, Card } from "react-bootstrap";
+import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Link as RouterLink, } from 'react-router-dom';
+import { fCurrency } from 'utils/formatNumber';
+import { authService } from 'services/auth.service';
+import { mediaService } from 'services/medias.service';
+import { useEffect, useState } from 'react';
 
-const AnnonceCard = ({annonce, picture}) => {
+const AnnonceCard = ({annonce}) => {
 
-    // TODO: renvoyer vers la page de details
-    function showDetails(id){
-        console.log(id)
+    const user = authService.getCurrentUser()
+    const [picture, setPicture] = useState(undefined)
+
+    const fetchData = async (annonce) => {
+        if(annonce) {
+            let media = await mediaService.get(annonce.displayed_picture)
+            setPicture(media)
+        }
     }
+
+    const ProductImgStyle = styled('img')({
+        top: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        position: 'absolute'
+      });
+
+    useEffect(() => {
+        fetchData(annonce)
+    }, [])
+
+
     return(
-        <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={picture!==null?picture.url:"holder.js/100px180"} />
-        <Card.Body>
-            <Card.Title>{annonce.title}</Card.Title>
-            <Card.Text>
-                {annonce.price}
-            </Card.Text>
-            <Card.Text>
-                {annonce.description}
-            </Card.Text>
-            <Button onClick={showDetails} variant="primary">Plus d'infos</Button>
-        </Card.Body>
-        </Card>
-    )
+        <Card>
+            <Box sx={{ pt: '100%', position: 'relative' }}>
+                {picture && <ProductImgStyle alt={"Image produit"} src={picture.media.url} />}
+            </Box>
+            <Stack spacing={2} sx={{ p: 3 }}>
+                <Link to={`${user?`/annonces/${annonce.id_ad}`:"/login"}`} color="inherit" underline="hover" component={RouterLink}>
+                <Typography variant="subtitle1" noWrap>
+                    {annonce.title}
+                </Typography>
+                </Link>
+                <Typography variant="subtitle2" noWrap>
+                    {annonce.description}
+                </Typography>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                <Typography variant="subtitle1">
+                    {fCurrency(Number(annonce.price))}
+                </Typography>
+                </Stack>
+            </Stack>
+        </Card>)
 }
 export default AnnonceCard;
