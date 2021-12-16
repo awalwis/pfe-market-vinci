@@ -1,13 +1,13 @@
 import React from "react";
 import {useState} from "react";
 import {categoryService} from 'services/categories.service'
-import {ListGroup,Badge,InputGroup} from "react-bootstrap";
+import {ListGroup,Badge} from "react-bootstrap";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import parse from 'html-react-parser';
 import { toast } from 'react-toastify';
 import { TextField,FormControl,Button,Stack } from "@mui/material";
-import { padding, spacing, width } from "@mui/system";
+
 
 const ConstructP = (props) => {
     let value = props.value;
@@ -47,10 +47,10 @@ const ConstructP = (props) => {
                 i++;
                 return(
                     <div key={'child'+nameParent+i}>
-                         <Stack direction="row" >
+                        <Stack spacing={-2}>
                             {parse(e)}
-                        <Button variant="contained"color="error" size="small" onClick={e => {deleteSubCategory(e)}}  >DELETE</Button>  
-                        </Stack> 
+                             <Button variant="contained"color="error" size="small" onClick={e => {deleteSubCategory(e)}}  >DELETE</Button>      
+                         </Stack>
                     </div>
                 )
             }else if(i===0){
@@ -105,6 +105,7 @@ const DisplayCategories = (props) => {
     }
 
     const deleteCategory = async (e)=>{
+        
         let idToast = toast.loading("Suppression d'une categorie",{position: "bottom-right"})
         let idDelete = e.target.parentNode.parentNode.dataset.key;
         await categoryService.deleteCategory(idDelete)
@@ -166,13 +167,10 @@ const DisplayCategories = (props) => {
                         key={key}
                         data-key={key}
                     >
-                        <div className="ms-2 me-auto">
-                        <Stack direction={{ xs: 'column'}} spacing={2}>
-                            <div className="fw-bold">{value[0]}</div>
-                        
-                           
+                        <div className="ms-2 me-auto">     
+                        <div className="fw-bold">{value[0]}</div>
+                            <Button onClick={e => {deleteCategory(e)}} variant="contained" color="error">DELETE</Button> 
                             <ConstructP value={value} setRefreshKey={props.setRefreshKey} refreshKey={props.refreshKey}/>
-                            </Stack>
                             <form onSubmit={addSubCategory}>
                             <FormControl fullWidth>
                             <TextField
@@ -203,6 +201,3 @@ const DisplayCategories = (props) => {
 
 export default DisplayCategories;
 
-/**
- *     <Button variant="contained" color="error" onClick={e => {deleteCategory(e)}} size="small">DELETE</Button>
- */
