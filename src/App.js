@@ -64,9 +64,9 @@ const App = () => {
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
             {currentUser && <NotificationsPopover />}
             <Switch>
-                <UnauthenticatedRoute path="/login" component={Login} appProps={loggedIn} />
-                <UnauthenticatedRoute path="/register" component={Register} appProps={loggedIn} />
-                <UnauthenticatedRoute path="/home" component={Home} appProps={loggedIn} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/home" component={Home} />
                 <AuthenticatedRoute path="/ajouter" component={CreateAd} appProps={loggedIn} />
                 <AuthenticatedRoute path="/annonces/:id" component={AdItem} appProps={loggedIn} />
                 <AuthenticatedRoute path="/admin/categories" component={AdminCategory} appProps={loggedIn} />
@@ -74,7 +74,7 @@ const App = () => {
                 <AuthenticatedRoute path="/admin/annonces" component={AdminAd} appProps={loggedIn} />
                 <AuthenticatedRoute path="/admin" component={Admin} appProps={undefined} />
                 <AuthenticatedRoute path="/profile/:email" component={Profile} appProps={loggedIn} />
-                <UnauthenticatedRoute path="/" component={Home} appProps={loggedIn} />
+                <Route path="/" component={Home} />
             </Switch>
             <Footer />
         </ThemeConfig>
