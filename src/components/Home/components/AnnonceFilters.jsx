@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { CategoriesAPI } from "services/categories";
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // material
 import {
@@ -35,6 +34,8 @@ export default function AnnonceFilters({
     onOpenFilter,
     onCloseFilter,
     category,
+    prixMin,
+    prixMax,
     handleCategoryChange, handleMinPriceChange, handleMaxPriceChange}) {
     const [categories, setCategories] = useState();
 
@@ -84,7 +85,7 @@ export default function AnnonceFilters({
                   <Typography variant="subtitle1" gutterBottom>
                     Catégorie
                   </Typography>
-                  <Form.Select defaultValue={"Tout"} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
+                  <Form.Select defaultValue={category} onChange={(e) => handleCategoryChange(e)} className="d-flex border" style={{"width":"200px"}}>
                     <option key={0}>Tout</option>
                     {categories && categories.categories.map((row) => {
                       if(!row.parent_category){
@@ -105,14 +106,14 @@ export default function AnnonceFilters({
                     Prix minimum
                   </Typography>
                   <Form.Control onChange={(e) => {handleMinPriceChange(e)}} 
-                    placeholder="Prix minimum" className="d-flex border" style={{"width":"200px"}}/>
+                    placeholder="Prix minimum" defaultValue={prixMin} className="d-flex border" style={{"width":"200px"}}/>
                 </div>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Prix maximum
                   </Typography>
                   <Form.Control onChange={(e) => {handleMaxPriceChange(e)}} 
-                    placeholder="Prix maximum" className="d-flex border" style={{"width":"200px"}}/>
+                    placeholder="Prix maximum" defaultValue={prixMax} className="d-flex border" style={{"width":"200px"}}/>
                 </div>
               </Stack>
             </Scrollbar>
