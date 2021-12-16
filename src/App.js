@@ -37,8 +37,8 @@ const App = () => {
         loggedIn = true;
         roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
     }
-    if(roleCurrentUser ==="banni"){
-        loggedIn=false
+    if (roleCurrentUser === "banni") {
+        loggedIn = false
     }
     console.log("App.js: ", loggedIn);
 
@@ -48,7 +48,7 @@ const App = () => {
             <ScrollToTop />
             <GlobalStyles />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
-            <NotificationsPopover />
+            {currentUser && <NotificationsPopover />}
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
@@ -62,7 +62,7 @@ const App = () => {
                 <Route path="/profile/:email" component={Profile} />
                 <Route path="/" component={Home} />
             </Switch>
-            <Footer/>
+            <Footer />
         </ThemeConfig>
 
     )
