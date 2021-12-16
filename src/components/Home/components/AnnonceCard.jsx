@@ -1,6 +1,6 @@
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Link as RouterLink, } from 'react-router-dom';
+import { Link as RouterLink, useHistory, } from 'react-router-dom';
 import { fNumber } from 'utils/formatNumber';
 import { authService } from 'services/auth.service';
 import { mediaService } from 'services/medias.service';
@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 const AnnonceCard = ({annonce}) => {
 
+    const history = useHistory()
     const user = authService.getCurrentUser()
     const [picture, setPicture] = useState(undefined)
 
@@ -32,7 +33,12 @@ const AnnonceCard = ({annonce}) => {
 
 
     return(
-        <Card>
+        <Card 
+            style={{"cursor":"pointer"}}
+            onClick={(e) => {
+                e.preventDefault()
+                history.push(`${user?`/annonces/${annonce.id_ad}`:"/login"}`)
+        }}>
             <Box sx={{ pt: '100%', position: 'relative' }}>
                 {picture && <ProductImgStyle alt={"Image produit"} src={picture.media.url} />}
             </Box>
@@ -47,7 +53,7 @@ const AnnonceCard = ({annonce}) => {
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="subtitle1">
-                   {fNumber(Number(annonce.price))}€
+                    {Number(annonce.price)===0?"Gratuit":fNumber(Number(annonce.price))+"€"}
                 </Typography>
                 </Stack>
             </Stack>

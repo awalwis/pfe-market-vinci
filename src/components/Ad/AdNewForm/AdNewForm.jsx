@@ -7,8 +7,9 @@ import Category from "components/Category/Category";
 import DropzoneAreaComponent from "./DropzoneArea";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, Stack,Box,
-    FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
+import { Button, Stack,
+    FormLabel,RadioGroup,FormControlLabel,Radio,TextField} from '@mui/material';
+import { notificationService } from "services/notifications.service";
 
 
 
@@ -18,7 +19,7 @@ const AdNewForm = () => {
     const currentUser = authService.getCurrentUser();
     const [id_user, setIdUser] = useState(0)
 
-    if(!currentUser){
+    if(!currentUser || authService.getRoleCurrentUser() === "limite"){
         history.push('/')
     }
     
@@ -132,9 +133,18 @@ const AdNewForm = () => {
             type,
             id_user        
         };
+        console.log(newAd)
         adService.createNewAd(newAd)
         .then(async res=>{
             await addMedia(res.id_ad, id_user)
+            let currentDate = new Date();
+            let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+            let newNotif = {
+                message:"Votre annonce ''"+title+"'' a été crée",
+                date:date,
+                id_user:id_user
+            }
+            await notificationService.createNotification(newNotif);
             toast.update(idToast,{
                 render: 'Annonce ajoutée !',
                 type: "success",
@@ -214,36 +224,38 @@ const AdNewForm = () => {
     }
     
     return (
-        <Box>
+        <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <TextField
-                    id="outlined-required"
                     label="Titre de l'annonce"
                     placeholder="Entrez un titre pour votre annonce"
                     onChange={handleTitleChange}
                     required
+                    
+                    
                     />
                 <TextField
-                    id="outlined-required"
                     label="Description de l'annonce"
                     placeholder="Entrez une description pour votre annonce"
                     onChange={handleDescriptionChange}
+                    multiline
+                    rows={3}
                     required
                 />
                 <Category setCategory={setCategory}/>
                 <FormLabel component="legend">Type d'annonce</FormLabel>
             </Stack> 
             <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"
-                 onChange={handleIsPaying}
+                 onChange={handleIsPaying}   
             >
-            <FormControlLabel value="isFree" control={<Radio />} label="A donner" aria-required />
-            <FormControlLabel value="isPaying" control={<Radio />} label="A vendre" aria-required />
+            <FormControlLabel value="isFree" control={<Radio required={true} />} label="A donner" aria-required />
+            <FormControlLabel value="isPaying" control={<Radio required={true}/>} label="A vendre" aria-required />
             </RadioGroup>
             {isPaying && showAddPrice()}
             <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>  <br/>
-            <Button variant="contained" size="medium" onClick={handleSubmit}>Créer</Button> 
+            <Button variant="contained" size="medium" type="submit">Créer</Button> 
             <ToastContainer/>
-        </Box> 
+        </form> 
     )
 }
 

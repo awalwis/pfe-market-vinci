@@ -21,32 +21,31 @@ const Category=({setCategory, idDefault})=>{
     if(idDefault){
         //when update
         return(           
-            <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                Categorie
-              </InputLabel>
-              <NativeSelect onChange={handleCategoryChange}
+           <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                    Categorie
+                </InputLabel>
+                <NativeSelect onChange={handleCategoryChange}
                 defaultValue={idDefault}
                 inputProps={{
                   name: 'category',
                   id: 'uncontrolled-native',
                 }}
-              >
-                <option value='0'>---Choisir une categorie---</option>
-                {categories.map(category => {
-                    if(!category.parent_category){
-                        return(
-                            <option key={category.id_category} disabled>--{category.name}--</option>
-                        )
-                    }else{
-                        return(
-                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
-                        )
-                    }
-                })}
-
-              </NativeSelect>
+                >
+                  <option value='0'>---Choisir une categorie---</option>
+                  {categories.map(category => {
+                      if(!category.parent_category){
+                          return(
+                              <option key={category.id_category} disabled>--{category.name}--</option>
+                          )
+                      }else{
+                          return(
+                              <option key={category.id_category} value={category.id_category}>{category.name}</option>
+                          )
+                      }
+                  })}
+               </NativeSelect>
             </FormControl>
           </Box>              
         )
@@ -66,8 +65,16 @@ const Category=({setCategory, idDefault})=>{
                 }}
               >
                 <option value='0'>---Choisir une categorie---</option>
-               {categories.map(category => {
-                    if(category.parent_category) return <option key={category.id_category} value={category.id_category}>{category.name}</option>;
+                {categories.map(category => {
+                    if(!category.parent_category){
+                        return(
+                            <option key={category.id_category} disabled>--{category.name}--</option>
+                        )
+                    }else{
+                        return(
+                            <option key={category.id_category} value={category.id_category}>{category.name}</option>
+                        )
+                    }
                 })}
               </NativeSelect>
             </FormControl>

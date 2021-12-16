@@ -26,12 +26,12 @@ export default function Page404() {
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
          
               <Typography variant="h3" paragraph>
-              Sorry, page not found!
+              Désolé, cette page est introuvable!
               </Typography>
           
             <Typography sx={{ color: 'text.secondary' }}>
-            Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL?
-              Be sure to check your spelling.
+            Nous somme navrés de ne pas avoir trouver la page que vous cherchiez. Il se peut qu'il ait 
+            une erreur dans l'URL. Veuillez vérifier et réessayer.
             </Typography>
             <br/>
             <Button to="/home" size="large" variant="contained" component={RouterLink}>

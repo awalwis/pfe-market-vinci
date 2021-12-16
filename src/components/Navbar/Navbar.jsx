@@ -7,14 +7,13 @@ import {authService} from "services/auth.service";
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import PeopleIcone from "@mui/icons-material/People"
+import PeopleIcone from "@mui/icons-material/PersonRounded"
 import LogOutIcone from "@mui/icons-material/Logout"
 import HomeIcone from "@mui/icons-material/Home"
-import AdIcone from "@mui/icons-material/Add"
+import AdIcone from "@mui/icons-material/AddCircle"
 import UserIcone from "@mui/icons-material/EmojiPeople"
 import AdminIcone from "@mui/icons-material/AdminPanelSettings"
-import {NavLink, useHistory} from "react-router-dom";
-import {Nav} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
 import ListItemText from '@mui/material/ListItemText';
 
 export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
@@ -25,10 +24,14 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
   const history = useHistory();
  
   let isAdmin=false
+  let isLimite=false
   
-
-  if(roleCurrentUser==="admin")
+  if(roleCurrentUser==="admin"){
       isAdmin=true
+  }
+  if(roleCurrentUser==="limite"){
+      isLimite=true
+  }
 
   const handleLogout=()=>{
     authService.logout();
@@ -77,12 +80,14 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
                     </ListItemIcon>
                     <ListItemText primary="Profil" />
                 </ListItem>
+                {!isLimite &&
                 <ListItem button onClick={handleCreateAd}>
                     <ListItemIcon>
                         <AdIcone/>
                     </ListItemIcon>
                     <ListItemText primary="Créer une annonce" />
                 </ListItem>
+                }
                 {isAdmin &&
                 <ListItem button onClick={handleAdmin}>
                     <ListItemIcon>
@@ -116,7 +121,7 @@ export default function TemporaryDrawer({loggedIn, roleCurrentUser}) {
                 <React.Fragment key={anchor}>
                 <Button className ="btn-drawer"onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
                 <Drawer
-                    anchor={anchor}
+                    anchor="left"
                     open={state[anchor]}
                     onClose={toggleDrawer(anchor, false)}
                 >

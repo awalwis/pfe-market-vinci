@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
 import NotFound from "pages/Page404"
+import { notificationService } from "services/notifications.service";
 import { Container, Typography } from "@mui/material";
 import ListInfosUser from "components/User/ListInfosUser";
 
@@ -58,6 +59,14 @@ const AdItem = ()=>{
         })
         await Promise.all(allPromise);
         await adService.remove(id);
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre annonce ''"+ad.title+"'' a été suprimée",
+            date:date,
+            id_user:ad.id_user
+        }
+        await notificationService.createNotification(newNotif);
         toast.update(idToast,{
             render: 'Annonce supprimée !',
             type: "info",
@@ -164,6 +173,7 @@ const AdItem = ()=>{
         <div>
             <AdDetail ad={ad} adMedias={medias} category={category}/>
             <Container>{buttonDisplay()}</Container>
+            <br/>
             {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey} setIsOpen={setIsOpen} adMedias={medias}/>}
             {sellerInfo &&
             <>

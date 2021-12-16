@@ -12,27 +12,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { Button, Stack,Container,
     FormLabel,RadioGroup,FormControlLabel,Radio,TextField } from '@mui/material';
 import {Button as ButtonReact}  from "react-bootstrap";
-
-/*const CheckBox = (type) => {
-
-    library.add(faHeart, far)
-
-    if(type==="a donner"){
-        return(
-            <>
-                A donner  <input type="radio" name="type" value="a donner" defaultChecked required/>
-                A vendre  <input type="radio" name="type" value="a vendre" required/>
-            </>
-        )
-    }else{
-        return(
-            <>
-                A donner  <input type="radio" name="type" value="a donner" required/>
-                A vendre  <input type="radio" name="type" value="a vendre" defaultChecked required/>
-            </>
-        )
-    }
-}*/
+import { notificationService } from "services/notifications.service";
 
  
 const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
@@ -108,6 +88,15 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
         }
         let idToast = toast.loading("Modification de l'annonce",{position: "bottom-right"})
         await addMediaAndUpdate();
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre annonce ''"+title+"'' a été modifiée",
+            date:date,
+            id_user:id_user
+        }
+        console.log(newNotif);
+        await notificationService.createNotification(newNotif);
         setRefreshKey(refreshKey+1);
         toast.update(idToast,{
             render: 'Annonce modifiée !',
@@ -294,8 +283,9 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
     }
 
     return (
-
-         <Container sx={{ maxWidth :'sm',border :"solid"}}>
+        
+         <Container sx={{ maxWidth :'sm',border :"solid",borderRadius : 10}}>
+             <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <TextField
                     id="outlined-required"
@@ -310,6 +300,8 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                     label="Description de l'annonce"
                     name="description"
                     defaultValue={ad.description}
+                    multiline
+                    rows={3}
                     onChange={handleUpdate}
                     required
                 />
@@ -335,7 +327,9 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
              
             <Category setCategory={setCategory} idDefault={id_category}/>
             <DropzoneAreaComponent setMedias={setMedias} medias={medias}/>   
-            <Button variant="contained" size="medium" onClick={handleSubmit}>Modifier</Button> 
+            <Button variant="contained" size="medium" type="submit">Modifier</Button> 
+            </form>
+            <br/>
             <Button variant="contained" size="medium" onClick={handlePictureChange}>Modifier vos images</Button> 
             {isChangeDisplayPicture &&
                  <div>   
@@ -349,7 +343,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                              </div>
                          )
                      }
-                     if(displayed_picture == media.id_media){
+                     if(displayed_picture === media.id_media){
                          return (
                              <div key={media.id_media}>
                                  <img src={media.url} alt="" />

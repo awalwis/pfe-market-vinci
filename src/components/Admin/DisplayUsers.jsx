@@ -1,13 +1,16 @@
 import React from "react"; 
-import { Button, Form, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import {userService} from 'services/users.service'
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
+import { notificationService } from "services/notifications.service";
 import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
-
+import DeleteIcone from "@material-ui/icons/DeleteRounded"
+import PeopleIcone from "@material-ui/icons/PeopleRounded"
+import { FormControl,InputLabel,MenuItem,Select,Button } from "@mui/material";
 export default function Display(props) {
 
 const DisplayUsers = (props) => {
@@ -31,6 +34,14 @@ const DisplayUsers = (props) => {
            role: selectValue
         }
         await userService.update(user.id_user, newUser)
+        let currentDate = new Date();
+        let date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}-${currentDate.getHours()}:${currentDate.getMinutes()}`;
+        let newNotif = {
+            message:"Votre role a été changé en ''"+ selectValue +"''",
+            date:date,
+            id_user:user.id_user
+        }
+        await notificationService.createNotification(newNotif);
         toast.update(idToast,{
             render: 'Role changé !',
             type: "success",
@@ -89,8 +100,11 @@ const DisplayUsers = (props) => {
             users.map((user) => {
                 return(
                     <tr className="tuple" key={user.id_user} >
-                            <td onClick={e => navigateToUserProfile(user.email)}>
+                          
+                            
+                           <td onClick={e => navigateToUserProfile(user.email)}>
                                 {user.last_name}
+                                
                             </td>
                             <td onClick={e => navigateToUserProfile(user.email)}>
                                 {user.first_name}
@@ -102,17 +116,22 @@ const DisplayUsers = (props) => {
                                 {user.campus}
                             </td>
                             <td>
-                                <Form.Select defaultValue={user.role}
-                                    onChange={e => changeSelectValue(user ,e.target.value)}
-                                >
-                                    <option value="utilisateur">utilisateur</option>
-                                    <option value="admin">admin</option>
-                                    <option value="limite">limité</option>
-                                    <option value="banni">banni</option>
-                                </Form.Select> 
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Rôle</InputLabel>
+                                    <Select
+                                        defaultValue={user.role}   
+                                        label="role"
+                                        onChange={e => changeSelectValue(user ,e.target.value)}
+                                    >
+                                        <MenuItem value="utilisateur">utilisateur</MenuItem>
+                                        <MenuItem value="admin">admin</MenuItem>
+                                        <MenuItem value="limite">limité</MenuItem>
+                                        <MenuItem value="banni">banni</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outline-danger" onClick={e => deleteUser(user.id_user)}>Supprimer</Button>
+                            <Button variant="outlined" color="error" onClick={e => deleteUser(user.id_user)} startIcon={<DeleteIcone />}>Supprimer</Button>
                             </td>
                     </tr>
                 )
@@ -140,7 +159,6 @@ return (
                     <th>email</th>
                     <th>campus</th>
                     <th>role</th>
-                    <th>supprimer un compte</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,3 +169,16 @@ return (
 )
 
 }
+
+/**
+ *    <List>
+                               <ListItem  onClick={e => navigateToUserProfile(user.email)}>
+                               <ListItemIcon>
+                               <PeopleIcone/>
+                                
+                            </ListItemIcon>
+                               <ListItemText primary={user.last_name}/>
+                               </ListItem>
+
+                           </List>
+ */

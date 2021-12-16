@@ -21,9 +21,9 @@ import Navbar from "components/Navbar/Navbar"
 import Login from "pages/Login";
 import Register from "pages/Register";
 import Admin from "components/Admin/Admin";
-import Footer from"pages/Footer"
 import CreateAd from "pages/CreateAd"
-import { ToastContainer } from 'react-toastify';
+import Footer from "pages/Footer"
+import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 
 //services
@@ -39,6 +39,9 @@ const App = () => {
         loggedIn = true;
         roleCurrentUser = authService.getRoleCurrentUser(currentUser.token)
     }
+    if(roleCurrentUser ==="banni"){
+        loggedIn=false
+    }
     console.log("App.js: ", loggedIn);
 
 
@@ -47,6 +50,7 @@ const App = () => {
             <ScrollToTop />
             <GlobalStyles />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
+            <NotificationsPopover />
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
@@ -60,6 +64,7 @@ const App = () => {
                 <Route path="/profile/:email" component={Profile} />
                 <Route path="/" component={Home} />
             </Switch>
+            <Footer/>
         </ThemeConfig>
 
     )
