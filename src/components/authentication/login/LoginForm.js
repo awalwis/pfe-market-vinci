@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -29,7 +29,7 @@ const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
-        email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+        email: Yup.string().email('Format non valide').required('Email is required'),
         password: Yup.string().required('Password is required')
     });
 
@@ -120,25 +120,3 @@ const LoginForm = () => {
 export default LoginForm;
 
 
-/*         <div>
-            <div className="customForm" id="loginForm">
-                <h1 className="center">Connexion</h1>
-                <Form onSubmit={login}>
-                        <Form.Group  className="mb-3" controlId="formGridAddress1">
-                            <Form.Label>Addresse e-mail institutionnelle :</Form.Label>
-                            <Form.Control placeholder="Entrez votre adresse email vinci" onChange={handleUserChange} name="email" required pattern="[A-Za-z0-9-_.]+@(student.){0,1}vinci.be"/>
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="formGridPassword" >
-                            <Form.Label>Mot de passe :</Form.Label>
-                            <Form.Control placeholder="Entrez votre mot de passe" onChange={handleUserChange} name="password"  type="password" required/>
-                        </Form.Group>
-                    <br/>
-                    <div className="center">
-                    <Button variant="outline-primary" type="submit">
-                        Se connecter
-                    </Button>
-                    </div>
-                </Form>
-            </div>
-            <a href="/register"><p className="center">Pas encore de compte? Inscrivez vous en cliquant ici</p></a>
-        </div>*/
