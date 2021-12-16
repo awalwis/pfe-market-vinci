@@ -12,6 +12,8 @@ import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
 import NotFound from "pages/Page404"
 import { notificationService } from "services/notifications.service";
+import { Container, Typography } from "@mui/material";
+import ListInfosUser from "components/User/ListInfosUser";
 
 const AdItem = ()=>{
 
@@ -29,7 +31,7 @@ const AdItem = ()=>{
     const [medias,setMedias] = useState([])
     const [seller,SetSeller]=useState("")
     const [category,setCategory]=useState("")
-    const [sellerInfo,setSellerInfo]=useState(false)
+    const [sellerInfo,setSellerInfo]=useState(true)
     const [notExist,setNotExist] = useState(false)
     const userRole = authService.getRoleCurrentUser();
     const [refreshKey, setRefreshKey] = useState(0);
@@ -115,7 +117,7 @@ const AdItem = ()=>{
                 SetSeller(retrievedAdSeller)
                 const retrievedCategory = await categoryService.getById(retrievedAd.id_category).then(res=>res.data.category)
                 setCategory(retrievedCategory)
-                setIsLoading(false);  
+                setIsLoading(false);
             }catch(e){
                 setNotExist(true)
             }
@@ -145,9 +147,7 @@ const AdItem = ()=>{
             }
         }else{
             return(
-                <>
-                    <button onClick={handleDetailSeller}>Infos Vendeur</button>
-                </>
+                null
             )
         }
     }
@@ -172,20 +172,22 @@ const AdItem = ()=>{
     return(
         <div>
             <AdDetail ad={ad} adMedias={medias} category={category}/>
-            {buttonDisplay()}
+            <Container>{buttonDisplay()}</Container>
             {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey} setIsOpen={setIsOpen} adMedias={medias}/>}
             {sellerInfo &&
-            <ul>
-                <li>Nom: {seller.user.last_name}</li>
-                <li>Prénom: {seller.user.first_name}</li>
-                <li>Mail: {seller.user.email}</li>
-                <li>Campus: {seller.user.campus}</li>
-            </ul>}
+            <>
+                <Container className="border-top-0 bg-white rounded border py-4 mt-4">
+                    <Typography className="mb-2" variant="subtitle2">Infos vendeur</Typography>
+                    <ListInfosUser user={seller.user}/>
+                    <div id="map_canvas">
+                    <Map seller={seller} />
+                    </div>
+                </Container>
+            </>
+            }   
             <ToastContainer />
-            <div id="map_canvas">
-                <Map seller={seller}/>
-            </div>
-         </div>
+            
+        </div>
         
     )
 }

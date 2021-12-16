@@ -1,12 +1,15 @@
+
+import Register from "pages/Register";
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import ThemeConfig from 'theme';
 import GlobalStyles from 'theme/globalStyles';
 
 // components
-import Register from "components/Register/Register";
+
 import ScrollToTop from 'components/ScrollToTop';
-import { BaseOptionChartStyle } from 'components/charts/BaseOptionChart';
 import Home from "components/Home/Home";
 import Profile from "components/Profile/Profile";
 import AdItem from "components/Ad/AdItem/AdItem";
@@ -18,6 +21,7 @@ import Login from "pages/Login";
 import Admin from "components/Admin/Admin";
 import CreateAd from "pages/CreateAd"
 import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
+
 
 //services
 import { authService } from "services/auth.service";
@@ -39,7 +43,6 @@ const App = () => {
         <ThemeConfig>
             <ScrollToTop />
             <GlobalStyles />
-            <BaseOptionChartStyle />
             <Navbar loggedIn={loggedIn} roleCurrentUser={roleCurrentUser} />
             <NotificationsPopover />
             <Switch>

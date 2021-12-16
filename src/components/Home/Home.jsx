@@ -2,48 +2,52 @@
 import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
-import { CategoriesAPI } from "services/categories";
+import AnnonceFilters from "./components/AnnonceFilters";
 import AnnonceList from "./components/AnnonceList";
+import AnnonceSort from "./components/AnnonceSort";
 import { ToastContainer } from 'react-toastify';
 
-function Home() {
+const Home = () => {
 
-    const [categories, setCategories] = useState();
+
     const [data, setData] = useState();
     const [filter, setFilter] = useState("?categorie=&tri=ASC&prixMin=0&prixMax=3000");
-    const [tri, setTri] = useState("ASC");
+    const [tri, setTri] = useState(true);
     const [category, setCategory] = useState("");
     const [prixMin, setPrixMin] = useState("0");
-    const [prixMax, setPrixMax] = useState("3000"); 
+    const [prixMax, setPrixMax] = useState("3000");
+    const [openFilter, setOpenFilter] = useState(false);
 
     // Functions
     async function handleCategoryChange(event){
-        let nameCategory = event.target.value.replaceAll("-", "");
-        if(nameCategory != "Tout"){
-            await setCategory(nameCategory)
-            await setFilter(`?categorie=${nameCategory}&tri=${tri}&prixMin=${prixMin}&prixMax=${prixMax}`)
+        let nameCategory = event.target.value;
+        if(nameCategory !== "Tout"){
+            await setCategory(event.target.value)
+            await setFilter(`?categorie=${event.target.value}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
         }else{
-            await setFilter(``)
+            await setFilter(`?categorie=&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
         }
     }
-    async function handleTriChange(){
-        if(tri==="ASC"){
-            await setTri("DESC")
+    async function handleTriChange(newTri){
+        if(newTri){
+            // change à prix décroissant
+            await setTri(false)
             await setFilter(`?categorie=${category}&tri=DESC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
                 return state;
             })
         } else {
-            await setTri("ASC")
+            // change à prix croissant
+            await setTri(true)
             await setFilter(`?categorie=${category}&tri=ASC&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
@@ -53,7 +57,7 @@ function Home() {
     }
     async function handleMinPriceChange(event){
         await setPrixMin(event.target.value)
-        await setFilter(`?categorie=${category}&tri=${tri}&prixMin=${event.target.value}&prixMax=${prixMax}`)
+        await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${event.target.value}&prixMax=${prixMax}`)
         await setFilter((state) => {
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
@@ -61,48 +65,41 @@ function Home() {
     }
     async function handleMaxPriceChange(event){
         await setPrixMax(event.target.value)
-        await setFilter(`?categorie=${category}&tri=${tri}&prixMin=${prixMin}&prixMax=${event.target.value}`)
+        await setFilter(`?categorie=${category}&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${event.target.value}`)
         await setFilter((state) => {
             AnnoncesAPI.getAds(state).then((elt) => setData(elt));
             return state;
         })
     }
+    const handleOpenFilter = () => {
+        setOpenFilter(true);
+    };
+
+    const handleCloseFilter = () => {
+        setOpenFilter(false);
+    };
     useEffect(() => {
-        CategoriesAPI.getCategories().then((elt) => setCategories(elt));
         AnnoncesAPI.getAds(filter).then((elt) => setData(elt));
     }, [])
 
     return (
         <>
             <Container>
-                <h1>Market Vinci - 2021</h1>
-                <h4>Filtres</h4>
+                <h1>Market Vinci</h1>
+                <h4>Annonces</h4>
                 <Container className="d-flex flex-column">
-                    <Container className="d-flex flex-row justify-content-start">
-                        <Form.Select defaultValue={categories?categories.categories[0]:""} onChange={handleCategoryChange} className="d-flex border" style={{"width":"200px"}}>
-                            <option key={0}>--Tout--</option>
-                            {categories && categories.categories.map((row) => {
-                                if(!row.parent_category){
-                                    return(
-                                        <option key={row.id_category} disabled>--{row.name}--</option>
-                                    )
-                                }else{
-                                    return(
-                                        <option key={row.id_category}>{row.name}</option>
-                                    )
-                                }
-                            }) }
-                        </Form.Select>
-                        <Container onClick={(e) => {e.preventDefault(); handleTriChange()}} className="d-flex border rounded" style={{"width":"100px", "cursor":"pointer"}}>Tri</Container>
-                        <Form.Control onChange={handleMinPriceChange} placeholder="Prix min" className="d-flex border" style={{"width":"100px"}}/>
-                        <Form.Control onChange={handleMaxPriceChange} placeholder="Prix max" className="d-flex border" style={{"width":"100px"}}/>
+                    <Container style={{"float":"right"}}>
+                        <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} handleCategoryChange={handleCategoryChange}
+                            handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
+                        <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
                     </Container>
+
                     <Container>
                         {data && <AnnonceList annonces={data.ads}/>}
                     </Container>
                 </Container>
             </Container>
-            <ToastContainer />
+            <ToastContainer/>
         </>
     )
 }

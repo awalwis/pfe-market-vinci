@@ -39,7 +39,6 @@ const get = (id) => {
         .get(`${apiurl}/${id}`)
         .then(response => response.data);
 }
-
 /*get all media for this id_ad*/
 const getByAdId = (id_ad) => {
     let currentUser = authService.getCurrentUser();
