@@ -1,5 +1,5 @@
 import React from "react"; 
-import { Button, Form, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { adService } from "services/ads.service";
 import {mediaService} from 'services/medias.service'
 import { notificationService } from "services/notifications.service";
@@ -7,6 +7,8 @@ import {useHistory} from "react-router-dom";
 import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
+import { FormControl,InputLabel,MenuItem,Select,Button } from "@mui/material";
+import DeleteIcone from "@material-ui/icons/DeleteRounded"
 
 export default function Display(props) {
 
@@ -114,16 +116,21 @@ const DisplayAds = (props) => {
                                 {ad.price}
                             </td>
                             <td>
-                                <Form.Select defaultValue={ad.state}
-                                    onChange={e => changeSelectValue(ad,e.target.value,ad.id_user,ad.title)}
-                                >
-                                    <option value="en attente">en attente</option>
-                                    <option value="vendu">vendu</option>
-                                    <option value="disponible">disponible</option>
-                                </Form.Select> 
+                            <FormControl fullWidth>
+                                    <InputLabel >Etat</InputLabel>
+                                    <Select
+                                        defaultValue={ad.state}   
+                                        label="state"
+                                        onChange={e => changeSelectValue(ad,e.target.value,ad.id_user,ad.title)}
+                                    >
+                                        <MenuItem value="en attente">en attente</MenuItem>
+                                        <MenuItem value="disponible">disponible</MenuItem>
+                                        <MenuItem value="vendu">vendu</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </td>
                             <td className='tdDelete'>
-                                <Button variant="outline-danger" onClick={e => deleteAd(ad.id_ad, ad.id_user, ad.title)}>Supprimer</Button>
+                                <Button variant="outlined" color="error" onClick={e => deleteAd(ad.id_ad, ad.id_user, ad.title)} startIcon={<DeleteIcone />}>Supprimer</Button>
                             </td>
                     </tr>
                 )
@@ -151,7 +158,6 @@ return (
                     <th>type</th>
                     <th>prix</th>
                     <th>etat</th>
-                    <th>supprimer une annonce</th>
                 </tr>
             </thead>
             <tbody>

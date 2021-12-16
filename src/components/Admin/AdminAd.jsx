@@ -1,10 +1,12 @@
 import {useEffect, useState} from "react";
 import { adService } from "services/ads.service";
-import {Col, Row, Form, FormControl, FloatingLabel} from "react-bootstrap";
+import {Col, Row, Form} from "react-bootstrap";
 import "styles/style.css"
 import { authService } from "services/auth.service";
-import DisplayAds from "./DisplayAds"
+import DisplayAds from "components/Admin/DisplayAds"
 import {useHistory} from "react-router-dom";
+import AdIcone from "@material-ui/icons/ChangeHistory"
+import { MenuItem,Select,InputLabel,FormControl,TextField } from "@mui/material";
 import { ToastContainer } from 'react-toastify';
 
 const AdminAd = () => {
@@ -21,14 +23,15 @@ const AdminAd = () => {
     }
 
     const [isLoading, setLoading] = useState(true); 
-    const [ads, setAds] = useState('');
+    const [ads, setAds] = useState([]);
     const [query, setQuery] = useState('');
     const [select, setSelect] = useState('state');
     const [refreshKey, setRefreshKey] = useState(0);
+    
 
     useEffect(() => {
         setLoading(true);
-        setAds('');
+        setAds([]);
         getAllAds(); 
     }, [refreshKey]);
 
@@ -53,45 +56,43 @@ const AdminAd = () => {
     }
 
     const filtredAds = getFiltredAds(query, ads)
-
     const changeSelectValue = (selectValue) => {
         setSelect(selectValue);
     }
+  
 
     return (
         <div>
-            <h1 className="center">Annonces</h1>
+            <h2 className="center">Annonces <AdIcone/></h2>
 
             <Form>
                 <Row className="g-2">
                     <Col xs={11}>
-                        <FloatingLabel controlId="floatingInputGrid" label="Entrez votre recherche">
-                            <FormControl
-                                type="search"
+                        <FormControl fullWidth>
+                            <TextField
+                                fullWidth
+                                label="Entrez votre recherche"
                                 placeholder="Entrez votre recherche : titre ou état de l'annonce"
-                                className="me-2"
-                                aria-label="Search"
-                                onChange={e => setQuery(e.target.value)}
-                            />
-                        </FloatingLabel>
+                                type="search"
+                                onChange={e => setQuery(e.target.value)}    
+                            />  
+                        </FormControl>
                     </Col>
                     <Col xs={1}>
-                        <FloatingLabel label="Filtres">
-                            <Form.Select 
-                                onChange={e => changeSelectValue(e.target.value)}
-                            >
-                                <option value="state">état</option>
-                                <option value="title">titre</option>
-                            </Form.Select>
-                        </FloatingLabel>
+                    <FormControl fullWidth>
+                        <InputLabel>Filtre</InputLabel>
+                            <Select onChange={e => changeSelectValue(e.target.value)}
+                                defaultValue="state"
+                            >   
+                                <MenuItem value="state">Etat</MenuItem>
+                                <MenuItem value="title">Titre</MenuItem>
+                            </Select>              
+                      </FormControl>
                     </Col>
                 </Row>
             </Form>
-
             <DisplayAds ads={filtredAds} setRefreshKey={setRefreshKey} refreshKey={refreshKey} isLoading={isLoading}/>
-
             <ToastContainer />
-
         </div>
     )
 } 

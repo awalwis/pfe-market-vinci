@@ -11,7 +11,7 @@ import { adService } from "services/ads.service";
 import { mediaService } from "services/medias.service";
 
 const DisplayTable = ({adsAvailable,adsPending,adsSold,mapUrl,id_user,currentIdUser,currentUserRole}) => {
-    if(id_user == currentIdUser || currentUserRole === "admin"){
+    if(id_user === currentIdUser || currentUserRole === "admin"){
         return(
             <>
                 <h2>Annonces Disponible</h2>
@@ -182,7 +182,7 @@ const Profile =  () => {
         setUpdatedUser(data.data.user)
         if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
         let adsUser;
-        if(data.data.user.id_user == authService.getCurrentUser().id_user || authService.getRoleCurrentUser() === "admin"){
+        if(data.data.user.id_user === authService.getCurrentUser().id_user || authService.getRoleCurrentUser() === "admin"){
             adsUser = await adService.getAllUser(data.data.user.id_user)
             setAdsPending(adsUser.ads.filter(ad=>ad.state==="en attente"));
             setAdsSold(adsUser.ads.filter(ad=>ad.state==="vendu"));
@@ -194,7 +194,7 @@ const Profile =  () => {
         const allPromise = adsUser.ads.map(async (ad)=>{
             let medias = await mediaService.getByAdId(ad.id_ad)
             medias.map((media)=>{
-                if(media.id_media==ad.displayed_picture){
+                if(media.id_media===ad.displayed_picture){
                     mapUrl[ad.id_ad]=media.url
                 }
             })

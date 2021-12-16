@@ -1,5 +1,4 @@
 import { ReactDOM } from 'react';
-import faker from 'faker';
 import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
