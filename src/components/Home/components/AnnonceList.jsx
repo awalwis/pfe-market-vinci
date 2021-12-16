@@ -7,11 +7,11 @@ const AnnonceList = ({annonces}) => {
     return(
 
         <Grid container spacing={3}>
-            {annonces.map((annonce) => (
-            <Grid key={annonce.id_ad} item xs={12} sm={6} md={3}>
-                <AnnonceCard annonce={annonce}/>
-            </Grid>
-            ))}
+            {annonces && (annonces.map((annonce) => (
+                <Grid key={annonce.id_ad} item xs={12} sm={6} md={3}>
+                    <AnnonceCard annonce={annonce}/>
+                </Grid>
+            )))}
         </Grid>
     )
 }

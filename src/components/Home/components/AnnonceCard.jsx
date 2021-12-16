@@ -9,8 +9,14 @@ import { useEffect, useState } from 'react';
 const AnnonceCard = ({annonce}) => {
 
     const user = authService.getCurrentUser()
+    const [picture, setPicture] = useState(undefined)
 
-    const [picture, setPicture] = useState()
+    const fetchData = async (annonce) => {
+        if(annonce) {
+            let media = await mediaService.get(annonce.displayed_picture)
+            setPicture(media)
+        }
+    }
 
     const ProductImgStyle = styled('img')({
         top: 0,
@@ -20,15 +26,15 @@ const AnnonceCard = ({annonce}) => {
         position: 'absolute'
       });
 
-    useEffect(()=>{
-        mediaService.get(annonce.displayed_picture??1).then((elt) => setPicture(elt.url))
-    },[])
+    useEffect(() => {
+        fetchData(annonce)
+    }, [])
+
 
     return(
-        picture && 
-        (<Card>
+        <Card>
             <Box sx={{ pt: '100%', position: 'relative' }}>
-                <ProductImgStyle alt={"Image produit"} src={picture} />
+                {picture && <ProductImgStyle alt={"Image produit"} src={picture.media.url} />}
             </Box>
             <Stack spacing={2} sx={{ p: 3 }}>
                 <Link to={`${user?`/annonces/${annonce.id_ad}`:"/login"}`} color="inherit" underline="hover" component={RouterLink}>
@@ -46,7 +52,5 @@ const AnnonceCard = ({annonce}) => {
                 </Stack>
             </Stack>
         </Card>)
-
-    )
 }
 export default AnnonceCard;
