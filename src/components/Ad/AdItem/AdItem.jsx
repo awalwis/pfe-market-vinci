@@ -167,8 +167,8 @@ const AdItem = ()=>{
             {isOpen && <AdUpdateForm ad={ad} setRefreshKey={setRefreshKey} refreshKey={refreshKey} setIsOpen={setIsOpen} adMedias={medias}/>}
             {sellerInfo &&
             <>
-                <Container className="border-top-0 border py-4">
-                    <Typography variant="subtitle1" fontWeight={30}>Infos vendeur</Typography>
+                <Container className="border-top-0 bg-white rounded border py-4 mt-4">
+                    <Typography className="mb-2" variant="subtitle2">Infos vendeur</Typography>
                     <ListInfosUser user={seller.user}/>
                     <div id="map_canvas">
                     <Map seller={seller} />

@@ -1,7 +1,7 @@
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link as RouterLink, } from 'react-router-dom';
-import { fCurrency } from 'utils/formatNumber';
+import { fNumber } from 'utils/formatNumber';
 import { authService } from 'services/auth.service';
 import { mediaService } from 'services/medias.service';
 import { useEffect, useState } from 'react';
@@ -47,7 +47,7 @@ const AnnonceCard = ({annonce}) => {
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="subtitle1">
-                    {fCurrency(Number(annonce.price))}
+                   {fNumber(Number(annonce.price))}€
                 </Typography>
                 </Stack>
             </Stack>
