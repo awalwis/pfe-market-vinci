@@ -14,8 +14,8 @@ const Home = () => {
     const [filter, setFilter] = useState("?categorie=&tri=ASC&prixMin=0&prixMax=3000");
     const [tri, setTri] = useState(true);
     const [category, setCategory] = useState("");
-    const [prixMin, setPrixMin] = useState("0");
-    const [prixMax, setPrixMax] = useState("3000");
+    const [prixMin, setPrixMin] = useState("");
+    const [prixMax, setPrixMax] = useState("");
     const [openFilter, setOpenFilter] = useState(false);
 
     // Functions
@@ -29,6 +29,7 @@ const Home = () => {
                 return state;
             })
         }else{
+            await setCategory(event.target.value)
             await setFilter(`?categorie=&tri=${tri?"ASC":"DESC"}&prixMin=${prixMin}&prixMax=${prixMax}`)
             await setFilter((state) => {
                 AnnoncesAPI.getAds(state).then((elt) => setData(elt));
@@ -89,7 +90,7 @@ const Home = () => {
                 <h4>Annonces</h4>
                 <Container className="d-flex flex-column">
                     <Container style={{"float":"right"}}>
-                        <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} handleCategoryChange={handleCategoryChange}
+                        <AnnonceFilters isOpenFilter={openFilter} onOpenFilter={handleOpenFilter} onCloseFilter={handleCloseFilter} category={category} prixMin={prixMin} prixMax={prixMax} handleCategoryChange={handleCategoryChange}
                             handleMinPriceChange={handleMinPriceChange} handleMaxPriceChange={handleMaxPriceChange}/>
                         <AnnonceSort tri={tri} handleTriChange={handleTriChange}/>
                     </Container>
