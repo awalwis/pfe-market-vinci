@@ -52,7 +52,7 @@ const DropzoneAreaComponent = (props) => {
     }
 
     const rejectMessage = (files) => {
-        toast.error('Seul les fichier de moins de '+files.name+' sont autorisé', {
+        toast.error('Le fichier '+files.name+' n\'est pas autorisé', {
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: false,

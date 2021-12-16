@@ -19,7 +19,7 @@ const AdDetail = ({ad,adMedias,category})=>{
                     <Carousel>
                         {adMedias.map(m => {
                             return(
-                                <Carousel.Item>
+                                <Carousel.Item key={m.id_media}>
                                     {m.type==="image"?
                                         <img
                                         className="d-block w-100"
