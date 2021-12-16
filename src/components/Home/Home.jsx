@@ -1,11 +1,14 @@
 
 import { useEffect, useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container} from "react-bootstrap";
 import { AnnoncesAPI } from "services/annonces";
-import AnnonceFilters from "./components/AnnonceFilters";
-import AnnonceList from "./components/AnnonceList";
-import AnnonceSort from "./components/AnnonceSort";
+import AnnonceFilters from "components/Home/components/AnnonceFilters";
+import AnnonceList from "components/Home/components/AnnonceList";
+import AnnonceSort from "components/Home/components/AnnonceSort";
 import { ToastContainer } from 'react-toastify';
+import { authService } from 'services/auth.service';
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
 
@@ -17,6 +20,8 @@ const Home = () => {
     const [prixMin, setPrixMin] = useState("");
     const [prixMax, setPrixMax] = useState("");
     const [openFilter, setOpenFilter] = useState(false);
+    const user = authService.getCurrentUser()
+    const history = useHistory()
 
     // Functions
     async function handleCategoryChange(event){
@@ -79,6 +84,13 @@ const Home = () => {
     const handleCloseFilter = () => {
         setOpenFilter(false);
     };
+    const HandleRedirection=(e)=>{
+        if(e.target.value ==="login"){
+            history.push("/login")
+        }else{
+            history.push("/register")
+        }
+    }
     useEffect(() => {
         AnnoncesAPI.getAds(filter).then((elt) => setData(elt));
     }, [])
@@ -86,6 +98,12 @@ const Home = () => {
     return (
         <>
             <Container>
+                {!user &&
+                <>
+            <Button variant="outlined" value="login" size="medium" onClick={HandleRedirection}>Connexion</Button>
+            <Button variant="outlined" value="register" size="medium"onClick={HandleRedirection}>S'inscrire</Button>
+                </>
+                }
                 <h1>Market Vinci</h1>
                 <h4>Annonces</h4>
                 <Container className="d-flex flex-column">
@@ -105,3 +123,6 @@ const Home = () => {
     )
 }
 export default Home;
+/**<Button variant="outlined" size="small">
+          Sign up
+        </Button> */

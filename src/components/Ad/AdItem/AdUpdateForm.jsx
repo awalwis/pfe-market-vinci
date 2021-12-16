@@ -284,7 +284,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
 
     return (
         
-         <Container sx={{ maxWidth :'sm',border :"solid",borderRadius : 10}}>
+         <Container sx={{ maxWidth :'sm',border :"solid",borderRadius : 5}}>
              <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <TextField
