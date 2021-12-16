@@ -17,7 +17,6 @@ const Category=({setCategory, idDefault})=>{
     const handleCategoryChange=(e)=>{
       setCategory(parseInt(e.target.value))
     }
-
     if(idDefault){
         //when update
         return(           
@@ -27,7 +26,7 @@ const Category=({setCategory, idDefault})=>{
                     Categorie
                 </InputLabel>
                 <NativeSelect onChange={handleCategoryChange}
-                defaultValue={idDefault}
+                value={idDefault}
                 inputProps={{
                   name: 'category',
                   id: 'uncontrolled-native',
