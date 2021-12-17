@@ -67,10 +67,11 @@ const DisplayCategories = (props) => {
     const {categories} = props;
     const [categoriesSubMap, setCategoriesSubMap] = useState({});
     const [valueInput, setValueInput] = useState('');
+    let empty = false;
 
     const constructMap = () => {
         let categoriesMap = {};
-        if(categories){
+        if(!isObjEmpty(categories)){
             categories.map((category) => {
                 if(!category.parent_category){
                     if(!categoriesMap[category.id_category]){
@@ -92,6 +93,8 @@ const DisplayCategories = (props) => {
                 }
             })
             setCategoriesSubMap(categoriesMap);
+        }else{
+            empty = true;
         }
     }
 
@@ -104,7 +107,7 @@ const DisplayCategories = (props) => {
     }
 
     if(!props.isLoading){
-        if(isObjEmpty(categoriesSubMap)){
+        if(isObjEmpty(categoriesSubMap)&&!empty){
             constructMap();
         }
     }
@@ -160,7 +163,7 @@ const DisplayCategories = (props) => {
         return(
             <Loader.BigLoader />  
         )
-    }else if(!isObjEmpty(categoriesSubMap)) {
+    }else if(!isObjEmpty(categoriesSubMap) && !empty) {
         return (
             Object.entries(categoriesSubMap).map(([key, value]) =>{
                 return(
