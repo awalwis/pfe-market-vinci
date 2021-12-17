@@ -12,7 +12,7 @@ import {Loader} from "components/Loading/Loading";
 import Map from "./Map";
 import NotFound from "pages/Page404"
 import { notificationService } from "services/notifications.service";
-import { Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import ListInfosUser from "components/User/ListInfosUser";
 
 const AdItem = ()=>{
@@ -130,18 +130,18 @@ const AdItem = ()=>{
             if(ad.state==="disponible"){
                 return(
                     <>
-                        <button onClick={handleDelete}> Supprimer l'annonce </button>
-                        <button onClick={handleUpdate}> Modfier l'annonce </button>
-                        <button onClick={handleDetailSeller}>Infos Vendeur</button>
-                        <button onClick={handleSold}>Vendu</button>
+                        <Button variant="outlined" value="deleteAd" size="medium" onClick={handleDelete}> Supprimer l'annonce </Button>
+                        <Button variant="outlined" value="editAd" size="medium" onClick={handleUpdate}> Modfier l'annonce </Button>
+                        <Button variant="outlined" value="sellerInfos" size="medium" onClick={handleDetailSeller}>Infos Vendeur</Button>
+                        <Button variant="outlined" value="sold" size="medium" onClick={handleSold}>Vendu</Button>
                     </>
                 )
             }else{
                 return(
                     <>
-                        <button onClick={handleDelete}> Supprimer l'annonce </button>
-                        <button onClick={handleUpdate}> Modfier l'annonce </button>
-                        <button onClick={handleDetailSeller}>Infos Vendeur</button>
+                        <Button variant="outlined" value="deleteAd" size="medium" onClick={handleDelete}> Supprimer l'annonce </Button>
+                        <Button variant="outlined" value="editAd" size="medium" onClick={handleUpdate}> Modfier l'annonce </Button>
+                        <Button variant="outlined" value="sellerInfos" size="medium" onClick={handleDetailSeller}>Infos Vendeur</Button>
                     </>
                 )
             }
