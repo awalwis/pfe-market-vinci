@@ -1,38 +1,29 @@
 
 import {useHistory} from "react-router-dom";
 import AnnonceList from "components/Home/components/AnnonceList";
-import {Button,Card } from "@mui/material";
+import {Button,Card, Stack } from "@mui/material";
 
 
 const DisplayMyAds = ({adsAvailable, adsPending, adsSold, mapUrl, id_user, currentIdUser, currentUserRole}) => {
 
-    const DisplayTable = ( {ads, mapUrl}) => {
-        const history = useHistory();
-
-        const handleButton = (e) => {
-            history.push("/annonces/" + e.target.dataset.id);
-        }
-        return (
-            <AnnonceList annonces={ads}/>
-        )
-    }
-
     if (id_user == currentIdUser || currentUserRole === "admin") {
         return (
-            <>
-                <h2>Annonces Disponible</h2>
-                <DisplayTable ads={adsAvailable} mapUrl={mapUrl}/>
-                <h2>Annonces en attente</h2>
-                <DisplayTable ads={adsPending} mapUrl={mapUrl}/>
-                <h2>Annonces vendue</h2>
-                <DisplayTable ads={adsSold} mapUrl={mapUrl}/>
-            </>
+            
+                <Stack spacing={3}>
+                <h4>Annonces disponibles</h4>
+                <AnnonceList annonces={adsAvailable}/>
+                <h4>Annonces en attente</h4>
+                <AnnonceList annonces={adsPending}/>
+                <h4>Annonces vendues</h4>
+                <AnnonceList annonces={adsSold}/>
+                </Stack>
+        
         )
     } else {
         return (
             <>
-                <h2>Annonces Disponible</h2>
-                <DisplayTable ads={adsAvailable} mapUrl={mapUrl}/>
+                <h4>Annonces disponibles</h4>
+                <AnnonceList annonces={adsAvailable}/>
             </>
         )
     }
