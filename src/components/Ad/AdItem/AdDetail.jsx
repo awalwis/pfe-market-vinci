@@ -14,7 +14,7 @@ const AdDetail = ({ad,adMedias,category})=>{
                     {ad.title}
                 </Typography>
             </Container>
-            <Container className="d-flex flex-row justify-content-between border bg-white rounded py-4" style={{"min-height":"25rem"}}>
+            <Container className="d-flex flex-row justify-content-between border bg-white rounded py-4" style={{minHeight:"25rem"}}>
                 <Container className="d-flex">
                     <Carousel>
                         {adMedias.map(m => {

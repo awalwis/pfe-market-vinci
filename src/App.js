@@ -43,7 +43,7 @@ const App = () => {
     if(roleCurrentUser ==="banni"){
         loggedIn = false
     }
-    console.log("App.js: ", loggedIn);
+
 
 
     return (
@@ -63,7 +63,7 @@ const App = () => {
                 <AuthenticatedRoute path="/admin/categories" component={AdminCategory} appProps={loggedIn} />
                 <AuthenticatedRoute path="/admin/utilisateurs" component={AdminUser} appProps={loggedIn} />
                 <AuthenticatedRoute path="/admin/annonces" component={AdminAd} appProps={loggedIn} />
-                <AuthenticatedRoute path="/admin" component={Admin} appProps={undefined} />
+                <AuthenticatedRoute path="/admin" component={Admin} appProps={loggedIn} />
                 <AuthenticatedRoute path="/profile/:email" component={Profile} appProps={loggedIn} />
                 <Route path="/" component={Home} />
             </Switch>

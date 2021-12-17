@@ -12,6 +12,7 @@ async function login(email, password) {
     }catch(error) {
         console.log(error);
     }
+    if(user.role==='banni')return 'banni'
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign({ id_user: user.id_user, role: user.role }, "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", { algorithm: 'HS256' });
         let userDto = {

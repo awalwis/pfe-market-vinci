@@ -1,7 +1,7 @@
 
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
+import { Box, Link, Container, Typography } from '@mui/material';
 
 // components
 import Page from '../components/Page';

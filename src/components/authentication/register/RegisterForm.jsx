@@ -7,9 +7,9 @@ import { useHistory } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import bcrypt from "bcryptjs";
+
 import {authService} from "../../../services/auth.service";
-import {FormControl, FormHelperText, InputLabel, MenuItem} from "@material-ui/core";
+import { MenuItem} from "@material-ui/core";
 
 // ----------------------------------------------------------------------
 
@@ -195,11 +195,8 @@ export default function RegisterForm() {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password2 && errors.password2)}
-            helperText={touched.password2 && errors.password2}
           />
           </Stack>
-
           <LoadingButton
             fullWidth
             size="large"
