@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {useHistory} from "react-router-dom";
-import {Card} from "react-bootstrap";
 import {userService} from "../../services/users.service";
 import { Icon } from '@iconify/react';
 import "styles/style.css"
@@ -8,7 +7,7 @@ import {authService} from "services/auth.service"
 import { toast, ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import {Form, FormikProvider, useFormik} from "formik";
-import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import {LoadingButton} from "@mui/lab";
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
@@ -17,13 +16,8 @@ import ProfileData from "./ProfileData";
 const UpdatePwd = (user) => {
     const history = useHistory();
     const [showPassword, setShowPassword] = useState(false);
-    const [updatedUser, setUpdatedUser] = useState()
-    const [modifPwd, setModifPwd] = useState(false);
     const [page, setPage] = useState("updatePwd")
     const bcrypt = require('bcryptjs');
-
-
-
 
     const validate = values => {
         const errors = {};
