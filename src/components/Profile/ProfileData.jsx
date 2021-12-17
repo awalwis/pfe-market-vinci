@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {useHistory} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -50,7 +49,7 @@ const ProfileData =  () => {
         setLoading(false);
         if(authService.getRoleCurrentUser()==="admin" || data.data.user.email===authService.getCurrentUser().email )setModifAuthorized(true);
         let adsUser;
-        if(data.data.user.id_user == authService.getCurrentUser().id_user || authService.getRoleCurrentUser() === "admin"){
+        if(data.data.user.id_user === authService.getCurrentUser().id_user || authService.getRoleCurrentUser() === "admin"){
             adsUser = await adService.getAllUser(data.data.user.id_user)
             setAdsPending(adsUser.ads.filter(ad=>ad.state==="en attente"));
             setAdsSold(adsUser.ads.filter(ad=>ad.state==="vendu"));
@@ -62,7 +61,7 @@ const ProfileData =  () => {
         const allPromise = adsUser.ads.map(async (ad)=>{
             let medias = await mediaService.getByAdId(ad.id_ad)
             medias.map((media)=>{
-                if(media.id_media==ad.displayed_picture){
+                if(media.id_media===ad.displayed_picture){
                     mapUrl[ad.id_ad]=media.url
                 }
             })

@@ -7,11 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';
 // material
 import {
     Stack,
-    Checkbox,
     TextField,
     IconButton,
     InputAdornment,
-    FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 

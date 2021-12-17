@@ -1,12 +1,10 @@
-
-import {useHistory} from "react-router-dom";
 import AnnonceList from "components/Home/components/AnnonceList";
-import {Button,Card, Stack } from "@mui/material";
+import {Stack } from "@mui/material";
 
 
 const DisplayMyAds = ({adsAvailable, adsPending, adsSold, mapUrl, id_user, currentIdUser, currentUserRole}) => {
 
-    if (id_user == currentIdUser || currentUserRole === "admin") {
+    if (id_user === currentIdUser || currentUserRole === "admin") {
         return (
             
                 <Stack spacing={3}>

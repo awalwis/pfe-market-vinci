@@ -9,7 +9,6 @@ import "styles/style.css"
 import {Loader} from "components/Loading/Loading";
 import { toast } from 'react-toastify';
 import DeleteIcone from "@material-ui/icons/DeleteRounded"
-import PeopleIcone from "@material-ui/icons/PeopleRounded"
 import { FormControl,InputLabel,MenuItem,Select,Button } from "@mui/material";
 export default function Display(props) {
 

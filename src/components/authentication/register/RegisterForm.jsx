@@ -5,7 +5,7 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useHistory } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import {authService} from "../../../services/auth.service";

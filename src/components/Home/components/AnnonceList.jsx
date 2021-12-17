@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+
 import AnnonceCard from "./AnnonceCard";
-import {mediaService} from "services/medias.service";
 import { Grid } from "@mui/material";
 const AnnonceList = ({annonces}) => {
 
