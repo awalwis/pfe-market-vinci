@@ -45,6 +45,8 @@ const App = () => {
 
 
     return (
+
+        loggedIn && (
         <ThemeConfig>
             <ScrollToTop />
             <GlobalStyles />
@@ -64,8 +66,7 @@ const App = () => {
                 <Route path="/" component={Home} />
             </Switch>
             <Footer />
-        </ThemeConfig>
-
+        </ThemeConfig>)
     )
 }
 export default App;
