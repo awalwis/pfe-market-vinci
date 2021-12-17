@@ -14,12 +14,12 @@ const AdDetail = ({ad,adMedias,category})=>{
                     {ad.title}
                 </Typography>
             </Container>
-            <Container className="d-flex flex-row justify-content-between border bg-white rounded py-4" style={{"height":"25rem"}}>
+            <Container className="d-flex flex-row justify-content-between border bg-white rounded py-4" style={{"min-height":"25rem"}}>
                 <Container className="d-flex">
                     <Carousel>
                         {adMedias.map(m => {
                             return(
-                                <Carousel.Item>
+                                <Carousel.Item key={m.id_media}>
                                     {m.type==="image"?
                                         <img
                                         className="d-block w-100"
