@@ -29,6 +29,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`;
     const[medias,setMedias] = useState([]);
+ 
 
 
     const handleSubmit = async (e) => {
@@ -305,7 +306,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                     onChange={handleUpdate}
                     required
                 />
-                <TextField
+                {type==="a vendre" && <TextField
                         fullWidth
                         id="outlined-number"
                         label="Prix de l'annonce"
@@ -314,7 +315,7 @@ const AdUpdateForm = ({ad,setRefreshKey,refreshKey,setIsOpen,adMedias}) => {
                         defaultValue={ad.price}
                         onChange={handleUpdate}
                         required        
-                />
+                />}
               </Stack>
                 <FormLabel component="legend">Type d'annonce</FormLabel>
                 <RadioGroup row aria-label="adType" name="controlled-radio-buttons-group"

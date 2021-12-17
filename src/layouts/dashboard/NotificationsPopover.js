@@ -1,4 +1,3 @@
-import { ReactDOM } from 'react';
 import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -17,7 +16,6 @@ import {
   Box,
   List,
   Badge,
-  Button,
   Avatar,
   Tooltip,
   Divider,
@@ -137,7 +135,7 @@ export default function NotificationsPopover() {
     let id = e.target.parentNode.dataset.id;
     let index = 0;
     for (let i = 0; i < notifications.length; i++) {
-      if (notifications[i].id_notification == id) {
+      if (notifications[i].id_notification === id) {
         index = i;
         break;
       }

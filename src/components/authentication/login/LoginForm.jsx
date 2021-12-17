@@ -6,7 +6,6 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { toast, ToastContainer } from 'react-toastify';
 // material
 import {
-    Link,
     Stack,
     Checkbox,
     TextField,
@@ -15,7 +14,6 @@ import {
     FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
 
 import {useState} from "react";
 
@@ -55,14 +53,27 @@ const LoginForm = () => {
                         progress: undefined,
                         theme: 'colored'
                     });
-                    console.log("test"); 
                     setRefreshKey(refreshKey+1);
                     formik.setFieldValue("email","");
                     formik.setFieldValue("password","");
                     formik.setSubmitting(false);
-                }else{
-                    history.push("/"); 
-                }
+                }else if(response==='banni'){
+                    toast.error('Erreur: Votre compte a été suspendu.', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored'
+                    });
+                    setRefreshKey(refreshKey+1);
+                    formik.setFieldValue("email","");
+                    formik.setFieldValue("password","");
+                    formik.setSubmitting(false);
+                    
+                }else{history.push("/"); }
             });
         }
     });
@@ -107,25 +118,18 @@ const LoginForm = () => {
                     error={Boolean(touched.password && errors.password)}
                     helperText={touched.password && errors.password}
                 />
+                <LoadingButton
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                >
+                    Connexion
+                </LoadingButton>
             </Stack>
 
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-                <FormControlLabel
-                    control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-                    label="Remember me"
-                />
 
-            </Stack>
-
-            <LoadingButton
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
-            >
-                Connexion
-            </LoadingButton>
         </Form>
         </FormikProvider>
     <ToastContainer/>

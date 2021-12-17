@@ -1,5 +1,4 @@
-import * as Yup from 'yup';
-import {useEffect, useState} from 'react';
+import { useState } from "react";
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -8,9 +7,9 @@ import { useHistory } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, Select } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import bcrypt from "bcryptjs";
+
 import {authService} from "../../../services/auth.service";
-import {FormControl, FormHelperText, InputLabel, MenuItem} from "@material-ui/core";
+import { MenuItem} from "@material-ui/core";
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +19,6 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [campus, setCampus] = useState("Woluwe");
   const bcrypt = require('bcryptjs');
-
-
 
   const validate = values => {
     const errors = {};
@@ -59,14 +56,6 @@ export default function RegisterForm() {
 
     return errors;
   };
-  const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Prénom requis'),
-    lastName: Yup.string().min(2, 'Trop court!').max(50, 'Trop long!').required('Nom requis'),
-    email: Yup.string(),
-    campus: Yup.string(),
-    password1: Yup.string().min(6, 'Minimum 6 caractères!').max(20, 'Maximum 20 caractères!').required('Mot de passe requis'),
-    password2: Yup.string().required('Veuillez confirmer votre mot de passe')
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -118,8 +107,6 @@ export default function RegisterForm() {
       label: 'Louvain la neuve',
     }
   ];
-
-
 
 
   return (
@@ -208,11 +195,8 @@ export default function RegisterForm() {
                 </InputAdornment>
               )
             }}
-            error={Boolean(touched.password2 && errors.password2)}
-            helperText={touched.password2 && errors.password2}
           />
           </Stack>
-
           <LoadingButton
             fullWidth
             size="large"

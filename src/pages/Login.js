@@ -30,22 +30,24 @@ export default function Login() {
   return (
     <RootStyle title="Connexion Market Vinci">
       <Container maxWidth="sm">
-        <ContentStyle >
-          <Stack sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Connexion à Market Vinci
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Entre tes informations ci-dessous.</Typography>
-          </Stack>
+        <ContentStyle>
+          <div>
+              <Stack sx={{ mb: 5 }}>
+                <Typography variant="h4" gutterBottom>
+                  Connexion à Market Vinci
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>Entre tes informations ci-dessous.</Typography>
+              </Stack>
 
-          <LoginForm />
+              <LoginForm />
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            Pas encore inscrit ? &nbsp;
-            <Link component={RouterLink} underline="always" sx={{ color: 'text.primary' }} to="/register">
-              Inscrivez-vous ici !
-            </Link>
-          </Typography>
+              <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+                Pas encore inscrit ? &nbsp;
+                <Link component={RouterLink} underline="always" sx={{ color: 'text.primary' }} to="/register">
+                  Inscrivez-vous ici !
+                </Link>
+              </Typography>
+          </div>
         </ContentStyle>
       </Container>
     </RootStyle>
