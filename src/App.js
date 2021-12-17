@@ -46,7 +46,7 @@ const App = () => {
 
     return (
 
-        loggedIn && (
+        loggedIn!==undefined && (
         <ThemeConfig>
             <ScrollToTop />
             <GlobalStyles />
