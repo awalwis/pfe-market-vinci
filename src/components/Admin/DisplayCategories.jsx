@@ -21,7 +21,6 @@ const ConstructP = (props) => {
                 idDelete = children[i].dataset.id;
             }
         }
-        console.log(idDelete)
         await categoryService.deleteCategory(idDelete)
         toast.update(idToast,{
             render: 'Sous categorie Supprimée !',
@@ -96,10 +95,16 @@ const DisplayCategories = (props) => {
         }
     }
 
-
+    function isObjEmpty(obj) {
+        for (var prop in obj) {
+          if (obj.hasOwnProperty(prop)) return false;
+        }
+      
+        return true;
+    }
 
     if(!props.isLoading){
-        if(!categoriesSubMap[1]){
+        if(isObjEmpty(categoriesSubMap)){
             constructMap();
         }
     }
@@ -155,11 +160,9 @@ const DisplayCategories = (props) => {
         return(
             <Loader.BigLoader />  
         )
-    }else if(categoriesSubMap[1]) {
+    }else if(!isObjEmpty(categoriesSubMap)) {
         return (
             Object.entries(categoriesSubMap).map(([key, value]) =>{
-                for(let i = 0; i<value.length;i++){
-                }
                 return(
                     <ListGroup.Item
                         as="li"
